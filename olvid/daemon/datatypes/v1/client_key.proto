@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package olvid.daemon.datatypes.v1;
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = false;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+message ClientKey {
+  string name = 1;
+  string key = 2;
+  uint64 identity_id = 3; // 0 if an admin key
+}
+
+message ClientKeyFilter {
+  oneof identity {
+    bool admin_key = 1;
+    uint64 identity_id = 2;
+  }
+  optional string name_search = 3;
+  optional string key = 4;
+}

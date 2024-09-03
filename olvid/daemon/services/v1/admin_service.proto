@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package olvid.daemon.services.v1;
+
+import "olvid/daemon/admin/v1/client_key_admin.proto";
+import "olvid/daemon/admin/v1/identity_admin.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+// ClientKey
+service ClientKeyAdminService {
+  rpc ClientKeyList(admin.v1.ClientKeyListRequest) returns (stream admin.v1.ClientKeyListResponse) {}
+  rpc ClientKeyGet(admin.v1.ClientKeyGetRequest) returns (admin.v1.ClientKeyGetResponse) {}
+  rpc ClientKeyNew(admin.v1.ClientKeyNewRequest) returns (admin.v1.ClientKeyNewResponse) {}
+  rpc ClientKeyDelete(admin.v1.ClientKeyDeleteRequest) returns (admin.v1.ClientKeyDeleteResponse) {}
+}
+
+// Identity
+service IdentityAdminService {
+  rpc IdentityList(admin.v1.IdentityListRequest) returns (stream admin.v1.IdentityListResponse) {}
+  rpc IdentityAdminGet(admin.v1.IdentityAdminGetRequest) returns (admin.v1.IdentityAdminGetResponse) {}
+  rpc IdentityDelete(admin.v1.IdentityDeleteRequest) returns (admin.v1.IdentityDeleteResponse) {}
+  rpc IdentityNew(admin.v1.IdentityNewRequest) returns (admin.v1.IdentityNewResponse) {}
+  rpc IdentityKeycloakNew(admin.v1.IdentityKeycloakNewRequest) returns (admin.v1.IdentityKeycloakNewResponse) {}
+}

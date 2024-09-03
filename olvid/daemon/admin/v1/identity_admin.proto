@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package olvid.daemon.admin.v1;
+
+import "olvid/daemon/datatypes/v1/identity.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** IdentityList
+ */
+message IdentityListRequest {
+  optional datatypes.v1.IdentityFilter filter = 1;
+}
+message IdentityListResponse {
+  repeated datatypes.v1.Identity identities = 1;
+}
+
+/*
+ ** IdentityGet
+ */
+message IdentityAdminGetRequest {
+  uint64 identity_id = 1;
+}
+message IdentityAdminGetResponse {
+  datatypes.v1.Identity identity = 1;
+}
+
+/*
+ ** IdentityNew
+ */
+message IdentityNewRequest {
+  datatypes.v1.IdentityDetails identity_details = 1;
+  optional string server_url = 2;
+  optional string api_key = 3;
+}
+message IdentityNewResponse {
+  datatypes.v1.Identity identity = 1;
+}
+
+/*
+ ** IdentityDelete
+ */
+message IdentityDeleteRequest {
+  uint64 identity_id = 1;
+}
+message IdentityDeleteResponse {}
+
+/*
+ ** IdentityKeycloakNew
+ */
+message IdentityKeycloakNewRequest {
+  string configuration_link = 1;
+}
+message IdentityKeycloakNewResponse {
+  datatypes.v1.Identity identity = 1;
+}

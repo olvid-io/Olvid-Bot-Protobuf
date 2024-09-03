@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package olvid.daemon.command.v1;
+
+import "olvid/daemon/datatypes/v1/invitation.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** InvitationList return all discussions for current identity
+ */
+message InvitationListRequest {
+  optional datatypes.v1.InvitationFilter filter = 1;
+}
+message InvitationListResponse {
+  repeated datatypes.v1.Invitation invitations = 1;
+}
+
+/*
+ ** InvitationGet
+ */
+message InvitationGetRequest {
+  uint64 invitation_id = 1;
+}
+message InvitationGetResponse {
+  datatypes.v1.Invitation invitation = 1;
+}
+
+/*
+ ** InvitationNew
+ */
+message InvitationNewRequest {
+  string invitation_url = 1;
+}
+
+message InvitationNewResponse {
+  datatypes.v1.Invitation invitation = 1;
+}
+
+/*
+ ** InvitationAccept
+ */
+message InvitationAcceptRequest {
+  uint64 invitation_id = 1;
+}
+message InvitationAcceptResponse {}
+
+/*
+ ** InvitationDecline
+ */
+message InvitationDeclineRequest {
+  uint64 invitation_id = 1;
+}
+message InvitationDeclineResponse {}
+
+/*
+ ** InvitationSas
+ */
+message InvitationSasRequest {
+  uint64 invitation_id = 1;
+  string sas = 2;
+}
+message InvitationSasResponse {}
+
+/*
+ ** InvitationDelete
+ */
+message InvitationDeleteRequest {
+  uint64 invitation_id = 1;
+}
+message InvitationDeleteResponse {}

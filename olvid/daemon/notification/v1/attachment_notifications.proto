@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package olvid.daemon.notification.v1;
+
+import "olvid/daemon/datatypes/v1/attachment.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** AttachmentReceived
+ */
+message SubscribeToAttachmentReceivedNotification {}
+message AttachmentReceivedNotification {
+  datatypes.v1.Attachment attachment = 1;
+}
+
+/*
+ ** AttachmentUploaded
+ */
+message SubscribeToAttachmentUploadedNotification {}
+message AttachmentUploadedNotification {
+  datatypes.v1.Attachment attachment = 1;
+}

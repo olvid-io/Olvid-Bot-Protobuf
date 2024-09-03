@@ -1,0 +1,154 @@
+syntax = "proto3";
+
+package olvid.daemon.datatypes.v1;
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = false;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+message Group {
+  enum Type {
+    TYPE_UNSPECIFIED = 0;
+    TYPE_STANDARD = 1;
+    TYPE_CONTROLLED = 2;
+    TYPE_READ_ONLY = 3;
+    TYPE_ADVANCED = 4;
+  }
+
+  message AdvancedConfiguration {
+    enum RemoteDelete {
+      REMOTE_DELETE_UNSPECIFIED = 0;
+      REMOTE_DELETE_NOBODY = 1;
+      REMOTE_DELETE_ADMINS = 2;
+      REMOTE_DELETE_EVERYONE = 3;
+    }
+
+    bool read_only = 1;
+    RemoteDelete remote_delete = 2;
+  }
+
+  uint64 id = 1;
+  Type type = 2;
+  optional AdvancedConfiguration advanced_configuration = 3; // only set if group.type is TYPE_ADVANCED
+  GroupMemberPermissions own_permissions = 4; // your permissions in this group
+  repeated GroupMember members = 5;
+  repeated PendingGroupMember pending_members = 6;
+  bool update_in_progress = 7; // deprecated ?
+  bool keycloak_managed = 8;
+  // group details
+  string name = 9;
+  string description = 10;
+  bool has_a_photo = 11;
+}
+
+message GroupMember {
+  uint64 contact_id = 1;
+  GroupMemberPermissions permissions = 2;
+}
+
+message PendingGroupMember {
+  uint64 pending_member_id = 1;
+  uint64 contact_id = 2; // set to 0 if not in your contacts
+  string display_name = 3;
+  bool declined = 4;
+  GroupMemberPermissions permissions = 5;
+}
+
+message GroupMemberPermissions {
+  bool admin = 1;
+  bool remote_delete_anything = 2;
+  bool edit_or_remote_delete_own_messages = 3;
+  bool change_settings = 4;
+  bool send_message = 5;
+}
+
+message GroupFilter {
+  enum Empty {
+    EMPTY_UNSPECIFIED = 0;
+    EMPTY_IS = 2;
+    EMPTY_IS_NOT = 1;
+  }
+  enum Keycloak {
+    KEYCLOAK_UNSPECIFIED = 0;
+    KEYCLOAK_IS = 2;
+    KEYCLOAK_IS_NOT = 1;
+  }
+  enum Photo {
+    PHOTO_UNSPECIFIED = 0;
+    PHOTO_HAS = 2;
+    PHOTO_HAS_NOT = 1;
+  }
+
+  optional Group.Type type = 1;
+  optional Empty empty = 2;
+  optional Photo photo = 3;
+  optional Keycloak keycloak = 4;
+
+  optional GroupPermissionFilter own_permissions_filter = 5; // your permission
+
+  optional string name_search = 6;
+  optional string description_search = 7;
+
+  repeated GroupMemberFilter member_filters = 8;
+  repeated PendingGroupMemberFilter pending_member_filters = 9;
+}
+
+message GroupMemberFilter {
+  optional uint64 contact_id = 1;
+  optional GroupPermissionFilter permissions = 5;
+}
+
+message PendingGroupMemberFilter {
+  enum Contact {
+    CONTACT_UNSPECIFIED = 0;
+    CONTACT_IS = 1;
+    CONTACT_IS_NOT = 2;
+  }
+
+  enum Declined {
+    DECLINED_UNSPECIFIED = 0;
+    DECLINED_HAS = 1;
+    DECLINED_HAS_NOT = 2;
+  }
+
+  optional Contact is_contact = 1;
+  optional Declined has_declined = 2;
+  optional uint64 contact_id = 3;
+
+  optional string display_name_search = 4;
+  optional GroupPermissionFilter permissions = 5;
+}
+
+message GroupPermissionFilter {
+  enum Admin {
+    ADMIN_UNSPECIFIED = 0;
+    ADMIN_IS = 1;
+    ADMIN_IS_NOT = 2;
+  }
+  enum SendMessage {
+    SEND_MESSAGE_UNSPECIFIED = 0;
+    SEND_MESSAGE_CAN = 1;
+    SEND_MESSAGE_CANNOT = 2;
+  }
+  enum RemoteDeleteAnything {
+    REMOTE_DELETE_ANYTHING_UNSPECIFIED = 0;
+    REMOTE_DELETE_ANYTHING_CAN = 1;
+    REMOTE_DELETE_ANYTHING_CANNOT = 2;
+  }
+  enum EditOrRemoteDeleteOwnMessage {
+    EDIT_OR_REMOTE_DELETE_OWN_MESSAGE_UNSPECIFIED = 0;
+    EDIT_OR_REMOTE_DELETE_OWN_MESSAGE_CAN = 1;
+    EDIT_OR_REMOTE_DELETE_OWN_MESSAGE_CANNOT = 2;
+  }
+  enum ChangeSettings {
+    CHANGE_SETTINGS_UNSPECIFIED = 0;
+    CHANGE_SETTINGS_CAN = 1;
+    CHANGE_SETTINGS_CANNOT = 2;
+  }
+
+  optional Admin admin = 1;
+  optional SendMessage send_message = 2;
+  optional RemoteDeleteAnything remote_delete_anything = 3;
+  optional EditOrRemoteDeleteOwnMessage edit_or_remote_delete_own_messages = 4;
+  optional ChangeSettings change_settings = 5;
+}

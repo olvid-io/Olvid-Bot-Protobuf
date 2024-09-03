@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package olvid.daemon.command.v1;
+
+import "olvid/daemon/datatypes/v1/storage.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** Global storage api: store key value elements in storage. They will be restored as is during backup restoration.
+ */
+/*
+ ** StorageList
+ */
+message StorageListRequest {
+  optional datatypes.v1.StorageElementFilter filter = 1;
+}
+message StorageListResponse {
+  repeated datatypes.v1.StorageElement elements = 1;
+}
+
+/*
+ ** StorageGet
+ */
+message StorageGetRequest {
+  string key = 1;
+}
+message StorageGetResponse {
+  string value = 1;
+}
+
+/*
+ ** StorageSet
+ */
+message StorageSetRequest {
+  string key = 1;
+  string value = 2;
+}
+message StorageSetResponse {
+  string previous_value = 1;
+}
+
+/*
+ ** StorageUnset
+ */
+message StorageUnsetRequest {
+  string key = 1;
+}
+message StorageUnsetResponse {
+  string previous_value = 1;
+}
+
+/*
+ ** Discussion storage api: store elements in daemon database, associated with a discussion id. They will remain associated to this discussion if you restore a backup.
+ */
+/*
+ ** DiscussionStorageList
+ */
+message DiscussionStorageListRequest {
+  uint64 discussion_id = 1;
+  optional datatypes.v1.StorageElementFilter filter = 2;
+}
+
+message DiscussionStorageListResponse {
+  repeated datatypes.v1.StorageElement elements = 1;
+}
+
+/*
+ ** DiscussionStorageGet
+ */
+message DiscussionStorageGetRequest {
+  uint64 discussion_id = 1;
+  string key = 2;
+}
+message DiscussionStorageGetResponse {
+  string value = 1;
+}
+
+/*
+ ** DiscussionStorageSet
+ */
+message DiscussionStorageSetRequest {
+  uint64 discussion_id = 1;
+  string key = 2;
+  string value = 3;
+}
+message DiscussionStorageSetResponse {
+  string previous_value = 1;
+}
+
+/*
+ ** DiscussionStorageUnset
+ */
+message DiscussionStorageUnsetRequest {
+  uint64 discussion_id = 1;
+  string key = 2;
+}
+message DiscussionStorageUnsetResponse {
+  string previous_value = 1;
+}

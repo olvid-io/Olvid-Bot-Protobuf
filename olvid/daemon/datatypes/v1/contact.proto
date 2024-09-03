@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package olvid.daemon.datatypes.v1;
+
+import "olvid/daemon/datatypes/v1/identity.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = false;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+message Contact {
+  uint64 id = 1;
+  string display_name = 2;
+  datatypes.v1.IdentityDetails details = 3;
+  uint32 established_channel_count = 4;
+  uint32 device_count = 5;
+  bool has_one_to_one_discussion = 6;
+  bool has_a_photo = 7;
+  bool keycloak_managed = 8;
+}
+
+message ContactFilter {
+  enum OneToOne {
+    ONE_TO_ONE_UNSPECIFIED = 0;
+    ONE_TO_ONE_IS = 1;
+    ONE_TO_ONE_IS_NOT = 2;
+  }
+
+  enum Photo {
+    PHOTO_UNSPECIFIED = 0;
+    PHOTO_HAS = 1;
+    PHOTO_HAS_NOT = 2;
+  }
+
+  enum Keycloak {
+    KEYCLOAK_UNSPECIFIED = 0;
+    KEYCLOAK_MANAGED = 1;
+    KEYCLOAK_NOT_MANAGED = 2;
+  }
+
+  optional OneToOne one_to_one = 1;
+  optional Photo photo = 2;
+  optional Keycloak keycloak = 3;
+
+  optional string display_name_search = 4;
+  optional IdentityDetails details_search = 5;
+}

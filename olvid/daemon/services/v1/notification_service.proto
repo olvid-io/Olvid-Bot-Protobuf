@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package olvid.daemon.services.v1;
+
+import "olvid/daemon/notification/v1/attachment_notifications.proto";
+import "olvid/daemon/notification/v1/contact_notifications.proto";
+import "olvid/daemon/notification/v1/discussion_notifications.proto";
+import "olvid/daemon/notification/v1/group_notifications.proto";
+//import "olvid/daemon/notification/v1/identity_notifications.proto";
+import "olvid/daemon/notification/v1/invitation_notifications.proto";
+import "olvid/daemon/notification/v1/message_notifications.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+// must be for admin only
+//// Identity
+//service IdentityNotificationService {
+//	rpc IdentityCreated(notification.v1.SubscribeToIdentityCreatedNotification) returns (stream notification.v1.IdentityCreatedNotification) {}
+//	rpc IdentityDeleted(notification.v1.SubscribeToIdentityDeletedNotification) returns (stream notification.v1.IdentityDeletedNotification) {}
+//	rpc IdentityDetailsUpdated(notification.v1.SubscribeToIdentityDetailsUpdatedNotification) returns (stream notification.v1.IdentityDetailsUpdatedNotification) {}
+//}
+
+// Invitation
+service InvitationNotificationService {
+  rpc InvitationReceived(notification.v1.SubscribeToInvitationReceivedNotification) returns (stream notification.v1.InvitationReceivedNotification);
+  rpc InvitationSent(notification.v1.SubscribeToInvitationSentNotification) returns (stream notification.v1.InvitationSentNotification);
+  rpc InvitationDeleted(notification.v1.SubscribeToInvitationDeletedNotification) returns (stream notification.v1.InvitationDeletedNotification);
+  rpc InvitationUpdated(notification.v1.SubscribeToInvitationUpdatedNotification) returns (stream notification.v1.InvitationUpdatedNotification);
+}
+
+// Contact
+service ContactNotificationService {
+  rpc ContactNew(notification.v1.SubscribeToContactNewNotification) returns (stream notification.v1.ContactNewNotification) {}
+  rpc ContactDeleted(notification.v1.SubscribeToContactDeletedNotification) returns (stream notification.v1.ContactDeletedNotification) {}
+  rpc ContactDetailsUpdated(notification.v1.SubscribeToContactDetailsUpdatedNotification) returns (stream notification.v1.ContactDetailsUpdatedNotification) {}
+}
+
+// Group
+service GroupNotificationService {
+  rpc GroupNew(notification.v1.SubscribeToGroupNewNotification) returns (stream notification.v1.GroupNewNotification) {}
+  rpc GroupDeleted(notification.v1.SubscribeToGroupDeletedNotification) returns (stream notification.v1.GroupDeletedNotification) {}
+  rpc GroupNameUpdated(notification.v1.SubscribeToGroupNameUpdatedNotification) returns (stream notification.v1.GroupNameUpdatedNotification) {}
+  rpc GroupDescriptionUpdated(notification.v1.SubscribeToGroupDescriptionUpdatedNotification) returns (stream notification.v1.GroupDescriptionUpdatedNotification) {}
+  rpc GroupPendingMemberAdded(notification.v1.SubscribeToGroupPendingMemberAddedNotification) returns (stream notification.v1.GroupPendingMemberAddedNotification) {}
+  rpc GroupPendingMemberRemoved(notification.v1.SubscribeToGroupPendingMemberRemovedNotification) returns (stream notification.v1.GroupPendingMemberRemovedNotification) {}
+  rpc GroupMemberJoined(notification.v1.SubscribeToGroupMemberJoinedNotification) returns (stream notification.v1.GroupMemberJoinedNotification) {}
+  rpc GroupMemberLeft(notification.v1.SubscribeToGroupMemberLeftNotification) returns (stream notification.v1.GroupMemberLeftNotification) {}
+  rpc GroupOwnPermissionsUpdated(notification.v1.SubscribeToGroupOwnPermissionsUpdatedNotification) returns (stream notification.v1.GroupOwnPermissionsUpdatedNotification) {}
+  rpc GroupMemberPermissionsUpdated(notification.v1.SubscribeToGroupMemberPermissionsUpdatedNotification) returns (stream notification.v1.GroupMemberPermissionsUpdatedNotification) {}
+  rpc GroupUpdateInProgress(notification.v1.SubscribeToGroupUpdateInProgressNotification) returns (stream notification.v1.GroupUpdateInProgressNotification) {}
+  rpc GroupUpdateFinished(notification.v1.SubscribeToGroupUpdateFinishedNotification) returns (stream notification.v1.GroupUpdateFinishedNotification) {}
+}
+
+// Discussion
+service DiscussionNotificationService {
+  rpc DiscussionNew(notification.v1.SubscribeToDiscussionNewNotification) returns (stream notification.v1.DiscussionNewNotification) {}
+  rpc DiscussionLocked(notification.v1.SubscribeToDiscussionLockedNotification) returns (stream notification.v1.DiscussionLockedNotification) {}
+  rpc DiscussionTitleUpdated(notification.v1.SubscribeToDiscussionTitleUpdatedNotification) returns (stream notification.v1.DiscussionTitleUpdatedNotification) {}
+  rpc DiscussionSettingsUpdated(notification.v1.SubscribeToDiscussionSettingsUpdatedNotification) returns (stream notification.v1.DiscussionSettingsUpdatedNotification) {}
+}
+
+// Message
+service MessageNotificationService {
+  rpc MessageReceived(notification.v1.SubscribeToMessageReceivedNotification) returns (stream notification.v1.MessageReceivedNotification) {}
+  rpc MessageSent(notification.v1.SubscribeToMessageSentNotification) returns (stream notification.v1.MessageSentNotification) {}
+  rpc MessageDeleted(notification.v1.SubscribeToMessageDeletedNotification) returns (stream notification.v1.MessageDeletedNotification) {}
+  // datatypes.v1.Message updates
+  rpc MessageBodyUpdated(notification.v1.SubscribeToMessageBodyUpdatedNotification) returns (stream notification.v1.MessageBodyUpdatedNotification) {}
+  rpc MessageUploaded(notification.v1.SubscribeToMessageUploadedNotification) returns (stream notification.v1.MessageUploadedNotification) {}
+  rpc MessageDelivered(notification.v1.SubscribeToMessageDeliveredNotification) returns (stream notification.v1.MessageDeliveredNotification) {}
+  rpc MessageRead(notification.v1.SubscribeToMessageReadNotification) returns (stream notification.v1.MessageReadNotification) {}
+  // location message
+  rpc MessageLocationReceived(notification.v1.SubscribeToMessageLocationReceivedNotification) returns (stream notification.v1.MessageLocationReceivedNotification) {}
+  rpc MessageLocationSharingStart(notification.v1.SubscribeToMessageLocationSharingStartNotification) returns (stream notification.v1.MessageLocationSharingStartNotification) {}
+  rpc MessageLocationSharingUpdate(notification.v1.SubscribeToMessageLocationSharingUpdateNotification) returns (stream notification.v1.MessageLocationSharingUpdateNotification) {}
+  rpc MessageLocationSharingEnd(notification.v1.SubscribeToMessageLocationSharingEndNotification) returns (stream notification.v1.MessageLocationSharingEndNotification) {}
+  // datatypes.v1.Message reactions
+  rpc MessageReactionAdded(notification.v1.SubscribeToMessageReactionAddedNotification) returns (stream notification.v1.MessageReactionAddedNotification) {}
+  rpc MessageReactionUpdated(notification.v1.SubscribeToMessageReactionUpdatedNotification) returns (stream notification.v1.MessageReactionUpdatedNotification) {}
+  rpc MessageReactionRemoved(notification.v1.SubscribeToMessageReactionRemovedNotification) returns (stream notification.v1.MessageReactionRemovedNotification) {}
+}
+
+// Attachment
+service AttachmentNotificationService {
+  rpc AttachmentReceived(notification.v1.SubscribeToAttachmentReceivedNotification) returns (stream notification.v1.AttachmentReceivedNotification) {}
+  rpc AttachmentUploaded(notification.v1.SubscribeToAttachmentUploadedNotification) returns (stream notification.v1.AttachmentUploadedNotification) {}
+}

@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package olvid.daemon.command.v1;
+
+import "olvid/daemon/datatypes/v1/attachment.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** AttachmentList return all attachments for current identity
+ */
+message AttachmentListRequest {
+  optional datatypes.v1.AttachmentFilter filter = 1;
+}
+message AttachmentListResponse {
+  repeated datatypes.v1.Attachment attachments = 1;
+}
+
+/*
+ ** AttachmentGet
+ */
+message AttachmentGetRequest {
+  datatypes.v1.AttachmentId attachment_id = 1;
+}
+message AttachmentGetResponse {
+  datatypes.v1.Attachment attachment = 1;
+}
+
+/*
+ ** AttachmentDelete
+ */
+message AttachmentDeleteRequest {
+  datatypes.v1.AttachmentId attachment_id = 1;
+  optional bool delete_everywhere = 2;
+}
+message AttachmentDeleteResponse {}
+
+/*
+ ** AttachmentDownload
+ */
+message AttachmentDownloadRequest {
+  datatypes.v1.AttachmentId attachment_id = 1;
+}
+message AttachmentDownloadResponse {
+  bytes chunk = 1;
+}

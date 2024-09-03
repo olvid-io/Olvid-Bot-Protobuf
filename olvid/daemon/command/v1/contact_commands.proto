@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package olvid.daemon.command.v1;
+
+import "olvid/daemon/datatypes/v1/contact.proto";
+import "olvid/daemon/datatypes/v1/invitation.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** ContactList
+ */
+message ContactListRequest {
+  optional datatypes.v1.ContactFilter filter = 1;
+}
+message ContactListResponse {
+  repeated datatypes.v1.Contact contacts = 1;
+}
+
+/*
+ ** ContactGet
+ */
+message ContactGetRequest {
+  uint64 contact_id = 1;
+}
+message ContactGetResponse {
+  datatypes.v1.Contact contact = 1;
+}
+
+/*
+ ** ContactDelete
+ */
+message ContactDeleteRequest {
+  uint64 contact_id = 1;
+}
+message ContactDeleteResponse {}
+
+/*
+ ** ContactIntroduction
+ */
+message ContactIntroductionRequest {
+  uint64 first_contact_id = 1;
+  uint64 second_contact_id = 2;
+}
+message ContactIntroductionResponse {}
+
+/*
+ ** ContactInviteToOneToOneDiscussion
+ */
+message ContactInviteToOneToOneDiscussionRequest {
+  uint64 contact_id = 1;
+}
+message ContactInviteToOneToOneDiscussionResponse {
+  datatypes.v1.Invitation invitation = 1;
+}
+
+/*
+ ** ContactDowngradeOneToOne
+ */
+message ContactDowngradeOneToOneDiscussionRequest {
+  uint64 contact_id = 1;
+}
+message ContactDowngradeOneToOneDiscussionResponse {}
+
+/*
+ ** ContactDownloadPhoto
+ */
+//message ContactDownloadPhotoRequest {
+//  uint64 contact_id = 1;
+//}
+//message ContactDownloadPhotoMetadata {
+//  string filename = 1;
+//  uint32 file_size = 2;
+//}
+//message ContactDownloadPhotoResponse {
+//  oneof payload {
+//    ContactDownloadPhotoMetadata metadata = 1;
+//    bytes chunk = 2;
+//  }
+//}

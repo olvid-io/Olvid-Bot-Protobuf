@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+package olvid.daemon.command.v1;
+
+import "olvid/daemon/datatypes/v1/attachment.proto";
+import "olvid/daemon/datatypes/v1/message.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** MessageList return all messages for current identity
+ */
+message MessageListRequest {
+  optional datatypes.v1.MessageFilter filter = 1;
+  optional bool unread = 2; // only list unread messages (messages that have never been listed or sent in a MessageReceived notification)
+}
+message MessageListResponse {
+  repeated datatypes.v1.Message messages = 1;
+}
+
+/*
+ ** MessageGet
+ */
+message MessageGetRequest {
+  datatypes.v1.MessageId message_id = 1;
+}
+message MessageGetResponse {
+  datatypes.v1.Message message = 1;
+}
+
+/*
+ ** MessageRefresh force download of messages on the server
+ */
+message MessageRefreshRequest {}
+message MessageRefreshResponse {}
+
+/*
+ ** MessageDelete
+ */
+message MessageDeleteRequest {
+  datatypes.v1.MessageId message_id = 1;
+  optional bool delete_everywhere = 2;
+}
+message MessageDeleteResponse {}
+
+/*
+ ** MessageSend
+ */
+message MessageSendRequest {
+  uint64 discussion_id = 1;
+  string body = 2;
+  optional datatypes.v1.MessageId reply_id = 3;
+  optional datatypes.v1.MessageEphemerality ephemerality = 4;
+  optional bool disable_link_preview = 5;
+}
+message MessageSendResponse {
+  datatypes.v1.Message message = 1;
+}
+
+/*
+ ** MessageSendWithAttachments
+ */
+message MessageSendWithAttachmentsRequest {
+  oneof request {
+    MessageSendWithAttachmentsRequestMetadata metadata = 1;
+    bytes payload = 2;
+    bool file_delimiter = 3;
+  }
+}
+message MessageSendWithAttachmentsRequestMetadata {
+  // message
+  uint64 discussion_id = 1;
+  optional string body = 2;
+  optional datatypes.v1.MessageId reply_id = 3;
+  optional datatypes.v1.MessageEphemerality ephemerality = 4;
+  optional bool disable_link_preview = 5;
+
+  // attachments
+  message File {
+    string filename = 1;
+    uint64 file_size = 2;
+  }
+  repeated File files = 10;
+}
+message MessageSendWithAttachmentsResponse {
+  datatypes.v1.Message message = 1;
+  repeated datatypes.v1.Attachment attachments = 2;
+}
+
+/*
+ ** MessageReact
+ */
+message MessageReactRequest {
+  .olvid.daemon.datatypes.v1.MessageId message_id = 1;
+  string reaction = 2;
+}
+message MessageReactResponse {}
+
+/*
+ ** MessageUpdateBody
+ */
+message MessageUpdateBodyRequest {
+  .olvid.daemon.datatypes.v1.MessageId message_id = 1;
+  string updated_body = 2;
+}
+message MessageUpdateBodyResponse {}
+
+/*
+ ** MessageSendVoip
+ */
+message MessageSendVoipRequest {
+  uint64 discussion_id = 1;
+}
+message MessageSendVoipResponse {}

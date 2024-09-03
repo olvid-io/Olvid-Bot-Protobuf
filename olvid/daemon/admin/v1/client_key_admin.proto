@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package olvid.daemon.admin.v1;
+
+import "olvid/daemon/datatypes/v1/client_key.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** ClientKeyList
+ */
+message ClientKeyListRequest {
+  optional datatypes.v1.ClientKeyFilter filter = 1;
+}
+message ClientKeyListResponse {
+  repeated datatypes.v1.ClientKey client_keys = 1;
+}
+
+/*
+ ** ClientKeyGet
+ */
+message ClientKeyGetRequest {
+  string client_key = 1;
+}
+message ClientKeyGetResponse {
+  datatypes.v1.ClientKey client_key = 1;
+}
+
+/*
+ ** ClientKeyNew create a new api key associated with a given identity
+ */
+message ClientKeyNewRequest {
+  string name = 1;
+  uint64 identity_id = 2; // specify 0 to create an admin api key
+}
+message ClientKeyNewResponse {
+  datatypes.v1.ClientKey client_key = 1;
+}
+
+/*
+ ** ClientKeyDelete
+ */
+message ClientKeyDeleteRequest {
+  string client_key = 1;
+}
+message ClientKeyDeleteResponse {}

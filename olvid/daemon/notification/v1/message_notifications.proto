@@ -1,0 +1,130 @@
+syntax = "proto3";
+
+package olvid.daemon.notification.v1;
+
+import "olvid/daemon/datatypes/v1/message.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** MessageReceived
+ */
+message SubscribeToMessageReceivedNotification {}
+message MessageReceivedNotification {
+  datatypes.v1.Message message = 1;
+}
+
+/*
+ ** MessageSent
+ */
+message SubscribeToMessageSentNotification {}
+message MessageSentNotification {
+  datatypes.v1.Message message = 1;
+}
+
+/*
+ ** MessageDeleted
+ */
+message SubscribeToMessageDeletedNotification {}
+message MessageDeletedNotification {
+  datatypes.v1.Message message = 1;
+}
+
+/*
+ ** MessageBodyUpdated
+ */
+message SubscribeToMessageBodyUpdatedNotification {}
+message MessageBodyUpdatedNotification {
+  datatypes.v1.Message message = 1;
+  string previous_body = 2;
+}
+
+// You cannot guarantee this notification will arrive when working with ephemeral message
+/*
+ ** MessageUploaded
+ */
+message SubscribeToMessageUploadedNotification {}
+message MessageUploadedNotification {
+  datatypes.v1.Message message = 1;
+}
+
+// You cannot guarantee this notification will arrive when working with ephemeral message
+/*
+ ** MessageDelivered
+ */
+message SubscribeToMessageDeliveredNotification {}
+message MessageDeliveredNotification {
+  datatypes.v1.Message message = 1;
+}
+
+// You cannot guarantee this notification will arrive when working with ephemeral message
+/*
+ ** MessageRead
+ */
+message SubscribeToMessageReadNotification {}
+message MessageReadNotification {
+  datatypes.v1.Message message = 1;
+}
+
+/*
+ ** MessageLocationReceived
+ */
+message SubscribeToMessageLocationReceivedNotification {}
+message MessageLocationReceivedNotification {
+  datatypes.v1.Message message = 1;
+}
+
+/*
+ ** MessageLocationSharingStart
+ */
+message SubscribeToMessageLocationSharingStartNotification {}
+message MessageLocationSharingStartNotification {
+  datatypes.v1.Message message = 1;
+}
+
+/*
+ ** MessageLocationSharingUpdate
+ */
+message SubscribeToMessageLocationSharingUpdateNotification {}
+message MessageLocationSharingUpdateNotification {
+  datatypes.v1.Message message = 1;
+  datatypes.v1.MessageLocation previous_location = 2;
+}
+
+/*
+ ** MessageLocationSharingEnd
+ */
+message SubscribeToMessageLocationSharingEndNotification {}
+message MessageLocationSharingEndNotification {
+  datatypes.v1.Message message = 1;
+}
+
+/*
+ ** MessageReactionAdded
+ */
+message SubscribeToMessageReactionAddedNotification {}
+message MessageReactionAddedNotification {
+  datatypes.v1.Message message = 1;
+  datatypes.v1.MessageReaction reaction = 2;
+}
+
+/*
+ ** MessageReactionUpdated
+ */
+message SubscribeToMessageReactionUpdatedNotification {}
+message MessageReactionUpdatedNotification {
+  datatypes.v1.Message message = 1;
+  datatypes.v1.MessageReaction reaction = 2;
+  datatypes.v1.MessageReaction previous_reaction = 3;
+}
+
+/*
+ ** MessageReactionRemoved
+ */
+message SubscribeToMessageReactionRemovedNotification {}
+message MessageReactionRemovedNotification {
+  datatypes.v1.Message message = 1;
+  datatypes.v1.MessageReaction reaction = 2;
+}

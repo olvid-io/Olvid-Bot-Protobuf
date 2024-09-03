@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package olvid.daemon.command.v1;
+
+import "olvid/daemon/datatypes/v1/discussion.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** DiscussionList
+ */
+message DiscussionListRequest {
+  optional datatypes.v1.DiscussionFilter filter = 1;
+}
+message DiscussionListResponse {
+  repeated datatypes.v1.Discussion discussions = 1;
+}
+
+/*
+ ** DiscussionGet
+ */
+message DiscussionGetRequest {
+  uint64 discussion_id = 1;
+}
+message DiscussionGetResponse {
+  datatypes.v1.Discussion discussion = 1;
+}
+
+/*
+ ** DiscussionGetByContact
+ */
+message DiscussionGetByContactRequest {
+  uint64 contact_id = 1;
+}
+message DiscussionGetByContactResponse {
+  datatypes.v1.Discussion discussion = 1;
+}
+
+/*
+ ** DiscussionGetByGroup
+ */
+message DiscussionGetByGroupRequest {
+  uint64 group_id = 1;
+}
+message DiscussionGetByGroupResponse {
+  datatypes.v1.Discussion discussion = 1;
+}
+
+/*
+ ** DiscussionEmpty
+ */
+message DiscussionEmptyRequest {
+  uint64 discussion_id = 1;
+  optional bool delete_everywhere = 2;
+}
+message DiscussionEmptyResponse {}
+
+/*
+ ** DiscussionSettingsGet
+ */
+message DiscussionSettingsGetRequest {
+  uint64 discussion_id = 1;
+}
+message DiscussionSettingsGetResponse {
+  datatypes.v1.DiscussionSettings settings = 1;
+}
+
+/*
+ ** DiscussionSettingsSet
+ */
+message DiscussionSettingsSetRequest {
+  datatypes.v1.DiscussionSettings settings = 1;
+}
+message DiscussionSettingsSetResponse {
+  datatypes.v1.DiscussionSettings new_settings = 1;
+}
+
+/*
+ ** DiscussionLockedList
+ */
+message DiscussionLockedListRequest {}
+message DiscussionLockedListResponse {
+  repeated datatypes.v1.Discussion discussions = 1;
+}
+
+/*
+ ** DiscussionLockedDelete
+ */
+message DiscussionLockedDeleteRequest {
+  uint64 discussion_id = 1;
+}
+message DiscussionLockedDeleteResponse {}

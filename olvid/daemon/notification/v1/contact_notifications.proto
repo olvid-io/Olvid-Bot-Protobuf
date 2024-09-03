@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package olvid.daemon.notification.v1;
+
+import "olvid/daemon/datatypes/v1/contact.proto";
+import "olvid/daemon/datatypes/v1/identity.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** ContactNew
+ */
+message SubscribeToContactNewNotification {}
+message ContactNewNotification {
+  datatypes.v1.Contact contact = 1;
+}
+
+/*
+ ** ContactDeleted
+ */
+message SubscribeToContactDeletedNotification {}
+message ContactDeletedNotification {
+  datatypes.v1.Contact contact = 1;
+}
+
+/*
+ ** ContactDetailsUpdated
+ */
+message SubscribeToContactDetailsUpdatedNotification {}
+message ContactDetailsUpdatedNotification {
+  datatypes.v1.Contact contact = 1;
+  datatypes.v1.IdentityDetails previous_details = 2;
+}

@@ -1,0 +1,118 @@
+syntax = "proto3";
+
+package olvid.daemon.datatypes.v1;
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = false;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+message MessageId {
+  enum Type {
+    TYPE_UNSPECIFIED = 0;
+    TYPE_INBOUND = 1;
+    TYPE_OUTBOUND = 2;
+  }
+  Type type = 1;
+  uint64 id = 2;
+}
+
+message Message {
+  MessageId id = 1;
+  uint64 discussion_id = 2;
+  uint64 sender_id = 3; // 0 if you sent the message
+  string body = 4;
+  double sort_index = 5;
+  uint64 timestamp = 6;
+  uint64 attachments_count = 7;
+  optional MessageId replied_message_id = 8;
+  optional MessageLocation message_location = 10;
+  repeated MessageReaction reactions = 11;
+}
+
+message MessageEphemerality {
+  bool read_once = 1;
+  uint64 existence_duration = 2; // seconds
+  uint64 visibility_duration = 3; // seconds
+}
+
+message MessageReaction {
+  uint64 contact_id = 1; // id == 0 if own reaction
+  string reaction = 2;
+  uint64 timestamp = 3;
+}
+
+message MessageLocation {
+  enum LocationType {
+    LOCATION_TYPE_UNSPECIFIED = 0;
+    LOCATION_TYPE_SEND = 1;
+    LOCATION_TYPE_SHARING = 2;
+    LOCATION_TYPE_SHARING_FINISHED = 3;
+  }
+
+  LocationType type = 1;
+  uint64 timestamp = 2;
+  double latitude = 3;
+  double longitude = 4;
+  optional double altitude = 5;
+  optional double precision = 6;
+  optional string address = 7;
+}
+
+message MessageFilter {
+  enum Attachment {
+    ATTACHMENT_UNSPECIFIED = 0;
+    ATTACHMENT_HAVE = 1;
+    ATTACHMENT_HAVE_NOT = 2;
+    // currently not implementable
+    //    ATTACHMENT_HAVE_IMAGE = 3;
+    //    ATTACHMENT_HAVE_VIDEO = 4;
+    //    ATTACHMENT_HAVE_IMAGE_VIDEO = 5;
+    //    ATTACHMENT_HAVE_AUDIO = 6;
+  }
+
+  enum Location {
+    LOCATION_UNSPECIFIED = 0;
+    LOCATION_HAVE = 1;
+    LOCATION_HAVE_NOT = 2;
+    LOCATION_IS_SEND = 3;
+    LOCATION_IS_SHARING = 5;
+    LOCATION_IS_SHARING_FINISHED = 6;
+  }
+
+  enum Reaction {
+    REACTION_UNSPECIFIED = 0;
+    REACTION_HAS = 1;
+    REACTION_HAS_NOT = 2;
+  }
+
+  // sender and recipient
+  optional datatypes.v1.MessageId.Type type = 1;
+  optional uint64 discussion_id = 2;
+  optional uint64 sender_contact_id = 3;
+
+  // content
+  optional string body_search = 5;
+  optional datatypes.v1.MessageFilter.Attachment attachment = 6;
+  optional datatypes.v1.MessageFilter.Location location = 7;
+  optional uint64 min_timestamp = 8;
+  optional uint64 max_timestamp = 9;
+
+  // reactions
+  optional Reaction reaction = 10;
+  repeated ReactionFilter reactions_filter = 11;
+
+  // message reply
+  oneof reply {
+    bool reply_to_a_message = 13;
+    bool do_not_reply_to_a_message = 14;
+    datatypes.v1.MessageId replied_message_id = 15;
+  }
+}
+
+message ReactionFilter {
+  oneof reacted_by {
+    bool reacted_by_me = 10;
+    uint64 reacted_by_contact_id = 11;
+  }
+  optional string reaction = 12; // contains this reaction emoji (combined with reacted_by parameter)
+}

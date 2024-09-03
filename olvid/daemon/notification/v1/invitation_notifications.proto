@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package olvid.daemon.notification.v1;
+
+import "olvid/daemon/datatypes/v1/invitation.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** InvitationReceived
+ */
+message SubscribeToInvitationReceivedNotification {}
+message InvitationReceivedNotification {
+  datatypes.v1.Invitation invitation = 1;
+}
+
+/*
+ ** InvitationSent
+ */
+message SubscribeToInvitationSentNotification {}
+message InvitationSentNotification {
+  datatypes.v1.Invitation invitation = 1;
+}
+
+/*
+ ** InvitationDeleted
+ */
+message SubscribeToInvitationDeletedNotification {}
+message InvitationDeletedNotification {
+  datatypes.v1.Invitation invitation = 1;
+}
+
+/*
+ ** InvitationUpdated
+ */
+message SubscribeToInvitationUpdatedNotification {}
+message InvitationUpdatedNotification {
+  datatypes.v1.Invitation invitation = 1;
+  datatypes.v1.Invitation.Status previous_invitation_status = 2;
+}

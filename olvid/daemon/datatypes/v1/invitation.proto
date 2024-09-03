@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package olvid.daemon.datatypes.v1;
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = false;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+message Invitation {
+  enum Status {
+    STATUS_UNSPECIFIED = 0;
+    STATUS_INVITATION_WAIT_YOU_TO_ACCEPT = 1;
+    STATUS_INVITATION_WAIT_IT_TO_ACCEPT = 2;
+    STATUS_INVITATION_STATUS_IN_PROGRESS = 3;
+    STATUS_INVITATION_WAIT_YOU_FOR_SAS_EXCHANGE = 4;
+    STATUS_INVITATION_WAIT_IT_FOR_SAS_EXCHANGE = 5;
+    STATUS_INTRODUCTION_WAIT_IT_TO_ACCEPT = 7;
+    STATUS_INTRODUCTION_WAIT_YOU_TO_ACCEPT = 8;
+    STATUS_ONE_TO_ONE_INVITATION_WAIT_IT_TO_ACCEPT = 9;
+    STATUS_ONE_TO_ONE_INVITATION_WAIT_YOU_TO_ACCEPT = 10;
+    STATUS_GROUP_INVITATION_WAIT_YOU_TO_ACCEPT = 11;
+    STATUS_GROUP_INVITATION_FROZEN = 12;
+  }
+
+  uint64 id = 1;
+  Status status = 2;
+  string display_name = 3;
+  uint64 timestamp = 4;
+  string sas = 5;
+}
+
+message InvitationFilter {
+  enum Type {
+    TYPE_UNSPECIFIED = 0;
+    TYPE_INVITATION = 1;
+    TYPE_INTRODUCTION = 2;
+    TYPE_GROUP = 3;
+    TYPE_ONE_TO_ONE = 4;
+  }
+
+  optional Invitation.Status status = 1;
+  optional Type type = 2;
+  optional string display_name_search = 3;
+  optional uint64 min_timestamp = 4;
+  optional uint64 max_timestamp = 5;
+}

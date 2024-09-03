@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package olvid.daemon.notification.v1;
+
+import "olvid/daemon/datatypes/v1/identity.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** IdentityCreated
+ */
+message SubscribeToIdentityCreatedNotification {}
+message IdentityCreatedNotification {
+  datatypes.v1.Identity identity = 1;
+}
+
+/*
+ ** IdentityDeleted
+ */
+message SubscribeToIdentityDeletedNotification {}
+message IdentityDeletedNotification {
+  datatypes.v1.Identity identity = 1;
+}
+
+/*
+ ** IdentityUpdated
+ */
+message SubscribeToIdentityUpdatedNotification {}
+message IdentityDetailsUpdatedNotification {
+  datatypes.v1.Identity identity = 1;
+  datatypes.v1.IdentityDetails previous_details = 2;
+}

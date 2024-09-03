@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package olvid.daemon.notification.v1;
+
+import "olvid/daemon/datatypes/v1/discussion.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** DiscussionNew
+ */
+message SubscribeToDiscussionNewNotification {}
+message DiscussionNewNotification {
+  datatypes.v1.Discussion discussion = 1;
+}
+
+/*
+ ** DiscussionLocked
+ */
+message SubscribeToDiscussionLockedNotification {}
+message DiscussionLockedNotification {
+  datatypes.v1.Discussion discussion = 1;
+}
+
+/*
+ ** DiscussionTitleUpdated
+ */
+message SubscribeToDiscussionTitleUpdatedNotification {}
+message DiscussionTitleUpdatedNotification {
+  datatypes.v1.Discussion discussion = 1;
+  string previous_title = 2;
+}
+
+/*
+ ** DiscussionSettingsUpdated
+ */
+message SubscribeToDiscussionSettingsUpdatedNotification {}
+message DiscussionSettingsUpdatedNotification {
+  datatypes.v1.DiscussionSettings new_settings = 1;
+  datatypes.v1.DiscussionSettings previous_settings = 2;
+}

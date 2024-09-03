@@ -1,0 +1,146 @@
+syntax = "proto3";
+
+package olvid.daemon.command.v1;
+
+import "olvid/daemon/datatypes/v1/group.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** GroupList return all groups for current identity
+ */
+message GroupListRequest {
+  optional datatypes.v1.GroupFilter filter = 1;
+}
+message GroupListResponse {
+  repeated datatypes.v1.Group groups = 1;
+}
+
+/*
+ ** GroupGet
+ */
+message GroupGetRequest {
+  uint64 group_id = 1;
+}
+message GroupGetResponse {
+  datatypes.v1.Group group = 1;
+}
+
+/*
+ ** GroupNewStandardGroup
+ */
+message GroupNewStandardGroupRequest {
+  optional string name = 1;
+  optional string description = 2;
+  repeated uint64 admin_contact_ids = 3;
+}
+message GroupNewStandardGroupResponse {
+  datatypes.v1.Group group = 1;
+}
+
+/*
+ ** GroupNewControlledGroup
+ */
+message GroupNewControlledGroupRequest {
+  optional string name = 1;
+  optional string description = 2;
+  repeated uint64 admin_contact_ids = 3;
+  repeated uint64 contact_ids = 4;
+}
+message GroupNewControlledGroupResponse {
+  datatypes.v1.Group group = 1;
+}
+
+/*
+ ** GroupNewReadOnlyGroup
+ */
+message GroupNewReadOnlyGroupRequest {
+  optional string name = 1;
+  optional string description = 2;
+  repeated uint64 admin_contact_ids = 3;
+  repeated uint64 contact_ids = 4;
+}
+message GroupNewReadOnlyGroupResponse {
+  datatypes.v1.Group group = 1;
+}
+
+/*
+ ** GroupNewAdvancedGroup
+ */
+message GroupNewAdvancedGroupRequest {
+  optional string name = 1;
+  optional string description = 2;
+  optional datatypes.v1.Group.AdvancedConfiguration advanced_configuration = 3;
+  repeated datatypes.v1.GroupMember members = 4;
+}
+message GroupNewAdvancedGroupResponse {
+  datatypes.v1.Group group = 1;
+}
+
+/*
+ ** GroupDisband
+ */
+message GroupDisbandRequest {
+  uint64 group_id = 1;
+}
+message GroupDisbandResponse {
+  datatypes.v1.Group group = 1;
+}
+
+/*
+ ** GroupLeave
+ */
+message GroupLeaveRequest {
+  uint64 group_id = 1;
+}
+message GroupLeaveResponse {
+  datatypes.v1.Group group = 1;
+}
+
+/*
+ ** GroupUpdate: update a group by modifying a Group object retrieved from groupList of groupGet.
+ ** Supported modifications:
+ ** - Add a member: create a new GroupMember and add it to members field
+ ** - Remove a member: remove associated GroupMember from members field
+ ** - Remove a pending member: remove associated GroupPendingMember from pendingMembers field
+ ** - Update (pending) member permissions: update permissions in permissions field in GroupMember or GroupPendingMember
+ ** - Update group name: modify name field
+ ** - Update group description: modify description field
+ ** Every other modifications will be ignored. You must keep groupId field properly set.
+ */
+message GroupUpdateRequest {
+  datatypes.v1.Group group = 1;
+}
+message GroupUpdateResponse {
+  datatypes.v1.Group group = 1;
+}
+
+/*
+ ** GroupUnsetPhoto
+ */
+message GroupUnsetPhotoRequest {
+  uint64 group_id = 1;
+}
+message GroupUnsetPhotoResponse {
+  datatypes.v1.Group group = 1;
+}
+
+/*
+ ** GroupSetPhoto
+ */
+message GroupSetPhotoRequestMetadata {
+  uint64 group_id = 1;
+  string filename = 2;
+  uint64 file_size = 3;
+}
+message GroupSetPhotoRequest {
+  oneof request {
+    GroupSetPhotoRequestMetadata metadata = 1;
+    bytes payload = 2;
+  }
+}
+message GroupSetPhotoResponse {
+  datatypes.v1.Group group = 1;
+}

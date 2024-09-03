@@ -1,0 +1,119 @@
+syntax = "proto3";
+
+package olvid.daemon.notification.v1;
+
+import "olvid/daemon/datatypes/v1/group.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** GroupNew
+ */
+message SubscribeToGroupNewNotification {}
+message GroupNewNotification {
+  datatypes.v1.Group group = 1;
+}
+
+/*
+ ** GroupDeleted
+ */
+message SubscribeToGroupDeletedNotification {}
+message GroupDeletedNotification {
+  datatypes.v1.Group group = 1;
+}
+
+/*
+ ** GroupNameUpdated
+ */
+message SubscribeToGroupNameUpdatedNotification {}
+message GroupNameUpdatedNotification {
+  datatypes.v1.Group group = 1;
+  string previous_name = 2;
+}
+
+/*
+ ** GroupDescriptionUpdated
+ */
+message SubscribeToGroupDescriptionUpdatedNotification {}
+message GroupDescriptionUpdatedNotification {
+  datatypes.v1.Group group = 1;
+  string previous_description = 2;
+}
+
+/*
+ ** GroupPendingMemberAdded
+ */
+message SubscribeToGroupPendingMemberAddedNotification {}
+message GroupPendingMemberAddedNotification {
+  datatypes.v1.Group group = 1;
+  datatypes.v1.PendingGroupMember pending_member = 2;
+}
+
+/*
+ ** GroupPendingMemberRemoved
+ */
+message SubscribeToGroupPendingMemberRemovedNotification {}
+message GroupPendingMemberRemovedNotification {
+  datatypes.v1.Group group = 1;
+  datatypes.v1.PendingGroupMember pending_member = 2;
+}
+
+/*
+ ** GroupMemberJoined
+ */
+message SubscribeToGroupMemberJoinedNotification {}
+message GroupMemberJoinedNotification {
+  datatypes.v1.Group group = 1;
+  datatypes.v1.GroupMember member = 2;
+}
+
+/*
+ ** GroupMemberLeft
+ */
+message SubscribeToGroupMemberLeftNotification {}
+message GroupMemberLeftNotification {
+  datatypes.v1.Group group = 1;
+  datatypes.v1.GroupMember member = 2;
+}
+
+/*
+ ** GroupPermissionsUpdated
+ ** triggered when your permissions are updated
+ */
+message SubscribeToGroupOwnPermissionsUpdatedNotification {}
+message GroupOwnPermissionsUpdatedNotification {
+  datatypes.v1.Group group = 1;
+  datatypes.v1.GroupMemberPermissions permissions = 2;
+  datatypes.v1.GroupMemberPermissions previous_permissions = 3;
+}
+
+/*
+ ** GroupMemberPermissionsUpdated
+ ** triggered when permissions of a group member are updated
+ */
+message SubscribeToGroupMemberPermissionsUpdatedNotification {}
+message GroupMemberPermissionsUpdatedNotification {
+  datatypes.v1.Group group = 1;
+  datatypes.v1.GroupMember member = 2; // not set if your permissions were updated
+  datatypes.v1.GroupMemberPermissions previous_permissions = 3;
+}
+
+/*
+ ** GroupUpdateInProgress
+ */
+// deprecated
+message SubscribeToGroupUpdateInProgressNotification {}
+message GroupUpdateInProgressNotification {
+  uint64 group_id = 1;
+}
+
+/*
+ ** GroupUpdateFinished
+ */
+// deprecated
+message SubscribeToGroupUpdateFinishedNotification {}
+message GroupUpdateFinishedNotification {
+  uint64 group_id = 1;
+}

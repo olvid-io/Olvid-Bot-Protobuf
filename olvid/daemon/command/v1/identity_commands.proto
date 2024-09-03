@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package olvid.daemon.command.v1;
+
+import "olvid/daemon/datatypes/v1/identity.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** IdentityGet
+ */
+message IdentityGetRequest {}
+message IdentityGetResponse {
+  datatypes.v1.Identity identity = 1;
+}
+
+/*
+ ** IdentityUpdateDetails
+ */
+message IdentityUpdateDetailsRequest {
+  datatypes.v1.IdentityDetails new_details = 2;
+}
+message IdentityUpdateDetailsResponse {}
+
+/*
+ ** IdentityRemovePhoto
+ */
+message IdentityRemovePhotoRequest {}
+message IdentityRemovePhotoResponse {}
+
+/*
+ ** IdentitySetPhoto
+ */
+message IdentitySetPhotoRequestMetadata {
+  string filename = 1;
+  uint64 file_size = 2;
+}
+message IdentitySetPhotoRequest {
+  oneof request {
+    IdentitySetPhotoRequestMetadata metadata = 1;
+    bytes payload = 2;
+  }
+}
+message IdentitySetPhotoResponse {}
+
+/*
+ ** IdentityKeycloakBind
+ */
+message IdentityKeycloakBindRequest {
+  string configuration_link = 1;
+}
+message IdentityKeycloakBindResponse {} // binding is partially asynchronous, so we cannot send back updated identity
+
+/*
+ ** IdentityKeycloakUnbind
+ */
+message IdentityKeycloakUnbindRequest {}
+message IdentityKeycloakUnbindResponse {}
+
+/*
+ ** IdentitySetApiKey
+ */
+message IdentitySetApiKeyRequest {
+  string api_key = 1;
+}
+message IdentitySetApiKeyResponse {
+  datatypes.v1.Identity.ApiKey api_key = 1;
+}
+
+/*
+ ** IdentitySetConfigurationLink
+ */
+message IdentitySetConfigurationLinkRequest {
+  string configuration_link = 1;
+}
+message IdentitySetConfigurationLinkResponse {
+  datatypes.v1.Identity.ApiKey api_key = 1;
+}

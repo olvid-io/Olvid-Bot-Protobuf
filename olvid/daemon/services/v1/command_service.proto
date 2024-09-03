@@ -1,0 +1,117 @@
+syntax = "proto3";
+
+package olvid.daemon.services.v1;
+
+import "olvid/daemon/command/v1/attachment_commands.proto";
+import "olvid/daemon/command/v1/contact_commands.proto";
+import "olvid/daemon/command/v1/discussion_commands.proto";
+import "olvid/daemon/command/v1/group_commands.proto";
+import "olvid/daemon/command/v1/identity_commands.proto";
+import "olvid/daemon/command/v1/invitation_commands.proto";
+import "olvid/daemon/command/v1/message_commands.proto";
+import "olvid/daemon/command/v1/storage_commands.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+// Identity
+service IdentityCommandService {
+  rpc IdentityGet(command.v1.IdentityGetRequest) returns (command.v1.IdentityGetResponse) {}
+  rpc IdentityUpdateDetails(command.v1.IdentityUpdateDetailsRequest) returns (command.v1.IdentityUpdateDetailsResponse) {}
+  rpc IdentityRemovePhoto(command.v1.IdentityRemovePhotoRequest) returns (command.v1.IdentityRemovePhotoResponse) {}
+  rpc IdentitySetPhoto(stream command.v1.IdentitySetPhotoRequest) returns (command.v1.IdentitySetPhotoResponse) {}
+  rpc IdentityKeycloakBind(command.v1.IdentityKeycloakBindRequest) returns (command.v1.IdentityKeycloakBindResponse) {}
+  rpc IdentityKeycloakUnbind(command.v1.IdentityKeycloakUnbindRequest) returns (command.v1.IdentityKeycloakUnbindResponse) {}
+  rpc IdentitySetApiKey(command.v1.IdentitySetApiKeyRequest) returns (command.v1.IdentitySetApiKeyResponse) {}
+  rpc IdentitySetConfigurationLink(command.v1.IdentitySetConfigurationLinkRequest) returns (command.v1.IdentitySetConfigurationLinkResponse) {}
+}
+
+// Invitation
+service InvitationCommandService {
+  rpc InvitationList(command.v1.InvitationListRequest) returns (stream command.v1.InvitationListResponse) {}
+  rpc InvitationGet(command.v1.InvitationGetRequest) returns (command.v1.InvitationGetResponse) {}
+  rpc InvitationNew(command.v1.InvitationNewRequest) returns (command.v1.InvitationNewResponse) {}
+  rpc InvitationAccept(command.v1.InvitationAcceptRequest) returns (command.v1.InvitationAcceptResponse) {}
+  rpc InvitationDecline(command.v1.InvitationDeclineRequest) returns (command.v1.InvitationDeclineResponse) {}
+  rpc InvitationSas(command.v1.InvitationSasRequest) returns (command.v1.InvitationSasResponse) {}
+  rpc InvitationDelete(command.v1.InvitationDeleteRequest) returns (command.v1.InvitationDeleteResponse) {}
+}
+
+// Contact
+service ContactCommandService {
+  rpc ContactList(command.v1.ContactListRequest) returns (stream command.v1.ContactListResponse) {}
+  rpc ContactGet(command.v1.ContactGetRequest) returns (command.v1.ContactGetResponse) {}
+  rpc ContactDelete(command.v1.ContactDeleteRequest) returns (command.v1.ContactDeleteResponse) {}
+  rpc ContactIntroduction(command.v1.ContactIntroductionRequest) returns (command.v1.ContactIntroductionResponse) {}
+  //	rpc ContactDownloadPhoto(command.v1.ContactDownloadPhotoRequest) returns (stream command.v1.ContactDownloadPhotoResponse) {}
+  // collected contacts
+  rpc ContactInviteToOneToOneDiscussion(command.v1.ContactInviteToOneToOneDiscussionRequest) returns (command.v1.ContactInviteToOneToOneDiscussionResponse) {}
+  rpc ContactDowngradeOneToOneDiscussion(command.v1.ContactDowngradeOneToOneDiscussionRequest) returns (command.v1.ContactDowngradeOneToOneDiscussionResponse) {}
+}
+
+// Group
+service GroupCommandService {
+  rpc GroupList(command.v1.GroupListRequest) returns (stream command.v1.GroupListResponse) {}
+  rpc GroupGet(command.v1.GroupGetRequest) returns (command.v1.GroupGetResponse) {}
+  rpc GroupNewStandardGroup(command.v1.GroupNewStandardGroupRequest) returns (command.v1.GroupNewStandardGroupResponse) {}
+  rpc GroupNewControlledGroup(command.v1.GroupNewControlledGroupRequest) returns (command.v1.GroupNewControlledGroupResponse) {}
+  rpc GroupNewReadOnlyGroup(command.v1.GroupNewReadOnlyGroupRequest) returns (command.v1.GroupNewReadOnlyGroupResponse) {}
+  rpc GroupNewAdvancedGroup(command.v1.GroupNewAdvancedGroupRequest) returns (command.v1.GroupNewAdvancedGroupResponse) {}
+  rpc GroupDisband(command.v1.GroupDisbandRequest) returns (command.v1.GroupDisbandResponse) {}
+  rpc GroupLeave(command.v1.GroupLeaveRequest) returns (command.v1.GroupLeaveResponse) {}
+  rpc GroupUpdate(command.v1.GroupUpdateRequest) returns (command.v1.GroupUpdateResponse) {}
+  rpc GroupUnsetPhoto(command.v1.GroupUnsetPhotoRequest) returns (command.v1.GroupUnsetPhotoResponse) {}
+  rpc GroupSetPhoto(stream command.v1.GroupSetPhotoRequest) returns (command.v1.GroupSetPhotoResponse) {}
+}
+
+// Discussion
+service DiscussionCommandService {
+  rpc DiscussionList(command.v1.DiscussionListRequest) returns (stream command.v1.DiscussionListResponse) {}
+  rpc DiscussionGet(command.v1.DiscussionGetRequest) returns (command.v1.DiscussionGetResponse) {}
+  rpc DiscussionGetByContact(command.v1.DiscussionGetByContactRequest) returns (command.v1.DiscussionGetByContactResponse) {}
+  rpc DiscussionGetByGroup(command.v1.DiscussionGetByGroupRequest) returns (command.v1.DiscussionGetByGroupResponse) {}
+  rpc DiscussionEmpty(command.v1.DiscussionEmptyRequest) returns (command.v1.DiscussionEmptyResponse) {}
+  rpc DiscussionSettingsGet(command.v1.DiscussionSettingsGetRequest) returns (command.v1.DiscussionSettingsGetResponse) {}
+  rpc DiscussionSettingsSet(command.v1.DiscussionSettingsSetRequest) returns (command.v1.DiscussionSettingsSetResponse) {}
+  // locked discussions
+  rpc DiscussionLockedList(command.v1.DiscussionLockedListRequest) returns (stream command.v1.DiscussionLockedListResponse) {}
+  rpc DiscussionLockedDelete(command.v1.DiscussionLockedDeleteRequest) returns (command.v1.DiscussionLockedDeleteResponse) {}
+}
+
+// Message
+service MessageCommandService {
+  rpc MessageList(command.v1.MessageListRequest) returns (stream command.v1.MessageListResponse) {}
+  rpc MessageGet(command.v1.MessageGetRequest) returns (command.v1.MessageGetResponse) {}
+  rpc MessageRefresh(command.v1.MessageRefreshRequest) returns (command.v1.MessageRefreshResponse) {}
+  rpc MessageDelete(command.v1.MessageDeleteRequest) returns (command.v1.MessageDeleteResponse) {}
+  rpc MessageSend(command.v1.MessageSendRequest) returns (command.v1.MessageSendResponse) {}
+  rpc MessageSendWithAttachments(stream command.v1.MessageSendWithAttachmentsRequest) returns (command.v1.MessageSendWithAttachmentsResponse) {}
+  rpc MessageReact(command.v1.MessageReactRequest) returns (command.v1.MessageReactResponse) {}
+  rpc MessageUpdateBody(command.v1.MessageUpdateBodyRequest) returns (command.v1.MessageUpdateBodyResponse) {}
+  rpc MessageSendVoip(command.v1.MessageSendVoipRequest) returns (command.v1.MessageSendVoipResponse) {}
+}
+
+// Attachment
+service AttachmentCommandService {
+  rpc AttachmentList(command.v1.AttachmentListRequest) returns (stream command.v1.AttachmentListResponse) {}
+  rpc AttachmentGet(command.v1.AttachmentGetRequest) returns (command.v1.AttachmentGetResponse) {}
+  rpc AttachmentDelete(command.v1.AttachmentDeleteRequest) returns (command.v1.AttachmentDeleteResponse) {}
+  rpc AttachmentDownload(command.v1.AttachmentDownloadRequest) returns (stream command.v1.AttachmentDownloadResponse) {}
+}
+
+// Storage
+service StorageCommandService {
+  rpc StorageList(command.v1.StorageListRequest) returns (stream command.v1.StorageListResponse) {}
+  rpc StorageGet(command.v1.StorageGetRequest) returns (command.v1.StorageGetResponse) {}
+  rpc StorageSet(command.v1.StorageSetRequest) returns (command.v1.StorageSetResponse) {}
+  rpc StorageUnset(command.v1.StorageUnsetRequest) returns (command.v1.StorageUnsetResponse) {}
+}
+
+// DiscussionStorage
+service DiscussionStorageCommandService {
+  rpc DiscussionStorageList(command.v1.DiscussionStorageListRequest) returns (stream command.v1.DiscussionStorageListResponse) {}
+  rpc DiscussionStorageGet(command.v1.DiscussionStorageGetRequest) returns (command.v1.DiscussionStorageGetResponse) {}
+  rpc DiscussionStorageSet(command.v1.DiscussionStorageSetRequest) returns (command.v1.DiscussionStorageSetResponse) {}
+  rpc DiscussionStorageUnset(command.v1.DiscussionStorageUnsetRequest) returns (command.v1.DiscussionStorageUnsetResponse) {}
+}

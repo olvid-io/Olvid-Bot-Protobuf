@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package olvid.daemon.datatypes.v1;
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = false;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+message Discussion {
+  uint64 id = 1;
+  string title = 2;
+  // if identifier is not set discussion is locked
+  oneof identifier {
+    uint64 contact_id = 3;
+    uint64 group_id = 4;
+  }
+}
+
+message DiscussionSettings {
+  uint64 discussion_id = 1;
+  // ephemeral settings
+  bool read_once = 2;
+  uint64 existence_duration = 3; // 0 -> disabled
+  uint64 visibility_duration = 4; // 0 -> disabled
+}
+
+message DiscussionFilter {
+  enum Type {
+    TYPE_UNSPECIFIED = 0;
+    TYPE_OTO = 1;
+    TYPE_GROUP = 2;
+  }
+
+  optional Type type = 1;
+  oneof identifier {
+    uint64 contact_id = 2;
+    uint64 group_id = 3;
+  }
+  optional string title_search = 4;
+}
