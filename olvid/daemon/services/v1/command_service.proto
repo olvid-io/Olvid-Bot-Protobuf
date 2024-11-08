@@ -87,6 +87,7 @@ service MessageCommandService {
   rpc MessageDelete(command.v1.MessageDeleteRequest) returns (command.v1.MessageDeleteResponse) {}
   rpc MessageSend(command.v1.MessageSendRequest) returns (command.v1.MessageSendResponse) {}
   rpc MessageSendWithAttachments(stream command.v1.MessageSendWithAttachmentsRequest) returns (command.v1.MessageSendWithAttachmentsResponse) {}
+  rpc MessageSendLocation(command.v1.MessageSendLocationRequest) returns (command.v1.MessageSendLocationResponse) {}
   rpc MessageReact(command.v1.MessageReactRequest) returns (command.v1.MessageReactResponse) {}
   rpc MessageUpdateBody(command.v1.MessageUpdateBodyRequest) returns (command.v1.MessageUpdateBodyResponse) {}
   rpc MessageSendVoip(command.v1.MessageSendVoipRequest) returns (command.v1.MessageSendVoipResponse) {}

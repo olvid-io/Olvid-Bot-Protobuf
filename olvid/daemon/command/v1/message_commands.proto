@@ -90,6 +90,25 @@ message MessageSendWithAttachmentsResponse {
 }
 
 /*
+ ** MessageSendLocation
+ */
+message MessageSendLocationRequest {
+  uint64 discussion_id = 1;
+  double latitude = 2;
+  double longitude = 3;
+  optional double altitude = 4;
+  optional float precision = 5;
+  optional string address = 6;
+  // preview filename and payload must be set together. Payload might not exceed protobuf max message size.
+  optional string preview_filename = 7;
+  optional bytes preview_payload = 8;
+  optional datatypes.v1.MessageEphemerality ephemerality = 9;
+}
+message MessageSendLocationResponse {
+  datatypes.v1.Message message = 1;
+}
+
+/*
  ** MessageReact
  */
 message MessageReactRequest {

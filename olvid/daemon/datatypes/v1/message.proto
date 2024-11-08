@@ -54,7 +54,7 @@ message MessageLocation {
   double latitude = 3;
   double longitude = 4;
   optional double altitude = 5;
-  optional double precision = 6;
+  optional float precision = 6;
   optional string address = 7;
 }
 
