@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Welcome to the Olvid Daemon gRPC API repository, part of the Olvid bots framework. If you're new here, consider starting with our [Quickstart page](https://doc.bot.olvid.io/quickstart).
+Welcome to the Olvid Daemon gRPC API repository, part of the Olvid bots framework. If you're new here, consider starting with our [Documentation](https://doc.bot.olvid.io).
 
 This repository contains `protobuf` files describing gRPC services implemented by the Olvid daemon. You can compile these files in any language using `protoc` or [buf](https://buf.build/) to interact with a daemon instance.
 
