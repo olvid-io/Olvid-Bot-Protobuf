@@ -27,6 +27,8 @@ message Message {
   optional MessageId replied_message_id = 8;
   optional MessageLocation message_location = 10;
   repeated MessageReaction reactions = 11;
+  bool forwarded = 12;
+  bool edited_body = 13;
 }
 
 message MessageEphemerality {

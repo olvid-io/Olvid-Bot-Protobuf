@@ -14,6 +14,8 @@ message IdentityDetails {
 }
 
 // id == 0 is equivalent to null identity
+// invitation_url field is deprecated, and will be removed in next major release
+//   use IdentityCommandService.IdentityGetInvitationLink or IdentityAdminService.IdentityAdminGetInvitationLink instead
 message Identity {
   message ApiKey {
     message Permission {
@@ -28,7 +30,8 @@ message Identity {
   uint64 id = 1;
   string display_name = 2;
   datatypes.v1.IdentityDetails details = 3;
-  string invitation_url = 4;
+
+  string invitation_url = 4 [deprecated = true];
   bool keycloak_managed = 5;
   bool has_a_photo = 6;
   ApiKey api_key = 7;

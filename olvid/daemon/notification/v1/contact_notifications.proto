@@ -33,3 +33,11 @@ message ContactDetailsUpdatedNotification {
   datatypes.v1.Contact contact = 1;
   datatypes.v1.IdentityDetails previous_details = 2;
 }
+
+/*
+ ** ContactPhotoUpdated
+ */
+message SubscribeToContactPhotoUpdatedNotification {}
+message ContactPhotoUpdatedNotification {
+  datatypes.v1.Contact contact = 1;
+}

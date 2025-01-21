@@ -30,6 +30,26 @@ message ContactGetResponse {
 }
 
 /*
+ ** ContactGetBytesIdentifier
+ */
+message ContactGetBytesIdentifierRequest {
+  uint64 contact_id = 1;
+}
+message ContactGetBytesIdentifierResponse {
+  bytes identifier = 1;
+}
+
+/*
+ ** ContactGetInvitationLink
+ */
+message ContactGetInvitationLinkRequest {
+  uint64 contact_id = 1;
+}
+message ContactGetInvitationLinkResponse {
+  string invitation_link = 1;
+}
+
+/*
  ** ContactDelete
  */
 message ContactDeleteRequest {
@@ -67,16 +87,9 @@ message ContactDowngradeOneToOneDiscussionResponse {}
 /*
  ** ContactDownloadPhoto
  */
-//message ContactDownloadPhotoRequest {
-//  uint64 contact_id = 1;
-//}
-//message ContactDownloadPhotoMetadata {
-//  string filename = 1;
-//  uint32 file_size = 2;
-//}
-//message ContactDownloadPhotoResponse {
-//  oneof payload {
-//    ContactDownloadPhotoMetadata metadata = 1;
-//    bytes chunk = 2;
-//  }
-//}
+message ContactDownloadPhotoRequest {
+  uint64 contact_id = 1;
+}
+message ContactDownloadPhotoResponse {
+  bytes photo = 1;
+}

@@ -17,6 +17,22 @@ message IdentityGetResponse {
 }
 
 /*
+ ** IdentityGetBytesIdentifier
+ */
+message IdentityGetBytesIdentifierRequest {}
+message IdentityGetBytesIdentifierResponse {
+  bytes identifier = 1;
+}
+
+/*
+ ** IdentityGetInvitationLink
+ */
+message IdentityGetInvitationLinkRequest {}
+message IdentityGetInvitationLinkResponse {
+  string invitation_link = 1;
+}
+
+/*
  ** IdentityUpdateDetails
  */
 message IdentityUpdateDetailsRequest {
@@ -44,6 +60,14 @@ message IdentitySetPhotoRequest {
   }
 }
 message IdentitySetPhotoResponse {}
+
+/*
+ ** IdentityDownloadPhoto
+ */
+message IdentityDownloadPhotoRequest {}
+message IdentityDownloadPhotoResponse {
+  bytes photo = 1;
+}
 
 /*
  ** IdentityKeycloakBind

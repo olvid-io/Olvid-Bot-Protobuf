@@ -29,6 +29,16 @@ message DiscussionGetResponse {
 }
 
 /*
+ ** DiscussionGetBytesIdentifier
+ */
+message DiscussionGetBytesIdentifierRequest {
+  uint64 discussion_id = 1;
+}
+message DiscussionGetBytesIdentifierResponse {
+  bytes identifier = 1;
+}
+
+/*
  ** DiscussionGetByContact
  */
 message DiscussionGetByContactRequest {

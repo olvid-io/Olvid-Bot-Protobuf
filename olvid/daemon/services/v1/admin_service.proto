@@ -21,6 +21,9 @@ service ClientKeyAdminService {
 service IdentityAdminService {
   rpc IdentityList(admin.v1.IdentityListRequest) returns (stream admin.v1.IdentityListResponse) {}
   rpc IdentityAdminGet(admin.v1.IdentityAdminGetRequest) returns (admin.v1.IdentityAdminGetResponse) {}
+  rpc IdentityAdminGetBytesIdentifier(admin.v1.IdentityAdminGetBytesIdentifierRequest) returns (admin.v1.IdentityAdminGetBytesIdentifierResponse) {}
+  rpc IdentityAdminGetInvitationLink(admin.v1.IdentityAdminGetInvitationLinkRequest) returns (admin.v1.IdentityAdminGetInvitationLinkResponse) {}
+  rpc IdentityAdminDownloadPhoto(admin.v1.IdentityAdminDownloadPhotoRequest) returns (admin.v1.IdentityAdminDownloadPhotoResponse) {}
   rpc IdentityDelete(admin.v1.IdentityDeleteRequest) returns (admin.v1.IdentityDeleteResponse) {}
   rpc IdentityNew(admin.v1.IdentityNewRequest) returns (admin.v1.IdentityNewResponse) {}
   rpc IdentityKeycloakNew(admin.v1.IdentityKeycloakNewRequest) returns (admin.v1.IdentityKeycloakNewResponse) {}

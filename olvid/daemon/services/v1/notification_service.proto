@@ -35,6 +35,7 @@ service ContactNotificationService {
   rpc ContactNew(notification.v1.SubscribeToContactNewNotification) returns (stream notification.v1.ContactNewNotification) {}
   rpc ContactDeleted(notification.v1.SubscribeToContactDeletedNotification) returns (stream notification.v1.ContactDeletedNotification) {}
   rpc ContactDetailsUpdated(notification.v1.SubscribeToContactDetailsUpdatedNotification) returns (stream notification.v1.ContactDetailsUpdatedNotification) {}
+  rpc ContactPhotoUpdated(notification.v1.SubscribeToContactPhotoUpdatedNotification) returns (stream notification.v1.ContactPhotoUpdatedNotification) {}
 }
 
 // Group
@@ -42,6 +43,7 @@ service GroupNotificationService {
   rpc GroupNew(notification.v1.SubscribeToGroupNewNotification) returns (stream notification.v1.GroupNewNotification) {}
   rpc GroupDeleted(notification.v1.SubscribeToGroupDeletedNotification) returns (stream notification.v1.GroupDeletedNotification) {}
   rpc GroupNameUpdated(notification.v1.SubscribeToGroupNameUpdatedNotification) returns (stream notification.v1.GroupNameUpdatedNotification) {}
+  rpc GroupPhotoUpdated(notification.v1.SubscribeToGroupPhotoUpdatedNotification) returns (stream notification.v1.GroupPhotoUpdatedNotification) {}
   rpc GroupDescriptionUpdated(notification.v1.SubscribeToGroupDescriptionUpdatedNotification) returns (stream notification.v1.GroupDescriptionUpdatedNotification) {}
   rpc GroupPendingMemberAdded(notification.v1.SubscribeToGroupPendingMemberAddedNotification) returns (stream notification.v1.GroupPendingMemberAddedNotification) {}
   rpc GroupPendingMemberRemoved(notification.v1.SubscribeToGroupPendingMemberRemovedNotification) returns (stream notification.v1.GroupPendingMemberRemovedNotification) {}

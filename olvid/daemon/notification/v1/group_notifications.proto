@@ -34,6 +34,14 @@ message GroupNameUpdatedNotification {
 }
 
 /*
+ ** GroupPhotoUpdated
+ */
+message SubscribeToGroupPhotoUpdatedNotification {}
+message GroupPhotoUpdatedNotification {
+  datatypes.v1.Group group = 1;
+}
+
+/*
  ** GroupDescriptionUpdated
  */
 message SubscribeToGroupDescriptionUpdatedNotification {}

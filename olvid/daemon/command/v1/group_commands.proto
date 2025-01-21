@@ -29,6 +29,16 @@ message GroupGetResponse {
 }
 
 /*
+ ** GroupGetBytesIdentifier
+ */
+message GroupGetBytesIdentifierRequest {
+  uint64 group_id = 1;
+}
+message GroupGetBytesIdentifierResponse {
+  bytes identifier = 1;
+}
+
+/*
  ** GroupNewStandardGroup
  */
 message GroupNewStandardGroupRequest {
@@ -143,4 +153,14 @@ message GroupSetPhotoRequest {
 }
 message GroupSetPhotoResponse {
   datatypes.v1.Group group = 1;
+}
+
+/*
+ ** GroupDownloadPhoto
+ */
+message GroupDownloadPhotoRequest {
+  uint64 group_id = 1;
+}
+message GroupDownloadPhotoResponse {
+  bytes photo = 1;
 }

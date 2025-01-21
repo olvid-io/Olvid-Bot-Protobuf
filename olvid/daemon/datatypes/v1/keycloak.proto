@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package olvid.daemon.datatypes.v1;
+
+import "olvid/daemon/datatypes/v1/identity.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = false;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+message KeycloakUser {
+  string keycloak_id = 1;
+  string display_name = 2;
+  daemon.datatypes.v1.IdentityDetails details = 3;
+  optional uint64 contact_id = 4;
+}
+
+message KeycloakUserFilter {
+  enum Contact {
+    CONTACT_UNSPECIFIED = 0;
+    CONTACT_IS = 1;
+    CONTACT_IS_NOT = 2;
+  }
+
+  optional Contact contact = 1;
+  optional string display_name_search = 2;
+  optional IdentityDetails details_search = 3;
+}

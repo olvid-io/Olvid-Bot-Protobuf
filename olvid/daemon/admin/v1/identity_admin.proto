@@ -19,13 +19,43 @@ message IdentityListResponse {
 }
 
 /*
- ** IdentityGet
+ ** IdentityAdminGet
  */
 message IdentityAdminGetRequest {
   uint64 identity_id = 1;
 }
 message IdentityAdminGetResponse {
   datatypes.v1.Identity identity = 1;
+}
+
+/*
+ ** IdentityAdminGetBytesIdentifier
+ */
+message IdentityAdminGetBytesIdentifierRequest {
+  uint64 identity_id = 1;
+}
+message IdentityAdminGetBytesIdentifierResponse {
+  bytes identifier = 1;
+}
+
+/*
+ ** IdentityAdminGetInvitationLink
+ */
+message IdentityAdminGetInvitationLinkRequest {
+  uint64 identity_id = 1;
+}
+message IdentityAdminGetInvitationLinkResponse {
+  string invitation_link = 1;
+}
+
+/*
+ ** IdentityAdminDownloadPhoto
+ */
+message IdentityAdminDownloadPhotoRequest {
+  uint64 identity_id = 1;
+}
+message IdentityAdminDownloadPhotoResponse {
+  bytes photo = 1;
 }
 
 /*

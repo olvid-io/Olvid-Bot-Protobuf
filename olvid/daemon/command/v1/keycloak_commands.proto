@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package olvid.daemon.command.v1;
+
+import "olvid/daemon/datatypes/v1/keycloak.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** KeycloakUserList
+ */
+message KeycloakUserListRequest {
+  optional daemon.datatypes.v1.KeycloakUserFilter filter = 1;
+  optional uint64 last_list_timestamp = 2;
+}
+message KeycloakUserListResponse {
+  repeated daemon.datatypes.v1.KeycloakUser users = 1;
+  uint64 last_list_timestamp = 2;
+}
+
+/*
+ ** KeycloakAddUserAsContact
+ */
+message KeycloakAddUserAsContactRequest {
+  string keycloak_id = 1;
+}
+message KeycloakAddUserAsContactResponse {}
