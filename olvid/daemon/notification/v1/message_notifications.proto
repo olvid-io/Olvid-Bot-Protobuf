@@ -70,6 +70,7 @@ message MessageReadNotification {
 
 /*
  ** MessageLocationReceived
+ ** triggered by inbound messages
  */
 message SubscribeToMessageLocationReceivedNotification {}
 message MessageLocationReceivedNotification {
@@ -77,7 +78,17 @@ message MessageLocationReceivedNotification {
 }
 
 /*
+ ** MessageLocationSent
+ ** triggered by outbound messages
+ */
+message SubscribeToMessageLocationSentNotification {}
+message MessageLocationSentNotification {
+  datatypes.v1.Message message = 1;
+}
+
+/*
  ** MessageLocationSharingStart
+ ** triggered by inbound AND outbound messages
  */
 message SubscribeToMessageLocationSharingStartNotification {}
 message MessageLocationSharingStartNotification {
@@ -86,6 +97,7 @@ message MessageLocationSharingStartNotification {
 
 /*
  ** MessageLocationSharingUpdate
+ ** triggered by inbound AND outbound messages
  */
 message SubscribeToMessageLocationSharingUpdateNotification {}
 message MessageLocationSharingUpdateNotification {
@@ -95,6 +107,7 @@ message MessageLocationSharingUpdateNotification {
 
 /*
  ** MessageLocationSharingEnd
+ ** triggered by inbound AND outbound messages
  */
 message SubscribeToMessageLocationSharingEndNotification {}
 message MessageLocationSharingEndNotification {

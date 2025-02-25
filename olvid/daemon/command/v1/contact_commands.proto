@@ -93,3 +93,12 @@ message ContactDownloadPhotoRequest {
 message ContactDownloadPhotoResponse {
   bytes photo = 1;
 }
+
+/*
+ ** ContactRecreateChannels
+ ** USE CAREFULLY: this might fix some issues but every non sent / received messages will be lost.
+ */
+message ContactRecreateChannelsRequest {
+  uint64 contact_id = 1;
+}
+message ContactRecreateChannelsResponse {}

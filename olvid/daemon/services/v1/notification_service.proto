@@ -75,6 +75,7 @@ service MessageNotificationService {
   rpc MessageRead(notification.v1.SubscribeToMessageReadNotification) returns (stream notification.v1.MessageReadNotification) {}
   // location message
   rpc MessageLocationReceived(notification.v1.SubscribeToMessageLocationReceivedNotification) returns (stream notification.v1.MessageLocationReceivedNotification) {}
+  rpc MessageLocationSent(notification.v1.SubscribeToMessageLocationSentNotification) returns (stream notification.v1.MessageLocationSentNotification) {}
   rpc MessageLocationSharingStart(notification.v1.SubscribeToMessageLocationSharingStartNotification) returns (stream notification.v1.MessageLocationSharingStartNotification) {}
   rpc MessageLocationSharingUpdate(notification.v1.SubscribeToMessageLocationSharingUpdateNotification) returns (stream notification.v1.MessageLocationSharingUpdateNotification) {}
   rpc MessageLocationSharingEnd(notification.v1.SubscribeToMessageLocationSharingEndNotification) returns (stream notification.v1.MessageLocationSharingEndNotification) {}

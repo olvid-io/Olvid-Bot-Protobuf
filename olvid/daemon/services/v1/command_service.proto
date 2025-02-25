@@ -51,6 +51,7 @@ service ContactCommandService {
   rpc ContactDelete(command.v1.ContactDeleteRequest) returns (command.v1.ContactDeleteResponse) {}
   rpc ContactIntroduction(command.v1.ContactIntroductionRequest) returns (command.v1.ContactIntroductionResponse) {}
   rpc ContactDownloadPhoto(command.v1.ContactDownloadPhotoRequest) returns (command.v1.ContactDownloadPhotoResponse) {}
+  rpc ContactRecreateChannels(command.v1.ContactRecreateChannelsRequest) returns (command.v1.ContactRecreateChannelsResponse) {}
   // collected contacts
   rpc ContactInviteToOneToOneDiscussion(command.v1.ContactInviteToOneToOneDiscussionRequest) returns (command.v1.ContactInviteToOneToOneDiscussionResponse) {}
   rpc ContactDowngradeOneToOneDiscussion(command.v1.ContactDowngradeOneToOneDiscussionRequest) returns (command.v1.ContactDowngradeOneToOneDiscussionResponse) {}
@@ -103,6 +104,9 @@ service MessageCommandService {
   rpc MessageSend(command.v1.MessageSendRequest) returns (command.v1.MessageSendResponse) {}
   rpc MessageSendWithAttachments(stream command.v1.MessageSendWithAttachmentsRequest) returns (command.v1.MessageSendWithAttachmentsResponse) {}
   rpc MessageSendLocation(command.v1.MessageSendLocationRequest) returns (command.v1.MessageSendLocationResponse) {}
+  rpc MessageStartLocationSharing(command.v1.MessageStartLocationSharingRequest) returns (command.v1.MessageStartLocationSharingResponse) {}
+  rpc MessageUpdateLocationSharing(command.v1.MessageUpdateLocationSharingRequest) returns (command.v1.MessageUpdateLocationSharingResponse) {}
+  rpc MessageEndLocationSharing(command.v1.MessageEndLocationSharingRequest) returns (command.v1.MessageEndLocationSharingResponse) {}
   rpc MessageReact(command.v1.MessageReactRequest) returns (command.v1.MessageReactResponse) {}
   rpc MessageUpdateBody(command.v1.MessageUpdateBodyRequest) returns (command.v1.MessageUpdateBodyResponse) {}
   rpc MessageSendVoip(command.v1.MessageSendVoipRequest) returns (command.v1.MessageSendVoipResponse) {}

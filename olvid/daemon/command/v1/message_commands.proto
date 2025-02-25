@@ -109,6 +109,44 @@ message MessageSendLocationResponse {
 }
 
 /*
+ ** MessageStartLocationSharing
+ */
+message MessageStartLocationSharingRequest {
+  uint64 discussion_id = 1;
+  double latitude = 2;
+  double longitude = 3;
+  optional double altitude = 4;
+  optional float precision = 5;
+}
+message MessageStartLocationSharingResponse {
+  datatypes.v1.Message message = 1;
+}
+
+/*
+ ** MessageUpdateLocationSharing
+ */
+message MessageUpdateLocationSharingRequest {
+  datatypes.v1.MessageId message_id = 1;
+  double latitude = 2;
+  double longitude = 3;
+  optional double altitude = 4;
+  optional float precision = 5;
+}
+message MessageUpdateLocationSharingResponse {
+  datatypes.v1.Message message = 1;
+}
+
+/*
+ ** MessageEndLocationSharing
+ */
+message MessageEndLocationSharingRequest {
+  datatypes.v1.MessageId message_id = 1;
+}
+message MessageEndLocationSharingResponse {
+  datatypes.v1.Message message = 1;
+}
+
+/*
  ** MessageReact
  */
 message MessageReactRequest {
