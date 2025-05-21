@@ -11,7 +11,10 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 /*
  ** MessageReceived
  */
-message SubscribeToMessageReceivedNotification {}
+message SubscribeToMessageReceivedNotification {
+  optional uint64 count = 1;
+  optional datatypes.v1.MessageFilter filter = 2;
+}
 message MessageReceivedNotification {
   datatypes.v1.Message message = 1;
 }
@@ -19,7 +22,10 @@ message MessageReceivedNotification {
 /*
  ** MessageSent
  */
-message SubscribeToMessageSentNotification {}
+message SubscribeToMessageSentNotification {
+  optional uint64 count = 1;
+  optional datatypes.v1.MessageFilter filter = 2;
+}
 message MessageSentNotification {
   datatypes.v1.Message message = 1;
 }
@@ -27,7 +33,11 @@ message MessageSentNotification {
 /*
  ** MessageDeleted
  */
-message SubscribeToMessageDeletedNotification {}
+message SubscribeToMessageDeletedNotification {
+  optional uint64 count = 1;
+  repeated datatypes.v1.MessageId message_ids = 2;
+  optional datatypes.v1.MessageFilter filter = 3;
+}
 message MessageDeletedNotification {
   datatypes.v1.Message message = 1;
 }
@@ -35,7 +45,11 @@ message MessageDeletedNotification {
 /*
  ** MessageBodyUpdated
  */
-message SubscribeToMessageBodyUpdatedNotification {}
+message SubscribeToMessageBodyUpdatedNotification {
+  optional uint64 count = 1;
+  repeated datatypes.v1.MessageId message_ids = 2;
+  optional datatypes.v1.MessageFilter filter = 3;
+}
 message MessageBodyUpdatedNotification {
   datatypes.v1.Message message = 1;
   string previous_body = 2;
@@ -45,7 +59,11 @@ message MessageBodyUpdatedNotification {
 /*
  ** MessageUploaded
  */
-message SubscribeToMessageUploadedNotification {}
+message SubscribeToMessageUploadedNotification {
+  optional uint64 count = 1;
+  repeated datatypes.v1.MessageId message_ids = 2;
+  optional datatypes.v1.MessageFilter filter = 3;
+}
 message MessageUploadedNotification {
   datatypes.v1.Message message = 1;
 }
@@ -54,7 +72,11 @@ message MessageUploadedNotification {
 /*
  ** MessageDelivered
  */
-message SubscribeToMessageDeliveredNotification {}
+message SubscribeToMessageDeliveredNotification {
+  optional uint64 count = 1;
+  repeated datatypes.v1.MessageId message_ids = 2;
+  optional datatypes.v1.MessageFilter filter = 3;
+}
 message MessageDeliveredNotification {
   datatypes.v1.Message message = 1;
 }
@@ -63,7 +85,11 @@ message MessageDeliveredNotification {
 /*
  ** MessageRead
  */
-message SubscribeToMessageReadNotification {}
+message SubscribeToMessageReadNotification {
+  optional uint64 count = 1;
+  repeated datatypes.v1.MessageId message_ids = 2;
+  optional datatypes.v1.MessageFilter filter = 3;
+}
 message MessageReadNotification {
   datatypes.v1.Message message = 1;
 }
@@ -72,7 +98,10 @@ message MessageReadNotification {
  ** MessageLocationReceived
  ** triggered by inbound messages
  */
-message SubscribeToMessageLocationReceivedNotification {}
+message SubscribeToMessageLocationReceivedNotification {
+  optional uint64 count = 1;
+  optional datatypes.v1.MessageFilter filter = 2;
+}
 message MessageLocationReceivedNotification {
   datatypes.v1.Message message = 1;
 }
@@ -81,7 +110,10 @@ message MessageLocationReceivedNotification {
  ** MessageLocationSent
  ** triggered by outbound messages
  */
-message SubscribeToMessageLocationSentNotification {}
+message SubscribeToMessageLocationSentNotification {
+  optional uint64 count = 1;
+  optional datatypes.v1.MessageFilter filter = 2;
+}
 message MessageLocationSentNotification {
   datatypes.v1.Message message = 1;
 }
@@ -90,7 +122,10 @@ message MessageLocationSentNotification {
  ** MessageLocationSharingStart
  ** triggered by inbound AND outbound messages
  */
-message SubscribeToMessageLocationSharingStartNotification {}
+message SubscribeToMessageLocationSharingStartNotification {
+  optional uint64 count = 1;
+  optional datatypes.v1.MessageFilter filter = 2;
+}
 message MessageLocationSharingStartNotification {
   datatypes.v1.Message message = 1;
 }
@@ -99,7 +134,11 @@ message MessageLocationSharingStartNotification {
  ** MessageLocationSharingUpdate
  ** triggered by inbound AND outbound messages
  */
-message SubscribeToMessageLocationSharingUpdateNotification {}
+message SubscribeToMessageLocationSharingUpdateNotification {
+  optional uint64 count = 1;
+  repeated datatypes.v1.MessageId message_ids = 2;
+  optional datatypes.v1.MessageFilter filter = 3;
+}
 message MessageLocationSharingUpdateNotification {
   datatypes.v1.Message message = 1;
   datatypes.v1.MessageLocation previous_location = 2;
@@ -109,7 +148,11 @@ message MessageLocationSharingUpdateNotification {
  ** MessageLocationSharingEnd
  ** triggered by inbound AND outbound messages
  */
-message SubscribeToMessageLocationSharingEndNotification {}
+message SubscribeToMessageLocationSharingEndNotification {
+  optional uint64 count = 1;
+  repeated datatypes.v1.MessageId message_ids = 2;
+  optional datatypes.v1.MessageFilter filter = 3;
+}
 message MessageLocationSharingEndNotification {
   datatypes.v1.Message message = 1;
 }
@@ -117,7 +160,12 @@ message MessageLocationSharingEndNotification {
 /*
  ** MessageReactionAdded
  */
-message SubscribeToMessageReactionAddedNotification {}
+message SubscribeToMessageReactionAddedNotification {
+  optional uint64 count = 1;
+  repeated datatypes.v1.MessageId message_ids = 2;
+  optional datatypes.v1.MessageFilter filter = 3;
+  optional datatypes.v1.ReactionFilter reaction_filter = 4;
+}
 message MessageReactionAddedNotification {
   datatypes.v1.Message message = 1;
   datatypes.v1.MessageReaction reaction = 2;
@@ -126,7 +174,13 @@ message MessageReactionAddedNotification {
 /*
  ** MessageReactionUpdated
  */
-message SubscribeToMessageReactionUpdatedNotification {}
+message SubscribeToMessageReactionUpdatedNotification {
+  optional uint64 count = 1;
+  repeated datatypes.v1.MessageId message_ids = 2;
+  optional datatypes.v1.MessageFilter message_filter = 3;
+  optional datatypes.v1.ReactionFilter reaction_filter = 4;
+  optional datatypes.v1.ReactionFilter previous_reaction_filter = 5;
+}
 message MessageReactionUpdatedNotification {
   datatypes.v1.Message message = 1;
   datatypes.v1.MessageReaction reaction = 2;
@@ -136,7 +190,12 @@ message MessageReactionUpdatedNotification {
 /*
  ** MessageReactionRemoved
  */
-message SubscribeToMessageReactionRemovedNotification {}
+message SubscribeToMessageReactionRemovedNotification {
+  optional uint64 count = 1;
+  repeated datatypes.v1.MessageId message_ids = 2;
+  optional datatypes.v1.MessageFilter filter = 3;
+  optional datatypes.v1.ReactionFilter reaction_filter = 4;
+}
 message MessageReactionRemovedNotification {
   datatypes.v1.Message message = 1;
   datatypes.v1.MessageReaction reaction = 2;

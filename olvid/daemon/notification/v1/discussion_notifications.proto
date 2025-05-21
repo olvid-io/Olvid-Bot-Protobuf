@@ -11,7 +11,10 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 /*
  ** DiscussionNew
  */
-message SubscribeToDiscussionNewNotification {}
+message SubscribeToDiscussionNewNotification {
+  optional uint64 count = 1;
+  optional datatypes.v1.DiscussionFilter filter = 2;
+}
 message DiscussionNewNotification {
   datatypes.v1.Discussion discussion = 1;
 }
@@ -19,7 +22,11 @@ message DiscussionNewNotification {
 /*
  ** DiscussionLocked
  */
-message SubscribeToDiscussionLockedNotification {}
+message SubscribeToDiscussionLockedNotification {
+  optional uint64 count = 1;
+  optional datatypes.v1.DiscussionFilter filter = 2;
+  repeated uint64 discussion_ids = 3;
+}
 message DiscussionLockedNotification {
   datatypes.v1.Discussion discussion = 1;
 }
@@ -27,7 +34,11 @@ message DiscussionLockedNotification {
 /*
  ** DiscussionTitleUpdated
  */
-message SubscribeToDiscussionTitleUpdatedNotification {}
+message SubscribeToDiscussionTitleUpdatedNotification {
+  optional uint64 count = 1;
+  optional datatypes.v1.DiscussionFilter filter = 2;
+  repeated uint64 discussion_ids = 3;
+}
 message DiscussionTitleUpdatedNotification {
   datatypes.v1.Discussion discussion = 1;
   string previous_title = 2;
@@ -36,8 +47,13 @@ message DiscussionTitleUpdatedNotification {
 /*
  ** DiscussionSettingsUpdated
  */
-message SubscribeToDiscussionSettingsUpdatedNotification {}
+message SubscribeToDiscussionSettingsUpdatedNotification {
+  optional uint64 count = 1;
+  optional datatypes.v1.DiscussionFilter filter = 2;
+  repeated uint64 discussion_ids = 3;
+}
 message DiscussionSettingsUpdatedNotification {
-  datatypes.v1.DiscussionSettings new_settings = 1;
-  datatypes.v1.DiscussionSettings previous_settings = 2;
+  datatypes.v1.Discussion discussion = 1;
+  datatypes.v1.DiscussionSettings new_settings = 2;
+  datatypes.v1.DiscussionSettings previous_settings = 3;
 }

@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package olvid.daemon.notification.v1;
+
+import "olvid/daemon/datatypes/v1/call.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*******************************************************
+   PUBLIC API
+   *******************************************************/
+/*
+ ** CallIncomingCall (Inbound call)
+ */
+message SubscribeToCallIncomingCallNotification {
+  optional uint64 count = 1;
+}
+message CallIncomingCallNotification {
+  string call_identifier = 1;
+  // set to group discussion if calling a group, else to contact's discussion, even if there are multiple participants
+  uint64 discussion_id = 2;
+  datatypes.v1.CallParticipantId participant_id = 3; // obviously contains a contact id
+  string caller_display_name = 4;
+  uint32 participant_count = 5;
+}
+
+/*
+ ** CallRinging (Outbound call)
+ */
+message SubscribeToCallRingingNotification {
+  optional uint64 count = 1;
+}
+message CallRingingNotification {
+  string call_identifier = 1;
+  datatypes.v1.CallParticipantId participant_id = 2;
+}
+
+/*
+ ** CallAccepted (Outbound call)
+ */
+message SubscribeToCallAcceptedNotification {
+  optional uint64 count = 1;
+}
+message CallAcceptedNotification {
+  string call_identifier = 1;
+  datatypes.v1.CallParticipantId participant_id = 2;
+}
+
+/*
+ ** CallDeclined (Outbound call)
+ */
+message SubscribeToCallDeclinedNotification {
+  optional uint64 count = 1;
+}
+message CallDeclinedNotification {
+  string call_identifier = 1;
+  datatypes.v1.CallParticipantId participant_id = 2;
+}
+
+/*
+ ** CallBusy (Outbound call)
+ */
+message SubscribeToCallBusyNotification {
+  optional uint64 count = 1;
+}
+message CallBusyNotification {
+  string call_identifier = 1;
+  datatypes.v1.CallParticipantId participant_id = 2;
+}
+
+/*
+ ** CallEnded: everyone declined or left call
+ */
+message SubscribeToCallEndedNotification {
+  optional uint64 count = 1;
+}
+message CallEndedNotification {
+  string call_identifier = 1;
+}

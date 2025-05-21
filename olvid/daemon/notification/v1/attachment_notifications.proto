@@ -3,6 +3,7 @@ syntax = "proto3";
 package olvid.daemon.notification.v1;
 
 import "olvid/daemon/datatypes/v1/attachment.proto";
+import "olvid/daemon/datatypes/v1/message.proto";
 
 option go_package = "olvid.io/daemon";
 option java_multiple_files = true;
@@ -11,7 +12,10 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 /*
  ** AttachmentReceived
  */
-message SubscribeToAttachmentReceivedNotification {}
+message SubscribeToAttachmentReceivedNotification {
+  optional uint64 count = 1;
+  optional datatypes.v1.AttachmentFilter filter = 2;
+}
 message AttachmentReceivedNotification {
   datatypes.v1.Attachment attachment = 1;
 }
@@ -19,7 +23,12 @@ message AttachmentReceivedNotification {
 /*
  ** AttachmentUploaded
  */
-message SubscribeToAttachmentUploadedNotification {}
+message SubscribeToAttachmentUploadedNotification {
+  optional uint64 count = 1;
+  optional datatypes.v1.AttachmentFilter filter = 2;
+  repeated datatypes.v1.MessageId message_ids = 3;
+  repeated datatypes.v1.AttachmentId attachment_ids = 4;
+}
 message AttachmentUploadedNotification {
   datatypes.v1.Attachment attachment = 1;
 }

@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package olvid.daemon.datatypes.v1;
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = false;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+message CallParticipantId {
+  oneof id {
+    uint64 contact_id = 1;
+    string participant_id = 2;
+  }
+}

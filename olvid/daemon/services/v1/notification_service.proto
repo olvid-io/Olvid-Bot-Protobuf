@@ -3,6 +3,7 @@ syntax = "proto3";
 package olvid.daemon.services.v1;
 
 import "olvid/daemon/notification/v1/attachment_notifications.proto";
+import "olvid/daemon/notification/v1/call_notifications.proto";
 import "olvid/daemon/notification/v1/contact_notifications.proto";
 import "olvid/daemon/notification/v1/discussion_notifications.proto";
 import "olvid/daemon/notification/v1/group_notifications.proto";
@@ -89,4 +90,14 @@ service MessageNotificationService {
 service AttachmentNotificationService {
   rpc AttachmentReceived(notification.v1.SubscribeToAttachmentReceivedNotification) returns (stream notification.v1.AttachmentReceivedNotification) {}
   rpc AttachmentUploaded(notification.v1.SubscribeToAttachmentUploadedNotification) returns (stream notification.v1.AttachmentUploadedNotification) {}
+}
+
+// Call
+service CallNotificationService {
+  rpc CallIncomingCall(notification.v1.SubscribeToCallIncomingCallNotification) returns (stream notification.v1.CallIncomingCallNotification) {}
+  rpc CallRinging(notification.v1.SubscribeToCallRingingNotification) returns (stream notification.v1.CallRingingNotification) {}
+  rpc CallAccepted(notification.v1.SubscribeToCallAcceptedNotification) returns (stream notification.v1.CallAcceptedNotification) {}
+  rpc CallDeclined(notification.v1.SubscribeToCallDeclinedNotification) returns (stream notification.v1.CallDeclinedNotification) {}
+  rpc CallBusy(notification.v1.SubscribeToCallBusyNotification) returns (stream notification.v1.CallBusyNotification) {}
+  rpc CallEnded(notification.v1.SubscribeToCallEndedNotification) returns (stream notification.v1.CallEndedNotification) {}
 }

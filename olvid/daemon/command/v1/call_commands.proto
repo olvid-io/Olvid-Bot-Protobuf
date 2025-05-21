@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package olvid.daemon.command.v1;
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** CallStartDiscussionCall
+ */
+message CallStartDiscussionCallRequest {
+  uint64 discussion_id = 1;
+}
+message CallStartDiscussionCallResponse {
+  string call_identifier = 1;
+}
+
+/*
+ ** CallStartCustomCall
+ */
+message CallStartCustomCallRequest {
+  repeated uint64 contact_ids = 1;
+  optional uint64 discussion_id = 2;
+}
+message CallStartCustomCallResponse {
+  string call_identifier = 1;
+}

@@ -150,7 +150,7 @@ message MessageEndLocationSharingResponse {
  ** MessageReact
  */
 message MessageReactRequest {
-  .olvid.daemon.datatypes.v1.MessageId message_id = 1;
+  datatypes.v1.MessageId message_id = 1;
   string reaction = 2;
 }
 message MessageReactResponse {}
@@ -159,13 +159,14 @@ message MessageReactResponse {}
  ** MessageUpdateBody
  */
 message MessageUpdateBodyRequest {
-  .olvid.daemon.datatypes.v1.MessageId message_id = 1;
+  datatypes.v1.MessageId message_id = 1;
   string updated_body = 2;
 }
 message MessageUpdateBodyResponse {}
 
 /*
  ** MessageSendVoip
+ ** ⚠️ deprecated: use CallCommandService instead ⚠️
  */
 message MessageSendVoipRequest {
   uint64 discussion_id = 1;

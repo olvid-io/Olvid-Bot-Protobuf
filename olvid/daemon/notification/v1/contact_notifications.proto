@@ -12,7 +12,10 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 /*
  ** ContactNew
  */
-message SubscribeToContactNewNotification {}
+message SubscribeToContactNewNotification {
+  optional uint64 count = 1;
+  optional datatypes.v1.ContactFilter filter = 2;
+}
 message ContactNewNotification {
   datatypes.v1.Contact contact = 1;
 }
@@ -20,7 +23,11 @@ message ContactNewNotification {
 /*
  ** ContactDeleted
  */
-message SubscribeToContactDeletedNotification {}
+message SubscribeToContactDeletedNotification {
+  optional uint64 count = 1;
+  optional datatypes.v1.ContactFilter filter = 2;
+  repeated uint64 contact_ids = 3;
+}
 message ContactDeletedNotification {
   datatypes.v1.Contact contact = 1;
 }
@@ -28,7 +35,11 @@ message ContactDeletedNotification {
 /*
  ** ContactDetailsUpdated
  */
-message SubscribeToContactDetailsUpdatedNotification {}
+message SubscribeToContactDetailsUpdatedNotification {
+  optional uint64 count = 1;
+  optional datatypes.v1.ContactFilter filter = 2;
+  repeated uint64 contact_ids = 3;
+}
 message ContactDetailsUpdatedNotification {
   datatypes.v1.Contact contact = 1;
   datatypes.v1.IdentityDetails previous_details = 2;
@@ -37,7 +48,11 @@ message ContactDetailsUpdatedNotification {
 /*
  ** ContactPhotoUpdated
  */
-message SubscribeToContactPhotoUpdatedNotification {}
+message SubscribeToContactPhotoUpdatedNotification {
+  optional uint64 count = 1;
+  optional datatypes.v1.ContactFilter filter = 2;
+  repeated uint64 contact_ids = 3;
+}
 message ContactPhotoUpdatedNotification {
   datatypes.v1.Contact contact = 1;
 }

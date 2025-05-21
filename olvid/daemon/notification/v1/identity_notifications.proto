@@ -11,7 +11,9 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 /*
  ** IdentityCreated
  */
-message SubscribeToIdentityCreatedNotification {}
+message SubscribeToIdentityCreatedNotification {
+  optional uint64 count = 1;
+}
 message IdentityCreatedNotification {
   datatypes.v1.Identity identity = 1;
 }
@@ -19,7 +21,9 @@ message IdentityCreatedNotification {
 /*
  ** IdentityDeleted
  */
-message SubscribeToIdentityDeletedNotification {}
+message SubscribeToIdentityDeletedNotification {
+  optional uint64 count = 1;
+}
 message IdentityDeletedNotification {
   datatypes.v1.Identity identity = 1;
 }
@@ -27,7 +31,9 @@ message IdentityDeletedNotification {
 /*
  ** IdentityUpdated
  */
-message SubscribeToIdentityUpdatedNotification {}
+message SubscribeToIdentityUpdatedNotification {
+  optional uint64 count = 1;
+}
 message IdentityDetailsUpdatedNotification {
   datatypes.v1.Identity identity = 1;
   datatypes.v1.IdentityDetails previous_details = 2;

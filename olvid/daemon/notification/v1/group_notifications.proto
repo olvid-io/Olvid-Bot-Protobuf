@@ -11,7 +11,10 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 /*
  ** GroupNew
  */
-message SubscribeToGroupNewNotification {}
+message SubscribeToGroupNewNotification {
+  optional uint64 count = 1;
+  optional datatypes.v1.GroupFilter group_filter = 2;
+}
 message GroupNewNotification {
   datatypes.v1.Group group = 1;
 }
@@ -19,7 +22,11 @@ message GroupNewNotification {
 /*
  ** GroupDeleted
  */
-message SubscribeToGroupDeletedNotification {}
+message SubscribeToGroupDeletedNotification {
+  optional uint64 count = 1;
+  repeated uint64 group_ids = 2;
+  optional datatypes.v1.GroupFilter group_filter = 3;
+}
 message GroupDeletedNotification {
   datatypes.v1.Group group = 1;
 }
@@ -27,7 +34,12 @@ message GroupDeletedNotification {
 /*
  ** GroupNameUpdated
  */
-message SubscribeToGroupNameUpdatedNotification {}
+message SubscribeToGroupNameUpdatedNotification {
+  optional uint64 count = 1;
+  repeated uint64 group_ids = 2;
+  optional datatypes.v1.GroupFilter group_filter = 3;
+  optional string previous_name_search = 4;
+}
 message GroupNameUpdatedNotification {
   datatypes.v1.Group group = 1;
   string previous_name = 2;
@@ -36,7 +48,11 @@ message GroupNameUpdatedNotification {
 /*
  ** GroupPhotoUpdated
  */
-message SubscribeToGroupPhotoUpdatedNotification {}
+message SubscribeToGroupPhotoUpdatedNotification {
+  optional uint64 count = 1;
+  repeated uint64 group_ids = 2;
+  optional datatypes.v1.GroupFilter group_filter = 3;
+}
 message GroupPhotoUpdatedNotification {
   datatypes.v1.Group group = 1;
 }
@@ -44,7 +60,12 @@ message GroupPhotoUpdatedNotification {
 /*
  ** GroupDescriptionUpdated
  */
-message SubscribeToGroupDescriptionUpdatedNotification {}
+message SubscribeToGroupDescriptionUpdatedNotification {
+  optional uint64 count = 1;
+  repeated uint64 group_ids = 2;
+  optional datatypes.v1.GroupFilter group_filter = 3;
+  optional string previous_description_search = 4;
+}
 message GroupDescriptionUpdatedNotification {
   datatypes.v1.Group group = 1;
   string previous_description = 2;
@@ -53,7 +74,12 @@ message GroupDescriptionUpdatedNotification {
 /*
  ** GroupPendingMemberAdded
  */
-message SubscribeToGroupPendingMemberAddedNotification {}
+message SubscribeToGroupPendingMemberAddedNotification {
+  optional uint64 count = 1;
+  repeated uint64 group_ids = 2;
+  optional datatypes.v1.GroupFilter group_filter = 3;
+  optional datatypes.v1.PendingGroupMemberFilter pending_member_filter = 4;
+}
 message GroupPendingMemberAddedNotification {
   datatypes.v1.Group group = 1;
   datatypes.v1.PendingGroupMember pending_member = 2;
@@ -62,7 +88,12 @@ message GroupPendingMemberAddedNotification {
 /*
  ** GroupPendingMemberRemoved
  */
-message SubscribeToGroupPendingMemberRemovedNotification {}
+message SubscribeToGroupPendingMemberRemovedNotification {
+  optional uint64 count = 1;
+  repeated uint64 group_ids = 2;
+  optional datatypes.v1.GroupFilter group_filter = 3;
+  optional datatypes.v1.PendingGroupMemberFilter pending_member_filter = 4;
+}
 message GroupPendingMemberRemovedNotification {
   datatypes.v1.Group group = 1;
   datatypes.v1.PendingGroupMember pending_member = 2;
@@ -71,7 +102,12 @@ message GroupPendingMemberRemovedNotification {
 /*
  ** GroupMemberJoined
  */
-message SubscribeToGroupMemberJoinedNotification {}
+message SubscribeToGroupMemberJoinedNotification {
+  optional uint64 count = 1;
+  repeated uint64 group_ids = 2;
+  optional datatypes.v1.GroupFilter group_filter = 3;
+  optional datatypes.v1.GroupMemberFilter member_filter = 4;
+}
 message GroupMemberJoinedNotification {
   datatypes.v1.Group group = 1;
   datatypes.v1.GroupMember member = 2;
@@ -80,17 +116,28 @@ message GroupMemberJoinedNotification {
 /*
  ** GroupMemberLeft
  */
-message SubscribeToGroupMemberLeftNotification {}
+message SubscribeToGroupMemberLeftNotification {
+  optional uint64 count = 1;
+  repeated uint64 group_ids = 2;
+  optional datatypes.v1.GroupFilter group_filter = 3;
+  optional datatypes.v1.GroupMemberFilter member_filter = 4;
+}
 message GroupMemberLeftNotification {
   datatypes.v1.Group group = 1;
   datatypes.v1.GroupMember member = 2;
 }
 
 /*
- ** GroupPermissionsUpdated
+ ** GroupOwnPermissionsUpdated
  ** triggered when your permissions are updated
  */
-message SubscribeToGroupOwnPermissionsUpdatedNotification {}
+message SubscribeToGroupOwnPermissionsUpdatedNotification {
+  optional uint64 count = 1;
+  repeated uint64 group_ids = 2;
+  optional datatypes.v1.GroupFilter group_filter = 3;
+  optional datatypes.v1.GroupPermissionFilter permissions_filter = 4;
+  optional datatypes.v1.GroupPermissionFilter previous_permissions_filter = 5;
+}
 message GroupOwnPermissionsUpdatedNotification {
   datatypes.v1.Group group = 1;
   datatypes.v1.GroupMemberPermissions permissions = 2;
@@ -101,10 +148,16 @@ message GroupOwnPermissionsUpdatedNotification {
  ** GroupMemberPermissionsUpdated
  ** triggered when permissions of a group member are updated
  */
-message SubscribeToGroupMemberPermissionsUpdatedNotification {}
+message SubscribeToGroupMemberPermissionsUpdatedNotification {
+  optional uint64 count = 1;
+  repeated uint64 group_ids = 2;
+  optional datatypes.v1.GroupFilter group_filter = 3;
+  optional datatypes.v1.GroupMemberFilter member_filter = 4;
+  optional datatypes.v1.GroupMemberFilter previous_permission_filter = 5;
+}
 message GroupMemberPermissionsUpdatedNotification {
   datatypes.v1.Group group = 1;
-  datatypes.v1.GroupMember member = 2; // not set if your permissions were updated
+  datatypes.v1.GroupMember member = 2;
   datatypes.v1.GroupMemberPermissions previous_permissions = 3;
 }
 
@@ -112,7 +165,10 @@ message GroupMemberPermissionsUpdatedNotification {
  ** GroupUpdateInProgress
  */
 // deprecated
-message SubscribeToGroupUpdateInProgressNotification {}
+message SubscribeToGroupUpdateInProgressNotification {
+  optional uint64 count = 1;
+  repeated uint64 group_ids = 3;
+}
 message GroupUpdateInProgressNotification {
   uint64 group_id = 1;
 }
@@ -121,7 +177,10 @@ message GroupUpdateInProgressNotification {
  ** GroupUpdateFinished
  */
 // deprecated
-message SubscribeToGroupUpdateFinishedNotification {}
+message SubscribeToGroupUpdateFinishedNotification {
+  optional uint64 count = 1;
+  repeated uint64 group_ids = 3;
+}
 message GroupUpdateFinishedNotification {
   uint64 group_id = 1;
 }

@@ -100,7 +100,7 @@ message MessageFilter {
   optional uint64 max_timestamp = 9;
 
   // reactions
-  optional Reaction reaction = 10;
+  optional Reaction has_reaction = 10;
   repeated ReactionFilter reactions_filter = 11;
 
   // message reply

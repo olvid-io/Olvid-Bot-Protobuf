@@ -3,6 +3,7 @@ syntax = "proto3";
 package olvid.daemon.services.v1;
 
 import "olvid/daemon/command/v1/attachment_commands.proto";
+import "olvid/daemon/command/v1/call_commands.proto";
 import "olvid/daemon/command/v1/contact_commands.proto";
 import "olvid/daemon/command/v1/discussion_commands.proto";
 import "olvid/daemon/command/v1/group_commands.proto";
@@ -109,6 +110,7 @@ service MessageCommandService {
   rpc MessageEndLocationSharing(command.v1.MessageEndLocationSharingRequest) returns (command.v1.MessageEndLocationSharingResponse) {}
   rpc MessageReact(command.v1.MessageReactRequest) returns (command.v1.MessageReactResponse) {}
   rpc MessageUpdateBody(command.v1.MessageUpdateBodyRequest) returns (command.v1.MessageUpdateBodyResponse) {}
+  // ⚠️ deprecated: use CallCommandService instead ⚠️
   rpc MessageSendVoip(command.v1.MessageSendVoipRequest) returns (command.v1.MessageSendVoipResponse) {}
 }
 
@@ -134,4 +136,10 @@ service DiscussionStorageCommandService {
   rpc DiscussionStorageGet(command.v1.DiscussionStorageGetRequest) returns (command.v1.DiscussionStorageGetResponse) {}
   rpc DiscussionStorageSet(command.v1.DiscussionStorageSetRequest) returns (command.v1.DiscussionStorageSetResponse) {}
   rpc DiscussionStorageUnset(command.v1.DiscussionStorageUnsetRequest) returns (command.v1.DiscussionStorageUnsetResponse) {}
+}
+
+// Call
+service CallCommandService {
+  rpc CallStartDiscussionCall(command.v1.CallStartDiscussionCallRequest) returns (command.v1.CallStartDiscussionCallResponse) {}
+  rpc CallStartCustomCall(command.v1.CallStartCustomCallRequest) returns (command.v1.CallStartCustomCallResponse) {}
 }
