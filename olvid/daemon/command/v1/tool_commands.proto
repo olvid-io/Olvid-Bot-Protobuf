@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package olvid.daemon.command.v1;
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** Ping
+ ** unauthenticated rpc to check daemon is up and accessible
+ */
+message PingRequest {}
+message PingResponse {}

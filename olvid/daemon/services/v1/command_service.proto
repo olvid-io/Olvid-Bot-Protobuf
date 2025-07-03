@@ -12,10 +12,16 @@ import "olvid/daemon/command/v1/invitation_commands.proto";
 import "olvid/daemon/command/v1/keycloak_commands.proto";
 import "olvid/daemon/command/v1/message_commands.proto";
 import "olvid/daemon/command/v1/storage_commands.proto";
+import "olvid/daemon/command/v1/tool_commands.proto";
 
 option go_package = "olvid.io/daemon";
 option java_multiple_files = true;
 option java_package = "io.olvid.desktop.daemon.protobuf";
+
+// Tools
+service ToolCommandService {
+	rpc Ping(command.v1.PingRequest) returns (command.v1.PingResponse) {}
+}
 
 // Identity
 service IdentityCommandService {
