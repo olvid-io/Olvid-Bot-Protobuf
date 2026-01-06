@@ -148,10 +148,11 @@ message MessageEndLocationSharingResponse {
 
 /*
  ** MessageReact
+ ** if reaction is not set delete current reaction if there is one
  */
 message MessageReactRequest {
   datatypes.v1.MessageId message_id = 1;
-  string reaction = 2;
+  optional string reaction = 2;
 }
 message MessageReactResponse {}
 
@@ -163,12 +164,3 @@ message MessageUpdateBodyRequest {
   string updated_body = 2;
 }
 message MessageUpdateBodyResponse {}
-
-/*
- ** MessageSendVoip
- ** ⚠️ deprecated: use CallCommandService instead ⚠️
- */
-message MessageSendVoipRequest {
-  uint64 discussion_id = 1;
-}
-message MessageSendVoipResponse {}

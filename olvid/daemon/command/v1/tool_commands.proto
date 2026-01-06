@@ -12,3 +12,26 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
  */
 message PingRequest {}
 message PingResponse {}
+
+/*
+ ** DaemonVersion
+ ** authenticated rpc to get current daemon version
+ */
+message DaemonVersionRequest {}
+message DaemonVersionResponse {
+  string version = 1;
+}
+
+/*
+ ** AuthenticationTest
+ ** check that sent credentials are valid user credentials, else it returns an error
+ */
+message AuthenticationTestRequest {}
+message AuthenticationTestResponse {}
+
+/*
+ ** AuthenticationAdminTest
+ ** check that sent credentials are valid admin credentials, else it returns an error
+ */
+message AuthenticationAdminTestRequest {}
+message AuthenticationAdminTestResponse {}

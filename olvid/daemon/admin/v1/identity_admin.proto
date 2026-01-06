@@ -64,19 +64,10 @@ message IdentityAdminDownloadPhotoResponse {
 message IdentityNewRequest {
   datatypes.v1.IdentityDetails identity_details = 1;
   optional string server_url = 2;
-  optional string api_key = 3;
 }
 message IdentityNewResponse {
   datatypes.v1.Identity identity = 1;
 }
-
-/*
- ** IdentityDelete
- */
-message IdentityDeleteRequest {
-  uint64 identity_id = 1;
-}
-message IdentityDeleteResponse {}
 
 /*
  ** IdentityKeycloakNew
@@ -87,3 +78,13 @@ message IdentityKeycloakNewRequest {
 message IdentityKeycloakNewResponse {
   datatypes.v1.Identity identity = 1;
 }
+
+/*
+ ** IdentityDelete
+ ** delete everywhere: delete from every device and notify your contacts for deletion
+ */
+message IdentityDeleteRequest {
+  uint64 identity_id = 1;
+  optional bool delete_everywhere = 2;
+}
+message IdentityDeleteResponse {}

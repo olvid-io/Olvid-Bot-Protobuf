@@ -26,3 +26,9 @@ message KeycloakUserFilter {
   optional string display_name_search = 2;
   optional IdentityDetails details_search = 3;
 }
+
+message KeycloakApiCredentials {
+  string server_url = 1;
+  string username = 2;
+  string direct_auth_token = 3;
+}

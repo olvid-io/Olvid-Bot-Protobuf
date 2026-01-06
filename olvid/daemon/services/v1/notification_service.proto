@@ -52,8 +52,6 @@ service GroupNotificationService {
   rpc GroupMemberLeft(notification.v1.SubscribeToGroupMemberLeftNotification) returns (stream notification.v1.GroupMemberLeftNotification) {}
   rpc GroupOwnPermissionsUpdated(notification.v1.SubscribeToGroupOwnPermissionsUpdatedNotification) returns (stream notification.v1.GroupOwnPermissionsUpdatedNotification) {}
   rpc GroupMemberPermissionsUpdated(notification.v1.SubscribeToGroupMemberPermissionsUpdatedNotification) returns (stream notification.v1.GroupMemberPermissionsUpdatedNotification) {}
-  rpc GroupUpdateInProgress(notification.v1.SubscribeToGroupUpdateInProgressNotification) returns (stream notification.v1.GroupUpdateInProgressNotification) {}
-  rpc GroupUpdateFinished(notification.v1.SubscribeToGroupUpdateFinishedNotification) returns (stream notification.v1.GroupUpdateFinishedNotification) {}
 }
 
 // Discussion

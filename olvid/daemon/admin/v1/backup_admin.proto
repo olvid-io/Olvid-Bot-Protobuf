@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package olvid.daemon.admin.v1;
+
+import "olvid/daemon/datatypes/v1/backup.proto";
+import "olvid/daemon/datatypes/v1/client_key.proto";
+import "olvid/daemon/datatypes/v1/identity.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** BackupKeyGet
+ ** get your current backup key (to store in a safe place to restore your identities)
+ */
+message BackupKeyGetRequest {}
+message BackupKeyGetResponse {
+  string backup_key = 1;
+}
+
+/*
+ ** BackupKeyRenew
+ ** discard previous backup key and create a new one
+ */
+message BackupKeyRenewRequest {}
+message BackupKeyRenewResponse {
+  string backup_key = 1;
+}
+
+/*
+ ** BackupGet
+ ** show backup associated with a backup key.
+ ** It contains an admin backup with admin client key and associated storage,
+ ** and snapshots for each profile (identity).
+ */
+message BackupGetRequest {
+  string backup_key = 1;
+}
+message BackupGetResponse {
+  datatypes.v1.Backup backup = 1;
+}
+
+/*
+ ** BackupNow
+ ** force to backup now
+ */
+message BackupNowRequest {}
+message BackupNowResponse {}
+
+/*
+ ** BackupRestoreDaemon
+ ** restore a complete daemon instance, only possible on a blank daemon instance
+ */
+message BackupRestoreDaemonRequest {
+  string backup_key = 1;
+  // specify a name for this new daemon
+  optional string new_device_name = 2;
+}
+message BackupRestoreDaemonResponse {
+  repeated datatypes.v1.Identity restored_identities = 1;
+  repeated datatypes.v1.ClientKey restored_admin_client_keys = 2;
+  repeated datatypes.v1.ClientKey restored_client_keys = 3;
+}
+
+/*
+ ** BackupRestoreAdminBackup
+ ** restore a backup admin data (admin client keys and associated storage)
+ */
+message BackupRestoreAdminBackupRequest {
+  string backup_key = 1;
+}
+message BackupRestoreAdminBackupResponse {
+  repeated datatypes.v1.ClientKey restored_admin_client_keys = 1;
+}
+
+/*
+ ** BackupRestoreProfileSnapshot
+ ** restore a specific profile snapshot
+ */
+message BackupRestoreProfileSnapshotRequest {
+  string backup_key = 1;
+  string id = 2;
+  // specify a name for this new daemon
+  optional string new_device_name = 3;
+}
+message BackupRestoreProfileSnapshotResponse {
+  datatypes.v1.Identity restored_identity = 1;
+  repeated datatypes.v1.ClientKey restored_client_keys = 2;
+}

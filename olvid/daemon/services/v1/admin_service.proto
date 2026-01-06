@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package olvid.daemon.services.v1;
 
+import "olvid/daemon/admin/v1/backup_admin.proto";
 import "olvid/daemon/admin/v1/client_key_admin.proto";
 import "olvid/daemon/admin/v1/identity_admin.proto";
 
@@ -27,4 +28,15 @@ service IdentityAdminService {
   rpc IdentityDelete(admin.v1.IdentityDeleteRequest) returns (admin.v1.IdentityDeleteResponse) {}
   rpc IdentityNew(admin.v1.IdentityNewRequest) returns (admin.v1.IdentityNewResponse) {}
   rpc IdentityKeycloakNew(admin.v1.IdentityKeycloakNewRequest) returns (admin.v1.IdentityKeycloakNewResponse) {}
+}
+
+// Backup
+service BackupAdminService {
+  rpc BackupKeyGet(admin.v1.BackupKeyGetRequest) returns (admin.v1.BackupKeyGetResponse) {}
+  rpc BackupKeyRenew(admin.v1.BackupKeyRenewRequest) returns (admin.v1.BackupKeyRenewResponse) {}
+  rpc BackupGet(admin.v1.BackupGetRequest) returns (admin.v1.BackupGetResponse) {}
+  rpc BackupNow(admin.v1.BackupNowRequest) returns (admin.v1.BackupNowResponse) {}
+  rpc BackupRestoreDaemon(admin.v1.BackupRestoreDaemonRequest) returns (admin.v1.BackupRestoreDaemonResponse) {}
+  rpc BackupRestoreAdminBackup(admin.v1.BackupRestoreAdminBackupRequest) returns (admin.v1.BackupRestoreAdminBackupResponse) {}
+  rpc BackupRestoreProfileSnapshot(admin.v1.BackupRestoreProfileSnapshotRequest) returns (admin.v1.BackupRestoreProfileSnapshotResponse) {}
 }

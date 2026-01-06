@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package olvid.daemon.command.v1;
+
+import "olvid/daemon/datatypes/v1/settings.proto";
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = true;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** SettingsIdentityGet
+ */
+message SettingsIdentityGetRequest {}
+message SettingsIdentityGetResponse {
+  datatypes.v1.IdentitySettings identity_settings = 1;
+}
+
+/*
+ ** SettingsIdentitySet
+ */
+message SettingsIdentitySetRequest {
+  datatypes.v1.IdentitySettings identity_settings = 1;
+}
+message SettingsIdentitySetResponse {
+  datatypes.v1.IdentitySettings identity_settings = 1;
+}
+
+/*
+ ** SettingsDiscussionGet
+ */
+message SettingsDiscussionGetRequest {
+  uint64 discussion_id = 1;
+}
+message SettingsDiscussionGetResponse {
+  datatypes.v1.DiscussionSettings discussion_settings = 1;
+}
+
+/*
+ ** SettingsDiscussionSet
+ */
+message SettingsDiscussionSetRequest {
+  datatypes.v1.DiscussionSettings discussion_settings = 1;
+}
+message SettingsDiscussionSetResponse {
+  datatypes.v1.DiscussionSettings discussion_settings = 1;
+}

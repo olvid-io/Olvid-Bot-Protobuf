@@ -16,14 +16,6 @@ message Discussion {
   }
 }
 
-message DiscussionSettings {
-  uint64 discussion_id = 1;
-  // ephemeral settings
-  bool read_once = 2;
-  uint64 existence_duration = 3; // 0 -> disabled
-  uint64 visibility_duration = 4; // 0 -> disabled
-}
-
 message DiscussionFilter {
   enum Type {
     TYPE_UNSPECIFIED = 0;

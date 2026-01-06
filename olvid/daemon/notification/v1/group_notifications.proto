@@ -160,27 +160,3 @@ message GroupMemberPermissionsUpdatedNotification {
   datatypes.v1.GroupMember member = 2;
   datatypes.v1.GroupMemberPermissions previous_permissions = 3;
 }
-
-/*
- ** GroupUpdateInProgress
- */
-// deprecated
-message SubscribeToGroupUpdateInProgressNotification {
-  optional uint64 count = 1;
-  repeated uint64 group_ids = 3;
-}
-message GroupUpdateInProgressNotification {
-  uint64 group_id = 1;
-}
-
-/*
- ** GroupUpdateFinished
- */
-// deprecated
-message SubscribeToGroupUpdateFinishedNotification {
-  optional uint64 count = 1;
-  repeated uint64 group_ids = 3;
-}
-message GroupUpdateFinishedNotification {
-  uint64 group_id = 1;
-}

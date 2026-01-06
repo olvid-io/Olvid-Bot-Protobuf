@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package olvid.daemon.datatypes.v1;
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = false;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+message IdentitySettings {
+  message AutoAcceptInvitation {
+    bool auto_accept_introduction = 1;
+    bool auto_accept_group = 2;
+    bool auto_accept_one_to_one = 3;
+    bool auto_accept_invitation = 4;
+  }
+
+  message MessageRetention {
+    uint64 existence_duration = 1; // 0 -> disabled (seconds)
+    uint64 discussion_count = 2; // 0 -> disabled
+    uint64 global_count = 3; // 0 -> disabled
+    bool clean_locked_discussions = 4;
+  }
+
+  message Keycloak {
+    bool auto_invite_new_members = 1;
+  }
+
+  AutoAcceptInvitation invitation = 1;
+  MessageRetention message_retention = 2;
+  Keycloak keycloak = 3;
+}
+
+message DiscussionSettings {
+  uint64 discussion_id = 1;
+  // message ephemerality settings (does not use a proper message for legacy reasons)
+  bool read_once = 2;
+  uint64 existence_duration = 3; // 0 -> disabled (seconds)
+  uint64 visibility_duration = 4; // 0 -> disabled (seconds)
+}

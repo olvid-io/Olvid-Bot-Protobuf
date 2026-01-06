@@ -2,11 +2,26 @@ syntax = "proto3";
 
 package olvid.daemon.command.v1;
 
+import "olvid/daemon/datatypes/v1/identity.proto";
 import "olvid/daemon/datatypes/v1/keycloak.proto";
 
 option go_package = "olvid.io/daemon";
 option java_multiple_files = true;
 option java_package = "io.olvid.desktop.daemon.protobuf";
+
+/*
+ ** KeycloakBindIdentity
+ */
+message KeycloakBindIdentityRequest {
+  string configuration_link = 1;
+}
+message KeycloakBindIdentityResponse {} // binding is partially asynchronous, so we cannot send back updated identity
+
+/*
+ ** KeycloakUnbindIdentity
+ */
+message KeycloakUnbindIdentityRequest {}
+message KeycloakUnbindIdentityResponse {}
 
 /*
  ** KeycloakUserList
@@ -27,3 +42,11 @@ message KeycloakAddUserAsContactRequest {
   string keycloak_id = 1;
 }
 message KeycloakAddUserAsContactResponse {}
+
+/*
+ ** KeycloakGetApiCredentials
+ */
+message KeycloakGetApiCredentialsRequest {}
+message KeycloakGetApiCredentialsResponse {
+  datatypes.v1.KeycloakApiCredentials credentials = 1;
+}

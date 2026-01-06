@@ -3,6 +3,7 @@ syntax = "proto3";
 package olvid.daemon.notification.v1;
 
 import "olvid/daemon/datatypes/v1/discussion.proto";
+import "olvid/daemon/datatypes/v1/settings.proto";
 
 option go_package = "olvid.io/daemon";
 option java_multiple_files = true;

@@ -33,7 +33,7 @@ message Group {
   GroupMemberPermissions own_permissions = 4; // your permissions in this group
   repeated GroupMember members = 5;
   repeated PendingGroupMember pending_members = 6;
-  bool update_in_progress = 7; // deprecated ?
+  bool update_in_progress = 7;
   bool keycloak_managed = 8;
   // group details
   string name = 9;

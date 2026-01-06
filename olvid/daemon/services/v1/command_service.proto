@@ -11,6 +11,7 @@ import "olvid/daemon/command/v1/identity_commands.proto";
 import "olvid/daemon/command/v1/invitation_commands.proto";
 import "olvid/daemon/command/v1/keycloak_commands.proto";
 import "olvid/daemon/command/v1/message_commands.proto";
+import "olvid/daemon/command/v1/settings_commands.proto";
 import "olvid/daemon/command/v1/storage_commands.proto";
 import "olvid/daemon/command/v1/tool_commands.proto";
 
@@ -20,7 +21,10 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 // Tools
 service ToolCommandService {
-	rpc Ping(command.v1.PingRequest) returns (command.v1.PingResponse) {}
+  rpc Ping(command.v1.PingRequest) returns (command.v1.PingResponse) {}
+  rpc DaemonVersion(command.v1.DaemonVersionRequest) returns (command.v1.DaemonVersionResponse) {}
+  rpc AuthenticationTest(command.v1.AuthenticationTestRequest) returns (command.v1.AuthenticationTestResponse) {}
+  rpc AuthenticationAdminTest(command.v1.AuthenticationAdminTestRequest) returns (command.v1.AuthenticationAdminTestResponse) {}
 }
 
 // Identity
@@ -32,8 +36,7 @@ service IdentityCommandService {
   rpc IdentityRemovePhoto(command.v1.IdentityRemovePhotoRequest) returns (command.v1.IdentityRemovePhotoResponse) {}
   rpc IdentitySetPhoto(stream command.v1.IdentitySetPhotoRequest) returns (command.v1.IdentitySetPhotoResponse) {}
   rpc IdentityDownloadPhoto(command.v1.IdentityDownloadPhotoRequest) returns (command.v1.IdentityDownloadPhotoResponse) {}
-  rpc IdentityKeycloakBind(command.v1.IdentityKeycloakBindRequest) returns (command.v1.IdentityKeycloakBindResponse) {}
-  rpc IdentityKeycloakUnbind(command.v1.IdentityKeycloakUnbindRequest) returns (command.v1.IdentityKeycloakUnbindResponse) {}
+  rpc IdentityGetApiKeyStatus(command.v1.IdentityGetApiKeyStatusRequest) returns (command.v1.IdentityGetApiKeyStatusResponse) {}
   rpc IdentitySetApiKey(command.v1.IdentitySetApiKeyRequest) returns (command.v1.IdentitySetApiKeyResponse) {}
   rpc IdentitySetConfigurationLink(command.v1.IdentitySetConfigurationLinkRequest) returns (command.v1.IdentitySetConfigurationLinkResponse) {}
 }
@@ -66,8 +69,11 @@ service ContactCommandService {
 
 // Keycloak
 service KeycloakCommandService {
+  rpc KeycloakBindIdentity(command.v1.KeycloakBindIdentityRequest) returns (command.v1.KeycloakBindIdentityResponse) {}
+  rpc KeycloakUnbindIdentity(command.v1.KeycloakUnbindIdentityRequest) returns (command.v1.KeycloakUnbindIdentityResponse) {}
   rpc KeycloakUserList(command.v1.KeycloakUserListRequest) returns (stream command.v1.KeycloakUserListResponse) {}
   rpc KeycloakAddUserAsContact(command.v1.KeycloakAddUserAsContactRequest) returns (command.v1.KeycloakAddUserAsContactResponse) {}
+  rpc KeycloakGetApiCredentials(command.v1.KeycloakGetApiCredentialsRequest) returns (command.v1.KeycloakGetApiCredentialsResponse) {}
 }
 
 // Group
@@ -95,8 +101,7 @@ service DiscussionCommandService {
   rpc DiscussionGetByContact(command.v1.DiscussionGetByContactRequest) returns (command.v1.DiscussionGetByContactResponse) {}
   rpc DiscussionGetByGroup(command.v1.DiscussionGetByGroupRequest) returns (command.v1.DiscussionGetByGroupResponse) {}
   rpc DiscussionEmpty(command.v1.DiscussionEmptyRequest) returns (command.v1.DiscussionEmptyResponse) {}
-  rpc DiscussionSettingsGet(command.v1.DiscussionSettingsGetRequest) returns (command.v1.DiscussionSettingsGetResponse) {}
-  rpc DiscussionSettingsSet(command.v1.DiscussionSettingsSetRequest) returns (command.v1.DiscussionSettingsSetResponse) {}
+  rpc DiscussionDownloadPhoto(command.v1.DiscussionDownloadPhotoRequest) returns (command.v1.DiscussionDownloadPhotoResponse) {}
   // locked discussions
   rpc DiscussionLockedList(command.v1.DiscussionLockedListRequest) returns (stream command.v1.DiscussionLockedListResponse) {}
   rpc DiscussionLockedDelete(command.v1.DiscussionLockedDeleteRequest) returns (command.v1.DiscussionLockedDeleteResponse) {}
@@ -116,8 +121,6 @@ service MessageCommandService {
   rpc MessageEndLocationSharing(command.v1.MessageEndLocationSharingRequest) returns (command.v1.MessageEndLocationSharingResponse) {}
   rpc MessageReact(command.v1.MessageReactRequest) returns (command.v1.MessageReactResponse) {}
   rpc MessageUpdateBody(command.v1.MessageUpdateBodyRequest) returns (command.v1.MessageUpdateBodyResponse) {}
-  // ⚠️ deprecated: use CallCommandService instead ⚠️
-  rpc MessageSendVoip(command.v1.MessageSendVoipRequest) returns (command.v1.MessageSendVoipResponse) {}
 }
 
 // Attachment
@@ -148,4 +151,12 @@ service DiscussionStorageCommandService {
 service CallCommandService {
   rpc CallStartDiscussionCall(command.v1.CallStartDiscussionCallRequest) returns (command.v1.CallStartDiscussionCallResponse) {}
   rpc CallStartCustomCall(command.v1.CallStartCustomCallRequest) returns (command.v1.CallStartCustomCallResponse) {}
+}
+
+// Settings
+service SettingsCommandService {
+  rpc SettingsIdentityGet(command.v1.SettingsIdentityGetRequest) returns (command.v1.SettingsIdentityGetResponse) {}
+  rpc SettingsIdentitySet(command.v1.SettingsIdentitySetRequest) returns (command.v1.SettingsIdentitySetResponse) {}
+  rpc SettingsDiscussionGet(command.v1.SettingsDiscussionGetRequest) returns (command.v1.SettingsDiscussionGetResponse) {}
+  rpc SettingsDiscussionSet(command.v1.SettingsDiscussionSetRequest) returns (command.v1.SettingsDiscussionSetResponse) {}
 }

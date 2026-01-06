@@ -70,18 +70,12 @@ message IdentityDownloadPhotoResponse {
 }
 
 /*
- ** IdentityKeycloakBind
+ ** IdentityGetApiKeyStatus
  */
-message IdentityKeycloakBindRequest {
-  string configuration_link = 1;
+message IdentityGetApiKeyStatusRequest {}
+message IdentityGetApiKeyStatusResponse {
+  datatypes.v1.Identity.ApiKey api_key = 1;
 }
-message IdentityKeycloakBindResponse {} // binding is partially asynchronous, so we cannot send back updated identity
-
-/*
- ** IdentityKeycloakUnbind
- */
-message IdentityKeycloakUnbindRequest {}
-message IdentityKeycloakUnbindResponse {}
 
 /*
  ** IdentitySetApiKey

@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package olvid.daemon.datatypes.v1;
+
+option go_package = "olvid.io/daemon";
+option java_multiple_files = false;
+option java_package = "io.olvid.desktop.daemon.protobuf";
+
+import "olvid/daemon/datatypes/v1/settings.proto";
+
+message Backup {
+  message AdminBackup {
+    uint64 admin_client_key_count = 1;
+    uint64 storage_elements_count = 2;
+  }
+
+  message ProfileBackup {
+    message Snapshot {
+      string id = 1;
+      uint64 timestamp = 2;
+      string from_device_name = 3;
+      uint64 contact_count = 4;
+      uint64 group_count = 5;
+      uint64 client_key_count = 6;
+      uint64 storage_elements_count = 7;
+	  IdentitySettings identitySettings = 8;
+    }
+    string profile_display_name = 1;
+    bool already_exists_locally = 2;
+    bool keycloak_managed = 3;
+    repeated Snapshot snapshots = 4;
+  }
+
+  AdminBackup admin_backup = 1;
+  repeated ProfileBackup profile_backups = 2;
+}

@@ -63,28 +63,17 @@ message DiscussionGetByGroupResponse {
  */
 message DiscussionEmptyRequest {
   uint64 discussion_id = 1;
-  optional bool delete_everywhere = 2;
 }
 message DiscussionEmptyResponse {}
 
 /*
- ** DiscussionSettingsGet
+ ** DiscussionDownloadPhoto
  */
-message DiscussionSettingsGetRequest {
+message DiscussionDownloadPhotoRequest {
   uint64 discussion_id = 1;
 }
-message DiscussionSettingsGetResponse {
-  datatypes.v1.DiscussionSettings settings = 1;
-}
-
-/*
- ** DiscussionSettingsSet
- */
-message DiscussionSettingsSetRequest {
-  datatypes.v1.DiscussionSettings settings = 1;
-}
-message DiscussionSettingsSetResponse {
-  datatypes.v1.DiscussionSettings new_settings = 1;
+message DiscussionDownloadPhotoResponse {
+  bytes photo = 1;
 }
 
 /*
