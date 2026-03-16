@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package olvid.daemon.datatypes.v1;
 
+import "olvid/daemon/datatypes/v1/settings.proto";
+
 option go_package = "olvid.io/daemon";
 option java_multiple_files = false;
 option java_package = "io.olvid.desktop.daemon.protobuf";
-
-import "olvid/daemon/datatypes/v1/settings.proto";
 
 message Backup {
   message AdminBackup {
@@ -23,7 +23,7 @@ message Backup {
       uint64 group_count = 5;
       uint64 client_key_count = 6;
       uint64 storage_elements_count = 7;
-	  IdentitySettings identitySettings = 8;
+      IdentitySettings identity_settings = 8;
     }
     string profile_display_name = 1;
     bool already_exists_locally = 2;

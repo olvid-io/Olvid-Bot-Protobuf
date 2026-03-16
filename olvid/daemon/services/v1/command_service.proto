@@ -73,7 +73,6 @@ service KeycloakCommandService {
   rpc KeycloakUnbindIdentity(command.v1.KeycloakUnbindIdentityRequest) returns (command.v1.KeycloakUnbindIdentityResponse) {}
   rpc KeycloakUserList(command.v1.KeycloakUserListRequest) returns (stream command.v1.KeycloakUserListResponse) {}
   rpc KeycloakAddUserAsContact(command.v1.KeycloakAddUserAsContactRequest) returns (command.v1.KeycloakAddUserAsContactResponse) {}
-  rpc KeycloakGetApiCredentials(command.v1.KeycloakGetApiCredentialsRequest) returns (command.v1.KeycloakGetApiCredentialsResponse) {}
 }
 
 // Group

@@ -18,6 +18,8 @@ message SettingsIdentityGetResponse {
 
 /*
  ** SettingsIdentitySet
+ ** WARN: this entrypoint erase WHOLE settings. To update identity settings use SettingsIdentityGet to get current config
+ ** and only edit fields you want to update.
  */
 message SettingsIdentitySetRequest {
   datatypes.v1.IdentitySettings identity_settings = 1;

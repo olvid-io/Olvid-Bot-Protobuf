@@ -19,6 +19,7 @@ message IdentitySettings {
     uint64 discussion_count = 2; // 0 -> disabled
     uint64 global_count = 3; // 0 -> disabled
     bool clean_locked_discussions = 4;
+    bool preserve_is_sharing_location_messages = 5;
   }
 
   message Keycloak {

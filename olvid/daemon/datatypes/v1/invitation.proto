@@ -25,7 +25,10 @@ message Invitation {
   Status status = 2;
   string display_name = 3;
   uint64 timestamp = 4;
-  string sas = 5;
+  // for STATUS_INVITATION_WAIT_YOU_FOR_SAS_EXCHANGE and STATUS_INVITATION_WAIT_IT_FOR_SAS_EXCHANGE, set to pin code to exchange
+  optional string sas = 5;
+  // For introductions only: the contact id of the person who initiated introduction protocol
+  optional uint64 mediatorId = 6;
 }
 
 message InvitationFilter {
