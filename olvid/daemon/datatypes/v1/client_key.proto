@@ -6,17 +6,29 @@ option go_package = "olvid.io/daemon";
 option java_multiple_files = false;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
+/*
+ ** A client key can be used to authenticate on the daemon.
+ ** It can be associated to a daemon identity if identity_id is specified, if not (identity_id is equal to zero) it is an admin client.
+ ** An admin client key can use admin command services and impersonate any daemon identity.
+ */
 message ClientKey {
-  string name = 1;
+  string name = 1; // user defined name
   string key = 2;
-  uint64 identity_id = 3; // 0 if an admin key
+  uint64 identity_id = 3; // 0 if an admin client key
 }
 
+/*
+ ** Filter client keys by attributes.
+ */
 message ClientKeyFilter {
   oneof identity {
+    // filter admin client keys
     bool admin_key = 1;
+    // filter keys associated to an identity id
     uint64 identity_id = 2;
   }
+  // regexp filter on *name*
   optional string name_search = 3;
+  // key value
   optional string key = 4;
 }

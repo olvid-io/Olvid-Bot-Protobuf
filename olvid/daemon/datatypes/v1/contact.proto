@@ -8,17 +8,26 @@ option go_package = "olvid.io/daemon";
 option java_multiple_files = false;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
+/*
+ ** A contact is an other olvid identity you are in contact with.
+ ** A contact can have an associated discussion if has_one_to_one_discussion is true, else it's probably a collected contact you met in a group discussion.
+ ** If keycloak_managed managed contact is registered on the same keycloak.
+ */
 message Contact {
   uint64 id = 1;
-  string display_name = 2;
+  string display_name = 2; // computed from *details*
   datatypes.v1.IdentityDetails details = 3;
-  uint32 established_channel_count = 4;
+  uint32 established_channel_count = 4; // shall be equal to device_count to exchange messages
   uint32 device_count = 5;
   bool has_one_to_one_discussion = 6;
   bool has_a_photo = 7;
   bool keycloak_managed = 8;
 }
 
+/*
+ ** Filter contacts by attributes.
+ ** To pass a filter an element must match all specified conditions.
+ */
 message ContactFilter {
   enum OneToOne {
     ONE_TO_ONE_UNSPECIFIED = 0;
@@ -38,10 +47,15 @@ message ContactFilter {
     KEYCLOAK_NOT_MANAGED = 2;
   }
 
+  // select only contacts with or without one to one discussions
   optional OneToOne one_to_one = 1;
+  // select only contacts with or without profile photo
   optional Photo photo = 2;
+  // select only contacts registered or not on you keycloak
   optional Keycloak keycloak = 3;
 
+  // regexp filter on *display_name*
   optional string display_name_search = 4;
+  // a set of regexp filters, one for each field of *details*
   optional IdentityDetails details_search = 5;
 }

@@ -6,43 +6,96 @@ option go_package = "olvid.io/daemon";
 option java_multiple_files = false;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
+/*
+ ** An invitation represents an instance of a protocol among several possibilities.
+ ** Protocols can be:
+ ** - Invitation: the classic Olvid invitation protocol to add someone else to your contact book. Protocol implies multiple manual steps, with invitation acceptation and four digit code exchange.
+ ** - Introduction: a third party identity presents two of its contacts to each other.
+ ** - One to one invitation: One of your contact asked you to create a one to one discussion.
+ ** - Group invitation: Someone invited you to join a group.
+ **
+ ** Each invitation have a status representing the protocol, and it's current step.
+ */
 message Invitation {
   enum Status {
     STATUS_UNSPECIFIED = 0;
+
+    // you received an invitation, accept or decline it
     STATUS_INVITATION_WAIT_YOU_TO_ACCEPT = 1;
+    // you sent an invitation, recipient must accept it to continue
     STATUS_INVITATION_WAIT_IT_TO_ACCEPT = 2;
+    // invitation process is in progress and will continue after automatic protocol message exchange between protagonist
     STATUS_INVITATION_STATUS_IN_PROGRESS = 3;
+    // you must set other sas code
     STATUS_INVITATION_WAIT_YOU_FOR_SAS_EXCHANGE = 4;
+    // you set other sas code, give your sas code to other
     STATUS_INVITATION_WAIT_IT_FOR_SAS_EXCHANGE = 5;
+
+    // you accepted an introduction, wait for the other to accept too
     STATUS_INTRODUCTION_WAIT_IT_TO_ACCEPT = 7;
+    // you received an introduction
     STATUS_INTRODUCTION_WAIT_YOU_TO_ACCEPT = 8;
+
+    // you sent a one to one invitation, wait for the other to accept
     STATUS_ONE_TO_ONE_INVITATION_WAIT_IT_TO_ACCEPT = 9;
+    // you received a one to one invitation, accept or decline it
     STATUS_ONE_TO_ONE_INVITATION_WAIT_YOU_TO_ACCEPT = 10;
+
+    // you received a group invitation, accept or decline it
     STATUS_GROUP_INVITATION_WAIT_YOU_TO_ACCEPT = 11;
   }
 
+  // invitation unique identifier
   uint64 id = 1;
+  // current protocol step
   Status status = 2;
+  // display name of the other identity or the group name
   string display_name = 3;
+  // latest status update timestamp
   uint64 timestamp = 4;
-  // for STATUS_INVITATION_WAIT_YOU_FOR_SAS_EXCHANGE and STATUS_INVITATION_WAIT_IT_FOR_SAS_EXCHANGE, set to pin code to exchange
+  // only set for STATUS_INVITATION_WAIT_YOU_FOR_SAS_EXCHANGE and STATUS_INVITATION_WAIT_IT_FOR_SAS_EXCHANGE
+  // four digit code to give to the other in an invitation protocol
   optional string sas = 5;
-  // For introductions only: the contact id of the person who initiated introduction protocol
+  // introductions protocol only
+  // the contact id of the person who initiated introduction protocol
   optional uint64 mediatorId = 6;
 }
 
+/*
+ ** Filter invitation by attributes.
+ ** To pass a filter an element must match all specified conditions.
+ */
 message InvitationFilter {
   enum Type {
     TYPE_UNSPECIFIED = 0;
+    // is status one of :
+    // - STATUS_INVITATION_WAIT_YOU_TO_ACCEPT
+    // - STATUS_INVITATION_WAIT_IT_TO_ACCEPT
+    // - STATUS_INVITATION_STATUS_IN_PROGRESS
+    // - STATUS_INVITATION_WAIT_YOU_FOR_SAS_EXCHANGE
+    // - STATUS_INVITATION_WAIT_IT_FOR_SAS_EXCHANGE
     TYPE_INVITATION = 1;
+    // is status one of :
+    // - STATUS_INTRODUCTION_WAIT_IT_TO_ACCEPT
+    // - STATUS_INTRODUCTION_WAIT_YOU_TO_ACCEPT
     TYPE_INTRODUCTION = 2;
+    // is status equals to:
+    // - STATUS_GROUP_INVITATION_WAIT_YOU_TO_ACCEPT
     TYPE_GROUP = 3;
+    // is status one of :
+    // - STATUS_ONE_TO_ONE_INVITATION_WAIT_IT_TO_ACCEPT
+    // - STATUS_ONE_TO_ONE_INVITATION_WAIT_YOU_TO_ACCEPT
     TYPE_ONE_TO_ONE = 4;
   }
 
+  // does invitation have a specific status
   optional Invitation.Status status = 1;
+  // does invitation belongs to a specific protocol
   optional Type type = 2;
+  // regexp filter on *display_name* field
   optional string display_name_search = 3;
+  // is timestamp less or equal than *min_timestamp*
   optional uint64 min_timestamp = 4;
+  // is timestamp more or equal than *max_timestamp*
   optional uint64 max_timestamp = 5;
 }

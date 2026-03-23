@@ -8,13 +8,25 @@ option go_package = "olvid.io/daemon";
 option java_multiple_files = false;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
+/*
+ ** One of your directory user.
+ **
+ */
 message KeycloakUser {
+  // unique identifier for directory, to use to add this user as a contact
   string keycloak_id = 1;
+  // name computed from details
   string display_name = 2;
+  // full identity details
   daemon.datatypes.v1.IdentityDetails details = 3;
+  // filled if this user is already a contact, else set to 0
   optional uint64 contact_id = 4;
 }
 
+/*
+ ** Filter keycloak users by attributes.
+ ** To pass a filter an element must match all specified conditions.
+ */
 message KeycloakUserFilter {
   enum Contact {
     CONTACT_UNSPECIFIED = 0;
@@ -22,7 +34,10 @@ message KeycloakUserFilter {
     CONTACT_IS_NOT = 2;
   }
 
+  // is user a contact or not
   optional Contact contact = 1;
+  // regexp filter on *display_name* field
   optional string display_name_search = 2;
+  // a set of regexp filters, one for each field of *details*
   optional IdentityDetails details_search = 3;
 }

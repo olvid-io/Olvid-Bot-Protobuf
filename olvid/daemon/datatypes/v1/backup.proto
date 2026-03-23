@@ -8,6 +8,15 @@ option go_package = "olvid.io/daemon";
 option java_multiple_files = false;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
+/*
+ ** Describe a full backup obtained with a backup key.
+ ** A backup contains multiple parts.
+ ** The AdminBackup contains the admin client keys and the elements contained in the global daemon storage.
+ ** A backup may contains multiple profile backup (one per identity), and each may contains one or more snapshot.
+ ** A profile snapshot contains an identity it's discussion, contacts, groups, client keys, and discussion storage.
+ **
+ ** Mind a backup does not contain any message or attachment.
+ */
 message Backup {
   message AdminBackup {
     uint64 admin_client_key_count = 1;
@@ -16,7 +25,7 @@ message Backup {
 
   message ProfileBackup {
     message Snapshot {
-      string id = 1;
+      string id = 1; // id to specify to restore an identity backup
       uint64 timestamp = 2;
       string from_device_name = 3;
       uint64 contact_count = 4;

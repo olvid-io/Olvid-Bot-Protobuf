@@ -6,6 +6,9 @@ option go_package = "olvid.io/daemon";
 option java_multiple_files = false;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
+/*
+ ** Identify a call participant by it's contact id, or a random identifier if it is not a contact.
+ */
 message CallParticipantId {
   oneof id {
     uint64 contact_id = 1;

@@ -8,45 +8,69 @@ option go_package = "olvid.io/daemon";
 option java_multiple_files = false;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
-message AttachmentId {
-  enum Type {
-    TYPE_UNSPECIFIED = 0;
-    TYPE_INBOUND = 1;
-    TYPE_OUTBOUND = 2;
-  }
-  Type type = 1;
-  uint64 id = 2;
-}
-
+/*
+ ** An attachment represents a file attached to a message.
+ ** It is associated to a *message_id* and a *discussion_id*.
+ **
+ ** Link previews are attachments with specific mime type: *olvid/link-preview*.
+ */
 message Attachment {
   AttachmentId id = 1;
   uint64 discussion_id = 2;
   MessageId message_id = 3;
   string file_name = 4;
   string mime_type = 5;
+  // file size in bytes
   uint64 size = 6;
 }
 
+/*
+ ** A composite id to uniquely identify an attachment.
+ */
+message AttachmentId {
+  enum Type {
+    TYPE_UNSPECIFIED = 0;
+    // received attachments
+    TYPE_INBOUND = 1;
+    // sent attachments
+    TYPE_OUTBOUND = 2;
+  }
+  // inbound or outbound attachment
+  Type type = 1;
+  uint64 id = 2;
+}
+
+/*
+ ** Filter attachments by attributes.
+ ** To pass a filter an element must match all specified conditions.
+ */
 message AttachmentFilter {
+  // apply pre-defined regexp filters on *mime_type*.
   enum FileType {
     FILE_TYPE_UNSPECIFIED = 0;
     FILE_TYPE_IMAGE = 3;
     FILE_TYPE_VIDEO = 4;
-    FILE_TYPE_IMAGE_VIDEO = 5;
+    FILE_TYPE_IMAGE_VIDEO = 5; // image or video
     FILE_TYPE_AUDIO = 6;
     FILE_TYPE_LINK_PREVIEW = 7;
-    FILE_TYPE_NOT_LINK_PREVIEW = 8;
+    FILE_TYPE_NOT_LINK_PREVIEW = 8; // all except link previews
   }
 
+  // select only INBOUND or OUTBOUND attachments
   optional AttachmentId.Type type = 1;
+  // filter by file type (pre-defined regexp for *mime_type*)
   optional AttachmentFilter.FileType file_type = 2;
   optional uint64 discussion_id = 3;
-  //  optional uint64 contact_id = 4; not implementable now
+  /* optional uint64 contact_id = 4; not implementable now */
   optional MessageId message_id = 5;
 
+  // regexp filter on *filename* field
   optional string filename_search = 6;
+  // regexp filter on *mime_type* field
   optional string mime_type_search = 7;
 
+  // minimum or equal file size
   optional uint64 min_size = 8;
+  // maximum or equal file size
   optional uint64 max_size = 9;
 }

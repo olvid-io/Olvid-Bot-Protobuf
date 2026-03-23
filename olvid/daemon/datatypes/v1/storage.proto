@@ -6,12 +6,23 @@ option go_package = "olvid.io/daemon";
 option java_multiple_files = false;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
+/*
+ ** Daemon embed a key-value storage, accessible for clients.
+ ** Each client-key have it's own global storage space, and a dedicated storage space for each discussion (see DiscussionStorageCommandService).
+ ** StorageElement is used for global and discussion storage.
+ */
 message StorageElement {
   string key = 1;
   string value = 2;
 }
 
+/*
+ ** Filter storage elements by attributes.
+ ** To pass a filter an element must match all specified conditions.
+ */
 message StorageElementFilter {
+  // regexp filter applied on *key_search* field
   optional string key_search = 1;
+  // regexp filter applied on *value_search* field
   optional string value_search = 2;
 }

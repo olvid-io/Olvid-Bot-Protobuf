@@ -6,12 +6,20 @@ option go_package = "olvid.io/daemon";
 option java_multiple_files = false;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
+/*
+ ** A group
+ ** *keycloak_managed* groups are not editable, and you cannot leave them. Group is managed from the keycloak admin console.
+ */
 message Group {
   enum Type {
     TYPE_UNSPECIFIED = 0;
+    // all members are admin
     TYPE_STANDARD = 1;
+    // non admin members cannot manage the group
     TYPE_CONTROLLED = 2;
+    // only admin members can post messages
     TYPE_READ_ONLY = 3;
+    // specify an advanced configuration field
     TYPE_ADVANCED = 4;
   }
 
@@ -23,45 +31,76 @@ message Group {
       REMOTE_DELETE_EVERYONE = 3;
     }
 
+    // is group read only
     bool read_only = 1;
+    // who has permission to delete message for everyone
     RemoteDelete remote_delete = 2;
   }
 
   uint64 id = 1;
+  // specify a pre-set of permissions given to group members.
   Type type = 2;
-  optional AdvancedConfiguration advanced_configuration = 3; // only set if group.type is TYPE_ADVANCED
-  GroupMemberPermissions own_permissions = 4; // your permissions in this group
+  // only set if group.type is TYPE_ADVANCED
+  optional AdvancedConfiguration advanced_configuration = 3;
+  // your permissions in this group
+  GroupMemberPermissions own_permissions = 4;
+  // members that accepted invitation
   repeated GroupMember members = 5;
+  // members invited to join group
   repeated PendingGroupMember pending_members = 6;
+  // group is locked, edition will be delayed
   bool update_in_progress = 7;
+  // group automatically pushed by keycloak
   bool keycloak_managed = 8;
-  // group details
   string name = 9;
   string description = 10;
   bool has_a_photo = 11;
 }
 
+/*
+ ** Associate a contact, member of a group, with its permissions in this group.
+ */
 message GroupMember {
   uint64 contact_id = 1;
   GroupMemberPermissions permissions = 2;
 }
 
+/*
+ ** Member of a group who has not yet accepted the invitation to join the group.
+ */
 message PendingGroupMember {
+  // unique identifier
   uint64 pending_member_id = 1;
-  uint64 contact_id = 2; // set to 0 if not in your contacts
+  // set to 0 if this identity is not a contact yet
+  uint64 contact_id = 2;
+  // computed display name from their identity details.
   string display_name = 3;
+  // does pending member declined invitation
   bool declined = 4;
+  // permissions given to this member
   GroupMemberPermissions permissions = 5;
 }
 
+/*
+ ** Describe permission set associated to any group member.
+ */
 message GroupMemberPermissions {
+  // can edit the group (change name or description, and manage group members)
   bool admin = 1;
+  // can delete everywhere someone's else message
   bool remote_delete_anything = 2;
+  // can edit or delete everywhere own messages
   bool edit_or_remote_delete_own_messages = 3;
+  // can change discussion shared settings (message ephemerality)
   bool change_settings = 4;
+  // can post message in the group discussion
   bool send_message = 5;
 }
 
+/*
+ ** Filter groups by attributes.
+ ** To pass a filter an element must match all specified conditions.
+ */
 message GroupFilter {
   enum Empty {
     EMPTY_UNSPECIFIED = 0;
@@ -80,21 +119,31 @@ message GroupFilter {
   }
 
   optional Group.Type type = 1;
+  // does group have members or not
   optional Empty empty = 2;
+  // does group have a photo or not
   optional Photo photo = 3;
+  // is group keycloak managed or not
   optional Keycloak keycloak = 4;
 
-  optional GroupPermissionFilter own_permissions_filter = 5; // your permission
+  // filter on your own permissions in the group
+  optional GroupPermissionFilter own_permissions_filter = 5;
 
+  // regexp filter on *name_search* field
   optional string name_search = 6;
+  // regexp filter on *description_search* field
   optional string description_search = 7;
 
+  // group must have at least one matching member for each *member_filters*
   repeated GroupMemberFilter member_filters = 8;
+  // group must have at least one pending member matching each *pending_member_filters*
   repeated PendingGroupMemberFilter pending_member_filters = 9;
 }
 
 message GroupMemberFilter {
+  // is member a specific contact
   optional uint64 contact_id = 1;
+  // does member's permissions match this permission filter
   optional GroupPermissionFilter permissions = 5;
 }
 
@@ -111,11 +160,16 @@ message PendingGroupMemberFilter {
     DECLINED_HAS_NOT = 2;
   }
 
+  // is pending member a contact or not
   optional Contact is_contact = 1;
+  // does pending member declined invitation or not
   optional Declined has_declined = 2;
+  // is pending member a specific known contact
   optional uint64 contact_id = 3;
 
+  // regexp filter applied on *display_name* field
   optional string display_name_search = 4;
+  // pending member's permissions match this permission filter
   optional GroupPermissionFilter permissions = 5;
 }
 
@@ -146,9 +200,14 @@ message GroupPermissionFilter {
     CHANGE_SETTINGS_CANNOT = 2;
   }
 
+  // is user a group admin or not
   optional Admin admin = 1;
+  // does user can post message in discussion
   optional SendMessage send_message = 2;
+  // does user can remote delete any message, even other members messages
   optional RemoteDeleteAnything remote_delete_anything = 3;
+  // does user can edit or remote delete its messages
   optional EditOrRemoteDeleteOwnMessage edit_or_remote_delete_own_messages = 4;
+  // does user can change group settings
   optional ChangeSettings change_settings = 5;
 }

@@ -6,23 +6,42 @@ option go_package = "olvid.io/daemon";
 option java_multiple_files = false;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
+/*
+ ** Settings for an Identity managed by a daemon.
+ ** - AutoAcceptInvitation: when enabled the daemon will automatically accept incoming and existing invitations from specified protocol.
+ ** - MessageRetention: when at least one element is set daemon will regularly check if some message can be deleted, matching filled criteria. This allows to save space and save performances by keeping database as small as possible.
+ ** - Keycloak: directory related settings
+ */
 message IdentitySettings {
   message AutoAcceptInvitation {
+    // auto accept introductions (a trusted contact pushed a new contact)
     bool auto_accept_introduction = 1;
+    // auto accept invitations to a group
     bool auto_accept_group = 2;
+    // auto accept contact invitations to one to one discussions
     bool auto_accept_one_to_one = 3;
+    // auto accept olvid invitations (mind this will only accept invitation and not exchange sas code for you)
     bool auto_accept_invitation = 4;
   }
 
   message MessageRetention {
-    uint64 existence_duration = 1; // 0 -> disabled (seconds)
-    uint64 discussion_count = 2; // 0 -> disabled
-    uint64 global_count = 3; // 0 -> disabled
+    // if set, message older than *existence_duration* seconds will be deleted
+    // set to 0 to disable
+    uint64 existence_duration = 1;
+    // if set, if a discussion has more than *discussion_count* messages, older messages will be deleted.
+    // set to 0 to disable
+    uint64 discussion_count = 2;
+    // if set, if identty has more than *global_count* messages, older messages will be deleted.
+    // set to 0 to disable
+    uint64 global_count = 3;
+    // if true, messages in locked discussions will be deleted.
     bool clean_locked_discussions = 4;
+    // if true, live sharing location messages will never be deleted.
     bool preserve_is_sharing_location_messages = 5;
   }
 
   message Keycloak {
+    // if true, directory will regularly be scanned to add new members as contacts.
     bool auto_invite_new_members = 1;
   }
 
@@ -31,10 +50,15 @@ message IdentitySettings {
   Keycloak keycloak = 3;
 }
 
+/*
+ ** Settings for a discussion. Those settings are shared with other contacts in this discussion.
+ */
 message DiscussionSettings {
   uint64 discussion_id = 1;
-  // message ephemerality settings (does not use a proper message for legacy reasons)
+  // are message read once
   bool read_once = 2;
-  uint64 existence_duration = 3; // 0 -> disabled (seconds)
-  uint64 visibility_duration = 4; // 0 -> disabled (seconds)
+  // if set, message are destroyed after *existence_duration* seconds, 0 to disable
+  uint64 existence_duration = 3;
+  // if set, message are only visible for *visibility_duration* seconds, 0 to disable
+  uint64 visibility_duration = 4;
 }

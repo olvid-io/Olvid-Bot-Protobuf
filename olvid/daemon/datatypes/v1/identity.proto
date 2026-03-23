@@ -6,16 +6,10 @@ option go_package = "olvid.io/daemon";
 option java_multiple_files = false;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
-message IdentityDetails {
-  optional string first_name = 1;
-  optional string last_name = 2;
-  optional string company = 3;
-  optional string position = 4;
-}
-
-// id == 0 is equivalent to null identity
-// invitation_url field is deprecated, and will be removed in next major release
-//   use IdentityCommandService.IdentityGetInvitationLink or IdentityAdminService.IdentityAdminGetInvitationLink instead
+/*
+ ** Your own Olvid identity, stored on this daemon instance.
+ ** A daemon can manage multiple Olvid identities.
+ */
 message Identity {
   message ApiKey {
     message Permission {
@@ -28,15 +22,35 @@ message Identity {
   }
 
   uint64 id = 1;
+  // computed from *details*
   string display_name = 2;
   datatypes.v1.IdentityDetails details = 3;
 
+  //   TODO TODEL !!!!
   string invitation_url = 4 [deprecated = true];
+  // identity is linked to a keycloak directory
   bool keycloak_managed = 5;
   bool has_a_photo = 6;
+  // Olvid api key to grant permissions
   ApiKey api_key = 7;
 }
 
+/*
+ ** Represents an Olvid identity details.
+ ** Used for any Olvid identity (owned identity or other contact).
+ ** Details are valid only if at least one field is not blank.
+ */
+message IdentityDetails {
+  optional string first_name = 1;
+  optional string last_name = 2;
+  optional string company = 3;
+  optional string position = 4;
+}
+
+/*
+ ** Filter identities by attributes.
+ ** To pass a filter an element must match all specified conditions.
+ */
 message IdentityFilter {
   enum Keycloak {
     KEYCLOAK_UNSPECIFIED = 0;
@@ -54,10 +68,15 @@ message IdentityFilter {
     API_KEY_HAS_NOT = 1;
   }
 
+  // is identity keycloak managed or not
   optional Keycloak keycloak = 1;
+  // does identity have a profile photo or not
   optional Photo photo = 2;
+  // does identity have an Olvid api key or not
   optional ApiKey api_key = 3;
 
+  // regexp filter on *display_name*
   optional string display_name_search = 4;
+  // a set of regexp filters, one for each field of *details*
   optional IdentityDetails details_search = 5;
 }

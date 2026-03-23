@@ -6,65 +6,118 @@ option go_package = "olvid.io/daemon";
 option java_multiple_files = false;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
+/*
+ ** An Olvid message posted in a discussion.
+ ** Send message are Outbound, received messages are Inbound.
+ ** Messages must have a body and/or one or more attachment.
+ */
+message Message {
+  // the message unique identifier
+  MessageId id = 1;
+  // the discussion the message belongs to
+  uint64 discussion_id = 2;
+  // set to a contact_id, or 0 if you sent the message
+  uint64 sender_id = 3;
+  // text body
+  string body = 4;
+  // index used to sort messages in a discussion
+  double sort_index = 5;
+  // the timestamp on which the message was received
+  uint64 timestamp = 6;
+  // number of attachments for this message
+  uint64 attachments_count = 7;
+  // set if this message is a reply to another message in this discussion
+  optional MessageId replied_message_id = 8;
+  // set if this message is a location message
+  optional MessageLocation message_location = 10;
+  // list of the reactions added on this message
+  repeated MessageReaction reactions = 11;
+  // does this message have been forwarded from another discussion by sender
+  bool forwarded = 12;
+  // does this message body have been edited
+  bool edited_body = 13;
+}
+
+/*
+ ** A composite id to uniquely identify a message.
+ */
 message MessageId {
   enum Type {
     TYPE_UNSPECIFIED = 0;
+    // received message
     TYPE_INBOUND = 1;
+    // sent message
     TYPE_OUTBOUND = 2;
   }
+  // inbound or outbound message
   Type type = 1;
   uint64 id = 2;
 }
 
-message Message {
-  MessageId id = 1;
-  uint64 discussion_id = 2;
-  uint64 sender_id = 3; // 0 if you sent the message
-  string body = 4;
-  double sort_index = 5;
-  uint64 timestamp = 6;
-  uint64 attachments_count = 7;
-  optional MessageId replied_message_id = 8;
-  optional MessageLocation message_location = 10;
-  repeated MessageReaction reactions = 11;
-  bool forwarded = 12;
-  bool edited_body = 13;
-}
-
+/*
+ ** Describe message ephemerality.
+ */
 message MessageEphemerality {
+  // message can only be read once (destroyed when discusion is closed)
   bool read_once = 1;
-  uint64 existence_duration = 2; // seconds
+  // message in destroyed after this duration, in seconds
+  uint64 existence_duration = 2;
+  // message is only visible for this duration, in seconds
   uint64 visibility_duration = 3; // seconds
 }
 
+/*
+ ** Describe a reaction to a message, by a contact or yourself.
+ */
 message MessageReaction {
-  uint64 contact_id = 1; // id == 0 if own reaction
+  // set to 0 for owned reactions
+  uint64 contact_id = 1;
+  // reaction emoji
   string reaction = 2;
+  // the timestamp at which the reaction was added.
   uint64 timestamp = 3;
 }
 
+/*
+ ** A location message content.
+ ** There are two location message families:
+ ** - location sending: send a specific location.
+ ** - location sharing: share someone's location for a given duration.
+ */
 message MessageLocation {
   enum LocationType {
     LOCATION_TYPE_UNSPECIFIED = 0;
+    // a one shot location sending
     LOCATION_TYPE_SEND = 1;
+    // a live location sharing
     LOCATION_TYPE_SHARING = 2;
+    // a completed location sharing
     LOCATION_TYPE_SHARING_FINISHED = 3;
   }
 
   LocationType type = 1;
+  // sending: when location was sent
+  // sharing: the last location update timestamp
   uint64 timestamp = 2;
   double latitude = 3;
   double longitude = 4;
   optional double altitude = 5;
+  // the accuracy this location was recorded with.
   optional float precision = 6;
+  // optionally set for sending, a human readable address for this location
   optional string address = 7;
 }
 
+/*
+ ** Filter messages by attributes.
+ ** To pass a filter an element must match all specified conditions.
+ */
 message MessageFilter {
   enum Attachment {
     ATTACHMENT_UNSPECIFIED = 0;
     ATTACHMENT_HAVE = 1;
     ATTACHMENT_HAVE_NOT = 2;
+
     // currently not implementable
     //    ATTACHMENT_HAVE_IMAGE = 3;
     //    ATTACHMENT_HAVE_VIDEO = 4;
@@ -87,34 +140,46 @@ message MessageFilter {
     REACTION_HAS_NOT = 2;
   }
 
-  // sender and recipient
+  // id message inbound or outbound
   optional datatypes.v1.MessageId.Type type = 1;
+  // does message belongs to a specific discussion
   optional uint64 discussion_id = 2;
+  // is message sent by a specific contact
   optional uint64 sender_contact_id = 3;
 
-  // content
+  // regexp filter on *body* field
   optional string body_search = 5;
+  // does message have attachments or not
   optional datatypes.v1.MessageFilter.Attachment attachment = 6;
+  // is message a location message
   optional datatypes.v1.MessageFilter.Location location = 7;
+  // is timestamp less or equal than *min_timestamp*
   optional uint64 min_timestamp = 8;
+  // is timestamp more or equal than *max_timestamp*
   optional uint64 max_timestamp = 9;
 
-  // reactions
+  // does message have reactions or not
   optional Reaction has_reaction = 10;
+  // message must have at least one matching reaction for each *reactions_filter*
   repeated ReactionFilter reactions_filter = 11;
 
-  // message reply
   oneof reply {
+    // is message a reply to another message
     bool reply_to_a_message = 13;
+    // is message not a reply to a message
     bool do_not_reply_to_a_message = 14;
+    // is message a reply to a specific message id
     datatypes.v1.MessageId replied_message_id = 15;
   }
 }
 
 message ReactionFilter {
   oneof reacted_by {
+    // is the reaction from yourself
     bool reacted_by_me = 10;
+    // is the reaction from a specific contact
     uint64 reacted_by_contact_id = 11;
   }
-  optional string reaction = 12; // contains this reaction emoji (combined with reacted_by parameter)
+  // is *reaction* equal to the *reaction* field
+  optional string reaction = 12;
 }

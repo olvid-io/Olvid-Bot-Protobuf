@@ -6,16 +6,23 @@ option go_package = "olvid.io/daemon";
 option java_multiple_files = false;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
+/*
+ ** A discussion must be associated to a contact or to a group.
+ ** If *contact_id* and *group_id* are both zero, then it is an existing locked discussion.
+ */
 message Discussion {
   uint64 id = 1;
-  string title = 2;
-  // if identifier is not set discussion is locked
+  string title = 2; // *contact.display_name* or *group.name*
   oneof identifier {
     uint64 contact_id = 3;
     uint64 group_id = 4;
   }
 }
 
+/*
+ ** Filter discussions by attributes.
+ ** To pass a filter an element must match all specified conditions.
+ */
 message DiscussionFilter {
   enum Type {
     TYPE_UNSPECIFIED = 0;
@@ -23,10 +30,12 @@ message DiscussionFilter {
     TYPE_GROUP = 2;
   }
 
+  // select group or contact discussions
   optional Type type = 1;
   oneof identifier {
     uint64 contact_id = 2;
     uint64 group_id = 3;
   }
+  // regexp filter on title field
   optional string title_search = 4;
 }
