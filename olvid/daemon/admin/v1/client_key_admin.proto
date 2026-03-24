@@ -10,6 +10,14 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** ClientKeyList
+ ** List all client keys of this daemon (admin and non admin).
+ ** This does not return temporary client keys passed in environment or as command line arguments.
+ **
+ ** **Error codes**:
+ ** `PERMISSION_DENIED`: an admin client key is necessary.
+ ** `INVALID_ARGUMENT`: filter is invalid.
+ ** `INTERNAL`
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message ClientKeyListRequest {
   optional datatypes.v1.ClientKeyFilter filter = 1;
@@ -20,6 +28,13 @@ message ClientKeyListResponse {
 
 /*
  ** ClientKeyGet
+ ** Get a specific client key details, identified by it's value.
+ ** This does not return temporary client keys passed in environment or as command line arguments.
+ **
+ ** **Error codes**:
+ ** `PERMISSION_DENIED`: an admin client key is necessary.
+ ** `NOT_FOUND`: client key not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message ClientKeyGetRequest {
   string client_key = 1;
@@ -29,11 +44,19 @@ message ClientKeyGetResponse {
 }
 
 /*
- ** ClientKeyNew create a new api key associated with a given identity
+ ** ClientKeyNew
+ ** Create a new client key associated with a given identity.
+ ** Pass 0 as identity id to create and admin client key.
+ **
+ ** **Error codes**:
+ ** `PERMISSION_DENIED`: an admin client key is necessary.
+ ** `NOT_FOUND`: identity not found.
+ ** `INTERNAL`
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message ClientKeyNewRequest {
   string name = 1;
-  uint64 identity_id = 2; // specify 0 to create an admin api key
+  uint64 identity_id = 2;
 }
 message ClientKeyNewResponse {
   datatypes.v1.ClientKey client_key = 1;
@@ -41,6 +64,12 @@ message ClientKeyNewResponse {
 
 /*
  ** ClientKeyDelete
+ ** Delete a specific client key, identified by it's value.
+ **
+ ** **Error codes**:
+ ** `PERMISSION_DENIED`: an admin client key is necessary.
+ ** `NOT_FOUND`: client key not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message ClientKeyDeleteRequest {
   string client_key = 1;
