@@ -7,7 +7,7 @@ option java_multiple_files = false;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
- ** Identify a call participant by it's contact id, or a random identifier if it is not a contact.
+ ** Identify a call participant by its contact id, or a random identifier if it is not a contact.
  */
 message CallParticipantId {
   oneof id {

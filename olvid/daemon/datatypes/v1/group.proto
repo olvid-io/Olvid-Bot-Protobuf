@@ -88,7 +88,7 @@ message PendingGroupMember {
 message GroupMemberPermissions {
   // can edit the group (change name or description, and manage group members)
   bool admin = 1;
-  // can delete everywhere someone's else message
+  // can delete everywhere someone else's message
   bool remote_delete_anything = 2;
   // can edit or delete everywhere own messages
   bool edit_or_remote_delete_own_messages = 3;
@@ -203,12 +203,12 @@ message GroupPermissionFilter {
 
   // is user a group admin or not
   optional Admin admin = 1;
-  // does user can post message in discussion
+  // can the user post a message in the discussion
   optional SendMessage send_message = 2;
-  // does user can remote delete any message, even other members messages
+  // can the user remote-delete any message, even other members' messages
   optional RemoteDeleteAnything remote_delete_anything = 3;
-  // does user can edit or remote delete its messages
+  // can the user edit or remote-delete their own messages
   optional EditOrRemoteDeleteOwnMessage edit_or_remote_delete_own_messages = 4;
-  // does user can change group settings
+  // can the user change group settings
   optional ChangeSettings change_settings = 5;
 }

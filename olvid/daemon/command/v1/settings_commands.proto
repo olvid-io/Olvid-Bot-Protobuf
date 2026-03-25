@@ -23,7 +23,7 @@ message SettingsIdentityGetResponse {
 /*
  ** SettingsIdentitySet
  ** Update your identity settings.
- ** ⚠️ Update erase the WHOLE settings.
+ ** ⚠️ Update erases the WHOLE settings.
  ** To update current settings use SettingsIdentityGet to get current config, and only edit fields you want to update.
  **
  ** **Error codes**:
@@ -57,7 +57,7 @@ message SettingsDiscussionGetResponse {
 /*
  ** SettingsDiscussionSet
  ** Update a discussion settings.
- ** ⚠️ Update erase the WHOLE settings.
+ ** ⚠️ Update erases the WHOLE settings.
  ** To update current settings use SettingsDiscussionGet to get current config, and only edit fields you want to update.
  **
  ** **Error codes**:

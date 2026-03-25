@@ -110,7 +110,7 @@ message MessageSendWithAttachmentsResponse {
 /*
  ** MessageReact
  ** Add, update or remove a reaction from a message.
- ** If _reaction_ is set this will add a new reaction or update your previous reaction on this message message.
+ ** If _reaction_ is set this will add a new reaction or update your previous reaction on this message.
  ** If _reaction_ is an empty string your previous reaction will be removed if you had one.
  **
  ** **Error codes**:
@@ -143,7 +143,7 @@ message MessageUpdateBodyResponse {}
 
 /*
  ** MessageDelete
- ** Delete a message giving it's id.
+ ** Delete a message giving its id.
  ** TODO delete everywhere ?
  **
  ** **Error codes**:
@@ -160,12 +160,12 @@ message MessageDeleteResponse {}
 /*
  ** MessageSendLocation
  ** Post a location message in a discussion.
- ** A location message represent a specific location, and is different of a location sharing that can be updated later.
+ ** A location message represents a specific location, and is different from a location sharing that can be updated later.
  **
  ** **Error codes**:
  ** `UNAUTHENTICATED`: client key is invalid.
  ** `NOT_FOUND`: discussion not found.
- ** `INVALID_ARGUMENT: latitude and longitude are both equal to zero / preview_filename and preview_payload must be set together.
+ ** `INVALID_ARGUMENT`: latitude and longitude are both equal to zero / preview_filename and preview_payload must be set together.
  ** `INTERNAL`
  */
 message MessageSendLocationRequest {
@@ -193,7 +193,7 @@ message MessageSendLocationResponse {
  ** **Error codes**:
  ** `UNAUTHENTICATED`: client key is invalid.
  ** `NOT_FOUND`: discussion not found.
- ** `INVALID_ARGUMENT: latitude and longitude are both equal to zero.
+ ** `INVALID_ARGUMENT`: latitude and longitude are both equal to zero.
  ** `INTERNAL`
  */
 message MessageStartLocationSharingRequest {
@@ -214,7 +214,7 @@ message MessageStartLocationSharingResponse {
  ** **Error codes**:
  ** `UNAUTHENTICATED`: client key is invalid.
  ** `NOT_FOUND`: message not found.
- ** `INVALID_ARGUMENT: you can only update your location sharing messages / sharing is no longer active.
+ ** `INVALID_ARGUMENT`: you can only update your location sharing messages / sharing is no longer active.
  ** `INTERNAL`
  */
 message MessageUpdateLocationSharingRequest {
@@ -234,7 +234,7 @@ message MessageUpdateLocationSharingResponse {
  ** **Error codes**:
  ** `UNAUTHENTICATED`: client key is invalid.
  ** `NOT_FOUND`: message not found.
- ** `INVALID_ARGUMENT: you can only end your location sharing messages / sharing is no longer active.
+ ** `INVALID_ARGUMENT`: you can only end your location sharing messages / sharing is no longer active.
  ** `INTERNAL`
  */
 message MessageEndLocationSharingRequest {

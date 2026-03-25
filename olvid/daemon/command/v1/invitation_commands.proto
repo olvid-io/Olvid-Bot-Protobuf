@@ -43,7 +43,7 @@ message InvitationGetResponse {
 /*
  ** InvitationNew
  ** Send an invitation to another Olvid user using its invitation link.
- ** Invitation links starts with https://invitation.olvid.io#.
+ ** Invitation links start with https://invitation.olvid.io#.
  ** Sending an invitation will initiate an invitation protocol and create a new Invitation.
  **
  ** **Error codes**:

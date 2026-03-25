@@ -28,7 +28,7 @@ message ClientKeyListResponse {
 
 /*
  ** ClientKeyGet
- ** Get a specific client key details, identified by it's value.
+ ** Get a specific client key details, identified by its value.
  ** This does not return temporary client keys passed in environment or as command line arguments.
  **
  ** **Error codes**:
@@ -46,7 +46,7 @@ message ClientKeyGetResponse {
 /*
  ** ClientKeyNew
  ** Create a new client key associated with a given identity.
- ** Pass 0 as identity id to create and admin client key.
+ ** Pass 0 as identity id to create an admin client key.
  **
  ** **Error codes**:
  ** `PERMISSION_DENIED`: an admin client key is necessary.
@@ -64,7 +64,7 @@ message ClientKeyNewResponse {
 
 /*
  ** ClientKeyDelete
- ** Delete a specific client key, identified by it's value.
+ ** Delete a specific client key, identified by its value.
  **
  ** **Error codes**:
  ** `PERMISSION_DENIED`: an admin client key is necessary.

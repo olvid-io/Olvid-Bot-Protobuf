@@ -12,10 +12,10 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
  ** Describe a full backup obtained with a backup key.
  ** A backup contains multiple parts.
  ** The AdminBackup contains the admin client keys and the elements contained in the global daemon storage.
- ** A backup may contains multiple profile backup (one per identity), and each may contains one or more snapshot.
- ** A profile snapshot contains an identity it's discussion, contacts, groups, client keys, and discussion storage.
+ ** A backup may contain multiple profile backups (one per identity), and each may contain one or more snapshots.
+ ** A profile snapshot contains an identity, its discussions, contacts, groups, client keys, and discussion storage.
  **
- ** Mind a backup does not contain any message or attachment.
+ ** Note: a backup does not contain any messages or attachments.
  */
 message Backup {
   message AdminBackup {

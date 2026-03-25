@@ -134,9 +134,9 @@ service AttachmentCommandService {
 // Each client key has its own independent storage space, with a simple key-value system.
 // _Storage_ can be seen as a global storage space, compared to _Discussion Storage_ that offers a space associated with a specific discussion.
 //
-// Both mechanisms are backup resilient, and will be restore with it's associated client key in a backup restoration process.
+// Both mechanisms are backup resilient, and will be restored with their associated client key in a backup restoration process.
 //
-// Mind that temporary client keys (specified in daemon environment or as command line arguments) does not have an allocated storage space.
+// Mind that temporary client keys (specified in daemon environment or as command line arguments) do not have an allocated storage space.
 // You must create a client in database to use storage commands.
 service StorageCommandService {
   rpc StorageList(command.v1.StorageListRequest) returns (stream command.v1.StorageListResponse) {}
@@ -149,9 +149,9 @@ service StorageCommandService {
 // Each client key has its own independent storage space, with a simple key-value system.
 // _Storage_ can be seen as a global storage space, compared to _Discussion Storage_ that offers a space associated with a specific discussion.
 //
-// Both mechanisms are backup resilient, and will be restore with it's associated client key in a backup restoration process.
+// Both mechanisms are backup resilient, and will be restored with their associated client key in a backup restoration process.
 //
-// Mind that temporary client keys (specified in daemon environment or as command line arguments) does not have an allocated storage space.
+// Mind that temporary client keys (specified in daemon environment or as command line arguments) do not have an allocated storage space.
 // You must create a client in database to use storage commands.
 service DiscussionStorageCommandService {
   rpc DiscussionStorageList(command.v1.DiscussionStorageListRequest) returns (stream command.v1.DiscussionStorageListResponse) {}
@@ -163,7 +163,7 @@ service DiscussionStorageCommandService {
 // Call
 // Currently daemon cannot handle Olvid calls properly.
 // You can be notified on incoming calls, and you can initiate call within discussions or with any contact.
-// But, you we cannot manage audio or video stream, that's why a daemon will always answer any incoming call with a "busy" response.
+// But we cannot manage audio or video streams, that's why a daemon will always answer any incoming call with a "busy" response.
 service CallCommandService {
   rpc CallStartDiscussionCall(command.v1.CallStartDiscussionCallRequest) returns (command.v1.CallStartDiscussionCallResponse) {}
   rpc CallStartCustomCall(command.v1.CallStartCustomCallRequest) returns (command.v1.CallStartCustomCallResponse) {}

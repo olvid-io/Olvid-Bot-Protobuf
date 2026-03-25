@@ -165,7 +165,7 @@ message GroupDisbandResponse {
  **
  ** **Error codes**:
  ** `NOT_FOUND`: group not found.
- ** `INVALID_ARGUMENT`: impossible to disband a keycloak group / you cannot leave a groupe if you are the only group administrator.
+ ** `INVALID_ARGUMENT`: impossible to disband a keycloak group / you cannot leave a group if you are the only group administrator.
  ** `UNAUTHENTICATED`: client key is invalid.
  ** `INTERNAL`
  */
@@ -178,7 +178,7 @@ message GroupLeaveResponse {
 
 /*
  ** GroupUpdate
- && Update a group by modifying a Group object retrieved from groupList of groupGet.
+ ** Update a group by modifying a Group object retrieved from groupList of groupGet.
  ** Supported modifications:
  ** - Add a member: create a new GroupMember and add it to members field
  ** - Remove a member: remove associated GroupMember from members field

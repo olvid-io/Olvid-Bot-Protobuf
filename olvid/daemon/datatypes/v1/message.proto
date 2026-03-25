@@ -8,8 +8,8 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** An Olvid message posted in a discussion.
- ** Sent message are Outbound, received messages are Inbound.
- ** Messages must have a body and/or one or more attachment.
+ ** Sent messages are Outbound, received messages are Inbound.
+ ** Messages must have a body and/or one or more attachments.
  */
 message Message {
   // the message unique identifier
@@ -58,9 +58,9 @@ message MessageId {
  ** Describe message ephemerality.
  */
 message MessageEphemerality {
-  // message can only be read once (destroyed when discusion is closed)
+  // message can only be read once (destroyed when discussion is closed)
   bool read_once = 1;
-  // message in destroyed after this duration, in seconds
+  // message is destroyed after this duration, in seconds
   uint64 existence_duration = 2;
   // message is only visible for this duration, in seconds
   uint64 visibility_duration = 3; // seconds

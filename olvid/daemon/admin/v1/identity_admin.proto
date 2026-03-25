@@ -27,7 +27,7 @@ message IdentityListResponse {
 
 /*
  ** IdentityAdminGet
- ** Get a specific identity, identified by it's id.
+ ** Get a specific identity, identified by its id.
  **
  ** **Error codes**:
  ** `PERMISSION_DENIED`: an admin client key is necessary.
@@ -95,7 +95,7 @@ message IdentityAdminDownloadPhotoResponse {
  ** IdentityNew
  ** Create a new identity on this daemon.
  ** You must specify at least a non blank firstname or lastname in identity_details.
- ** You can specify a server_url to create identity on, by default it use Olvid main distribution server.
+ ** You can specify a server_url to create identity on, by default it uses Olvid main distribution server.
  **
  ** **Error codes**:
  ** `PERMISSION_DENIED`: an admin client key is necessary.
@@ -129,7 +129,7 @@ message IdentityKeycloakNewResponse {
 
 /*
  ** IdentityDelete
- ** Delete an identity on this daemon, identified by it's id.
+ ** Delete an identity on this daemon, identified by its id.
  **
  ** **Error codes**:
  ** `PERMISSION_DENIED`: an admin client key is necessary.

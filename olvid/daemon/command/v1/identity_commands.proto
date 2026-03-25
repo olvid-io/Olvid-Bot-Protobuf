@@ -39,7 +39,7 @@ message IdentityGetBytesIdentifierResponse {
 /*
  ** IdentityGetInvitationLink
  ** Get your invitation link. This link can be sent to other Olvid users to let them send you an invitation.
- ** Invitation links can be open with any Olvid application or open in a web browser to show a QR code to scan.
+ ** Invitation links can be opened with any Olvid application or opened in a web browser to show a QR code to scan.
  **
  ** **Error codes**:
  ** `NOT_FOUND`: identity not found.
@@ -54,8 +54,8 @@ message IdentityGetInvitationLinkResponse {
 /*
  ** IdentityUpdateDetails
  ** Update your Olvid identity details (first name, last name, company and position).
- ** At least on field in first and last name must be non empty.
- ** Your details will be visible by your contacts, and you display name is computed from this details.
+ ** At least one field in first and last name must be non empty.
+ ** Your details will be visible by your contacts, and your display name is computed from these details.
  ** Details for a keycloak managed identity cannot be updated.
  **
  ** **Error codes**:
@@ -110,7 +110,7 @@ message IdentityDownloadPhotoResponse {
 /*
  ** IdentityRemovePhoto
  ** Remove your current identity picture.
- ** The automatically generate identity image will be used instead.
+ ** The automatically generated identity image will be used instead.
  **
  ** **Error codes**:
  ** `NOT_FOUND`: identity not found.
@@ -122,8 +122,8 @@ message IdentityRemovePhotoResponse {}
 
 /*
  ** IdentityGetApiKeyStatus
- ** Check you current Olvid api key status.
- ** Api Keys allows an identity to initiate calls or to use multi device.
+ ** Check your current Olvid API key status.
+ ** API keys allow an identity to initiate calls or to use multi device.
  **
  ** **Error codes**:
  ** `UNAUTHENTICATED`: client key is invalid.

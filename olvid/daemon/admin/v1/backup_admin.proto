@@ -110,7 +110,7 @@ message BackupRestoreAdminBackupResponse {
 
 /*
  ** BackupRestoreProfileSnapshot
- ** Restore a identity from a backup.
+ ** Restore an identity from a backup.
  ** Pass the identity snapshot id you want to restore.
  **
  ** **Error codes**:
@@ -123,7 +123,7 @@ message BackupRestoreAdminBackupResponse {
 message BackupRestoreProfileSnapshotRequest {
   // key of the backup to restore
   string backup_key = 1;
-  // id of the spnapshot to restore
+  // id of the snapshot to restore
   string id = 2;
   // specify a name for this new device (*daemon* is set as default)
   optional string new_device_name = 3;

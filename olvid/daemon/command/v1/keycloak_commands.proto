@@ -10,7 +10,7 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** KeycloakBindIdentity
- ** Register you identity in a keycloak directory.
+ ** Register your identity in a keycloak directory.
  ** Your identity should not already be registered in a keycloak directory (`identity.keycloak_managed`).
  ** When registered your directory might add you to some managed groups, and you will be granted access to other directory users.
  ** Other directory users can be added as contacts with no further confirmation (see *KeycloakUserList* and *KeycloakAddUserAsContact*).

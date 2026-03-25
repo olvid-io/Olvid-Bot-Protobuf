@@ -31,7 +31,7 @@ message IdentitySettings {
     // if set, if a discussion has more than *discussion_count* messages, older messages will be deleted.
     // set to 0 to disable
     uint64 discussion_count = 2;
-    // if set, if identty has more than *global_count* messages, older messages will be deleted.
+    // if set, if identity has more than *global_count* messages, older messages will be deleted.
     // set to 0 to disable
     uint64 global_count = 3;
     // if true, messages in locked discussions will be deleted.
@@ -57,8 +57,8 @@ message DiscussionSettings {
   uint64 discussion_id = 1;
   // are message read once
   bool read_once = 2;
-  // if set, message are destroyed after *existence_duration* seconds, 0 to disable
+  // if set, messages are destroyed after *existence_duration* seconds, 0 to disable
   uint64 existence_duration = 3;
-  // if set, message are only visible for *visibility_duration* seconds, 0 to disable
+  // if set, messages are only visible for *visibility_duration* seconds, 0 to disable
   uint64 visibility_duration = 4;
 }

@@ -9,9 +9,8 @@ option java_multiple_files = false;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
- ** A contact is an other olvid identity you are in contact with.
+ ** A contact is another Olvid identity you are in contact with.
  ** A contact can have an associated discussion if has_one_to_one_discussion is true, else it's probably a collected contact you met in a group discussion.
- ** If keycloak_managed managed contact is registered on the same keycloak.
  */
 message Contact {
   uint64 id = 1;
@@ -21,7 +20,7 @@ message Contact {
   uint32 device_count = 5;
   bool has_one_to_one_discussion = 6;
   bool has_a_photo = 7;
-  bool keycloak_managed = 8;
+  bool keycloak_managed = 8; // contact is registered on the same directory
 }
 
 /*
@@ -51,7 +50,7 @@ message ContactFilter {
   optional OneToOne one_to_one = 1;
   // select only contacts with or without profile photo
   optional Photo photo = 2;
-  // select only contacts registered or not on you keycloak
+  // select only contacts registered or not on your keycloak
   optional Keycloak keycloak = 3;
 
   // regexp filter on *display_name*

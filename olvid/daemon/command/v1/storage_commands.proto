@@ -31,7 +31,7 @@ message StorageListResponse {
 /*
  ** StorageGet
  ** Request the value associated to a key in your global storage.
- ** If the key does not already exists return an empty string.
+ ** If the key does not already exist, return an empty string.
  **
  ** **Error codes**:
  ** `UNAUTHENTICATED`: client key is invalid or a temporary client key.
@@ -97,7 +97,7 @@ message DiscussionStorageListResponse {
 /*
  ** DiscussionStorageGet
  ** Request the value associated to a key in the specified discussion storage.
- ** If the key does not already exists return an empty string.
+ ** If the key does not already exist, return an empty string.
  **
  ** **Error codes**:
  ** `UNAUTHENTICATED`: client key is invalid or a temporary client key.
