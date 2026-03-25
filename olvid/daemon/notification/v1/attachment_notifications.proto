@@ -11,8 +11,8 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** AttachmentReceived
- ** Receive a notification every time you receive an attachment in a discussion (one to one or group discussion).
- ** When you receive a message with multiple attachments, you will receive one notification per attachment.
+ ** Receive a notification every time you receive an attachment in a discussion (one-to-one or group discussion).
+ ** When you receive a message with multiple attachments, you will receive one notification for each attachment.
  **
  ** **Error codes**:
  ** `UNAUTHENTICATED`: client key is invalid.
@@ -29,13 +29,13 @@ message AttachmentReceivedNotification {
 
 /*
  ** AttachmentUploaded
- ** Receive a notification every time an attachment you sent have been marked as uploaded.
+ ** Receive a notification every time an attachment you sent has been marked as uploaded.
  ** A message with attachments is delivered to recipients only when all attachments have been uploaded.
  **
  ** **Error codes**:
  ** `UNAUTHENTICATED`: client key is invalid.
- ** `INVALID_ARGUMENT`: cannot subscribe for non outbound messages.
- ** `NOT_FOUND`: at least one of _message_ids_ is incorrect.
+ ** `INVALID_ARGUMENT`: cannot subscribe for non-outbound messages.
+ ** `NOT_FOUND`: at least one of the _message_ids_ is incorrect.
  */
 message SubscribeToAttachmentUploadedNotification {
   // limit the number of notifications you will receive , set to 0 to disable

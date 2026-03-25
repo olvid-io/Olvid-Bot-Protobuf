@@ -10,7 +10,7 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** MessageReceived
- ** Receive a notification when an you received a new message.
+ ** Receive a notification each time you receive a new message.
  **
  ** **Error codes**:
  ** `UNAUTHENTICATED`: client key is invalid.
@@ -27,7 +27,7 @@ message MessageReceivedNotification {
 
 /*
  ** MessageSent
- ** Receive a notification when an you sent a new message.
+ ** Receive a notification each time an you sent a new message.
  **
  ** **Error codes**:
  ** `UNAUTHENTICATED`: client key is invalid.
@@ -44,13 +44,13 @@ message MessageSentNotification {
 
 /*
  ** MessageDeleted
- ** Receive a notification when a message has been deleted.
- ** This can arrive under different circumstances:
+ ** Receive a notification each time a message has been deleted.
+ ** This can happen under different circumstances:
  ** - you deleted a message locally
  ** - someone else deleted it's own message for everyone in the discussion
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _message_ids_ does not exists.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageDeletedNotification {
@@ -67,11 +67,11 @@ message MessageDeletedNotification {
 
 /*
  ** MessageBodyUpdated
- ** Receive a notification when a message text body have been updated.
+ ** Receive a notification each time a message text body have been updated.
  ** Only the message sender can edit its own messages.
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _message_ids_ does not exists.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageBodyUpdatedNotification {
@@ -90,12 +90,12 @@ message MessageBodyUpdatedNotification {
 
 /*
  ** MessageUploaded
- ** Receive a notification when an outbound message have been uploaded on server.
+ ** Receive a notification each time an outbound message have been uploaded on server.
  ** Note: You cannot guarantee this notification will arrive when working with ephemeral message
  **
  ** **Error codes**:
  ** `INVALID_ARGUMENT`: at least one of _message_ids_ is not an outbound message.
- ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _message_ids_ does not exists.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageUploadedNotification {
@@ -112,12 +112,12 @@ message MessageUploadedNotification {
 
 /*
  ** MessageDelivered
- ** Receive a notification when an outbound message have been delivered on at least one recipient's device.
+ ** Receive a notification each time an outbound message have been delivered on at least one recipient's device.
  ** Note: You cannot guarantee this notification will arrive when working with ephemeral message
  **
  ** **Error codes**:
  ** `INVALID_ARGUMENT`: at least one of _message_ids_ is not an outbound message.
- ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _message_ids_ does not exists.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageDeliveredNotification {
@@ -134,12 +134,12 @@ message MessageDeliveredNotification {
 
 /*
  ** MessageRead
- ** Receive a notification when an outbound message have been read by at least one recipient.
+ ** Receive a notification each time an outbound message have been read by at least one recipient.
  ** Note: You cannot guarantee this notification will arrive when working with ephemeral message
  **
  ** **Error codes**:
  ** `INVALID_ARGUMENT`: at least one of _message_ids_ is not an outbound message.
- ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _message_ids_ does not exists.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageReadNotification {
@@ -156,7 +156,7 @@ message MessageReadNotification {
 
 /*
  ** MessageLocationReceived
- ** Receive a notification when you received a location message.
+ ** Receive a notification each time you received a location message.
  ** Location messages are different from location sharing messages as they contains one static position.
  ** A received location message also triggers the MessageReceived notification.
  **
@@ -175,7 +175,7 @@ message MessageLocationReceivedNotification {
 
 /*
  ** MessageLocationSent
- ** Receive a notification when you sent a location message.
+ ** Receive a notification each time you sent a location message.
  ** Location messages are different from location sharing messages as they contains one static position.
  ** A sent location message also triggers the MessageSent notification.
  **
@@ -194,7 +194,7 @@ message MessageLocationSentNotification {
 
 /*
  ** MessageLocationSharingStart
- ** Receive a notification when you sent or you received a new location sharing message.
+ ** Receive a notification each time you sent or you received a new location sharing message.
  ** Location sharing messages are supposed to be updated for a given while.
  ** A new location sharing message also triggers the MessageReceived or MessageSent notification.
  **
@@ -213,11 +213,11 @@ message MessageLocationSharingStartNotification {
 
 /*
  ** MessageLocationSharingUpdate
- ** Receive a notification when a location sharing message have been updated with a new location.
+ ** Receive a notification each time a location sharing message have been updated with a new location.
  ** This might concern inbound or outbound messages.
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _message_ids_ does not exists.
  ** `INVALID_ARGUMENT`: one of _message_ids_ is not a live location sharing.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
@@ -236,11 +236,11 @@ message MessageLocationSharingUpdateNotification {
 
 /*
  ** MessageLocationSharingEnd
- ** Receive a notification when a location sharing message have been stopped or automatically finished.
+ ** Receive a notification each time a location sharing message have been stopped or automatically finished.
  ** This might concern inbound or outbound messages.
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _message_ids_ does not exists.
  ** `INVALID_ARGUMENT`: one of _message_ids_ is not a live location sharing.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
@@ -258,11 +258,11 @@ message MessageLocationSharingEndNotification {
 
 /*
  ** MessageReactionAdded
- ** Receive a notification when a reaction was added to a message.
+ ** Receive a notification each time a reaction was added to a message.
  ** It can concern your reactions or any contact reactions.
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _message_ids_ does not exists.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageReactionAddedNotification {
@@ -282,11 +282,11 @@ message MessageReactionAddedNotification {
 
 /*
  ** MessageReactionUpdated
- ** Receive a notification when a reaction on a message was updated.
+ ** Receive a notification each time a reaction on a message was updated.
  ** It can concern your reactions or any contact reactions.
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _message_ids_ does not exists.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageReactionUpdatedNotification {
@@ -309,11 +309,11 @@ message MessageReactionUpdatedNotification {
 
 /*
  ** MessageReactionRemoved
- ** Receive a notification when a reaction on a message was removed.
+ ** Receive a notification each time a reaction on a message was removed.
  ** It can concern your reactions or any contact reactions.
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _message_ids_ does not exists.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageReactionRemovedNotification {

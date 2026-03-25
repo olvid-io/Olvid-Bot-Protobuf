@@ -10,8 +10,8 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** GroupNew
- ** Receive a notification when you join a new group.
- ** This can arrive under different circumstances:
+ ** Receive a notification each time you join a new group.
+ ** This can happen under different circumstances:
  ** - you created a group
  ** - you accepted a group invitation
  ** - for keycloak managed group: the directory created a group or added you to an existing group
@@ -31,8 +31,8 @@ message GroupNewNotification {
 
 /*
  ** GroupDeleted
- ** Receive a notification when you left a group.
- ** This can arrive under different circumstances:
+ ** Receive a notification each time you leave a group.
+ ** This can happen under different circumstances:
  ** - you chose to leave a group
  ** - you disbanded a group (you must be admin of this group)
  ** - a group admin disbanded the group
@@ -40,7 +40,7 @@ message GroupNewNotification {
  ** - for keycloak managed group: the keycloak directory removed you from the group or disbanded the group
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _group_ids_ does not exist.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupDeletedNotification {
@@ -57,14 +57,14 @@ message GroupDeletedNotification {
 
 /*
  ** GroupNameUpdated
- ** Receive a notification when a group name have been updated.
- ** This can arrive under different circumstances:
+ ** Receive a notification each time a group name have been updated.
+ ** This can happen under different circumstances:
  ** - you updated the group name (you must be admin of this group)
  ** - an admin updated the group name
  ** - for keycloak managed groups: the group name were changed by the keycloak directory
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _group_ids_ does not exists.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupNameUpdatedNotification {
@@ -86,13 +86,13 @@ message GroupNameUpdatedNotification {
 /*
  ** GroupPhotoUpdated
  ** Receive a notification when a group picture have been updated.
- ** This can arrive under different circumstances:
+ ** This can happen under different circumstances:
  ** - you updated the group picture (you must be admin of this group)
  ** - an admin updated the group picture
  ** - for keycloak managed groups: the group picture were changed by the keycloak directory
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _group_ids_ does not exists.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupPhotoUpdatedNotification {
@@ -110,13 +110,13 @@ message GroupPhotoUpdatedNotification {
 /*
  ** GroupDescriptionUpdated
  ** Receive a notification when a group description have been updated.
- ** This can arrive under different circumstances:
+ ** This can happen under different circumstances:
  ** - you updated the group description (you must be admin of this group)
  ** - an admin updated the group description
  ** - for keycloak managed groups: the group description were changed by the keycloak directory
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _group_ids_ does not exists.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupDescriptionUpdatedNotification {
@@ -137,12 +137,12 @@ message GroupDescriptionUpdatedNotification {
 /*
  ** GroupPendingMemberAdded
  ** Receive a notification when a pending member was added from a group.
- ** This can arrive under different circumstances:
+ ** This can happen under different circumstances:
  ** - an admin added a new member to the group
  ** - you joined a group and all group members are all considered as pending until each one acknowledge you joined this group
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _group_ids_ does not exists.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupPendingMemberAddedNotification {
@@ -163,12 +163,12 @@ message GroupPendingMemberAddedNotification {
 /*
  ** GroupPendingMemberRemoved
  ** Receive a notification when a pending member was removed from a group.
- ** This can arrive under different circumstances:
+ ** This can happen under different circumstances:
  ** - a pending group member accepted or declined the group invitation
  ** - you joined a group and a member acknowledged you joined this group
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _group_ids_ does not exists.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupPendingMemberRemovedNotification {
@@ -189,12 +189,12 @@ message GroupPendingMemberRemovedNotification {
 /*
  ** GroupMemberJoined
  ** Receive a notification when a new member joined a group.
- ** This can arrive under different circumstances:
+ ** This can happen under different circumstances:
  ** - a pending group member accepted the group invitation
  ** - for keycloak managed groups: directory added a new group member / a user registered on directory and was automatically added to existing groups
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _group_ids_ does not exists.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupMemberJoinedNotification {
@@ -215,13 +215,13 @@ message GroupMemberJoinedNotification {
 /*
  ** GroupMemberLeft
  ** Receive a notification when a group member was removed from a group.
- ** This can arrive under different circumstances:
+ ** This can happen under different circumstances:
  ** - you removed a group member (you must be a group admin)
  ** - a group member was removed by an admin
  ** - for keycloak managed groups: directory removed a group member / a user unregistered from directory and was automatically removed from groups
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _group_ids_ does not exists.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupMemberLeftNotification {
@@ -244,7 +244,7 @@ message GroupMemberLeftNotification {
  ** Receive a notification when your permissions have been updated in a group.
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _group_ids_ does not exists.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupOwnPermissionsUpdatedNotification {
@@ -272,7 +272,7 @@ message GroupOwnPermissionsUpdatedNotification {
  ** Receive a notification when a group member permissions have been updated.
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _group_ids_ does not exists.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupMemberPermissionsUpdatedNotification {

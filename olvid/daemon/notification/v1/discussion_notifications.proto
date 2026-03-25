@@ -11,13 +11,13 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** DiscussionNew
- ** Receive a notification each time a discussion is created or re-used.
- ** This can arrive under different circumstances:
+ ** Receive a notification every time a discussion is created or re-used.
+ ** This can happen under different circumstances:
  ** - a new contact was added
  ** - you created or joined a group
  **
  ** **Error codes**:
- ** `UNAUTHENTICATED`: client key is invalid.
+ ** `UNAUTHENTICATED`: Client key is invalid.
  */
 message SubscribeToDiscussionNewNotification {
   // limit the number of notifications you will receive , set to 0 to disable
@@ -32,12 +32,12 @@ message DiscussionNewNotification {
 /*
  ** DiscussionLocked
  ** Receive a notification each time a discussion is locked.
- ** This can arrive under different circumstances:
+ ** This can happen under different circumstances:
  ** - the contact associated to this discussion was removed from your contact book
  ** - you left the associated group or the group was disbanded
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _discussion_ids_ was not found.
+ ** `NOT_FOUND`: at least one of the _discussion_ids_ was not found.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToDiscussionLockedNotification {
@@ -55,12 +55,12 @@ message DiscussionLockedNotification {
 /*
  ** DiscussionTitleUpdated
  ** Receive a notification each time a discussion title changed.
- ** This can arrive under different circumstances:
+ ** This can happen under different circumstances:
  ** - the contact associated to this discussion changed it's details
  ** - the associated group was renamed
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _discussion_ids_ was not found.
+ ** `NOT_FOUND`: at least one of the _discussion_ids_ was not found.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToDiscussionTitleUpdatedNotification {
@@ -79,9 +79,11 @@ message DiscussionTitleUpdatedNotification {
 /*
  ** DiscussionSettingsUpdated
  ** Receive a notification each time the discussion shared settings have been updated.
+ ** Any group group member with the _change_settings_ permission can update shared settings.
+ ** By default admin members have this permission.
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _discussion_ids_ was not found.
+ ** `NOT_FOUND`: at least one of the _discussion_ids_ was not found.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToDiscussionSettingsUpdatedNotification {

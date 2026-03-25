@@ -10,11 +10,11 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** InvitationReceived
- ** Receive a notification when you receive a new invitation.
- ** A new invitation is the first step of an invitation protocol.
+ ** Receive a notification each time you receive a new invitation.
+ ** A new invitation marks the first step of an invitation protocol.
  **
  ** **Error codes**:
- ** `UNAUTHENTICATED`: client key is invalid.
+ ** `UNAUTHENTICATED`: Client key is invalid.
  */
 message SubscribeToInvitationReceivedNotification {
   // limit the number of notifications you will receive , set to 0 to disable
@@ -28,7 +28,7 @@ message InvitationReceivedNotification {
 
 /*
  ** InvitationSent
- ** Receive a notification when you send a new invitation.
+ ** Receive a notification each time you send a new invitation.
  ** A new invitation is the first step of an invitation protocol.
  **
  ** **Error codes**:
@@ -46,14 +46,14 @@ message InvitationSentNotification {
 
 /*
  ** InvitationDeleted
- ** Receive a notification when an invitation is deleted.
- ** This can arrive under different circumstances:
+ ** Receive a notification each time an invitation is deleted.
+ ** This can happen under different circumstances:
  ** - an invitation protocol ended and invitation was automatically removed
  ** - you aborted a protocol
  ** - you deleted an invitation
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _invitation_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _invitation_ids_ does not exists.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToInvitationDeletedNotification {
@@ -70,11 +70,11 @@ message InvitationDeletedNotification {
 
 /*
  ** InvitationUpdated
- ** Receive a notification when an invitation status have been updated.
+ ** Receive a notification each time an invitation status have been updated.
  ** Invitation status are updated when a new protocol step is passed.
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _invitation_ids_ does not exists.
+ ** `NOT_FOUND`: at least one of the _invitation_ids_ does not exists.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToInvitationUpdatedNotification {

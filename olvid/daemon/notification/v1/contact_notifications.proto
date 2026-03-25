@@ -11,7 +11,7 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** ContactNew
- ** Receive a notification every time a contact is added to your contact book.
+ ** Receive a notification each time a contact is added to your contact book.
  **
  ** **Error codes**:
  ** `UNAUTHENTICATED`: client key is invalid.
@@ -28,11 +28,14 @@ message ContactNewNotification {
 
 /*
  ** ContactDeleted
- ** Receive a notification every time a contact is removed from your contact book.
- ** This might happen if you manually removed contact, if he did, or if he deleted it's identity and chose to notify it's contact about it.
+ ** Receive a notification each time a contact is removed from your contact book.
+ ** This can happen under different circumstances:
+ ** - you deleted the contact
+ ** - he contact deleted you
+ ** - the contact deleted his identity and chose to notify his contacts
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _contact_ids_ was not found.
+ ** `NOT_FOUND`: at least one of the _contact_ids_ was not found.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToContactDeletedNotification {
@@ -51,9 +54,12 @@ message ContactDeletedNotification {
  ** ContactDetailsUpdated
  ** Receive a notification each time a contact update it's identity details.
  ** This implies that this contact display name changed.
+ ** This can happen under different circumstances:
+ ** - the contact updated his details
+ ** - for _keycloak_managed_ contacts the directory updated it's details
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _contact_ids_ was not found.
+ ** `NOT_FOUND`: at least one of the _contact_ids_ was not found.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToContactDetailsUpdatedNotification {
@@ -74,7 +80,7 @@ message ContactDetailsUpdatedNotification {
  ** Receive a notification each time a contact profile picture has been updated.
  **
  ** **Error codes**:
- ** `NOT_FOUND`: at least one of _contact_ids_ was not found.
+ ** `NOT_FOUND`: at least one of the _contact_ids_ was not found.
  ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToContactPhotoUpdatedNotification {
