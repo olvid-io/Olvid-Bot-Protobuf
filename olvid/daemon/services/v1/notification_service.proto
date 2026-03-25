@@ -7,21 +7,12 @@ import "olvid/daemon/notification/v1/call_notifications.proto";
 import "olvid/daemon/notification/v1/contact_notifications.proto";
 import "olvid/daemon/notification/v1/discussion_notifications.proto";
 import "olvid/daemon/notification/v1/group_notifications.proto";
-//import "olvid/daemon/notification/v1/identity_notifications.proto";
 import "olvid/daemon/notification/v1/invitation_notifications.proto";
 import "olvid/daemon/notification/v1/message_notifications.proto";
 
 option go_package = "olvid.io/daemon";
 option java_multiple_files = true;
 option java_package = "io.olvid.desktop.daemon.protobuf";
-
-// must be for admin only
-//// Identity
-//service IdentityNotificationService {
-//	rpc IdentityCreated(notification.v1.SubscribeToIdentityCreatedNotification) returns (stream notification.v1.IdentityCreatedNotification) {}
-//	rpc IdentityDeleted(notification.v1.SubscribeToIdentityDeletedNotification) returns (stream notification.v1.IdentityDeletedNotification) {}
-//	rpc IdentityDetailsUpdated(notification.v1.SubscribeToIdentityDetailsUpdatedNotification) returns (stream notification.v1.IdentityDetailsUpdatedNotification) {}
-//}
 
 // Invitation
 service InvitationNotificationService {

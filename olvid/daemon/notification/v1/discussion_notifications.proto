@@ -11,9 +11,18 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** DiscussionNew
+ ** Receive a notification each time a discussion is created or re-used.
+ ** This can arrive under different circumstances:
+ ** - a new contact was added
+ ** - you created or joined a group
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToDiscussionNewNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about discussions that match all the filter params.
   optional datatypes.v1.DiscussionFilter filter = 2;
 }
 message DiscussionNewNotification {
@@ -22,10 +31,21 @@ message DiscussionNewNotification {
 
 /*
  ** DiscussionLocked
+ ** Receive a notification each time a discussion is locked.
+ ** This can arrive under different circumstances:
+ ** - the contact associated to this discussion was removed from your contact book
+ ** - you left the associated group or the group was disbanded
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _discussion_ids_ was not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToDiscussionLockedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about discussions that match all the filter params.
   optional datatypes.v1.DiscussionFilter filter = 2;
+  // you will only receive notifications about discussions specified in this list.
   repeated uint64 discussion_ids = 3;
 }
 message DiscussionLockedNotification {
@@ -34,10 +54,21 @@ message DiscussionLockedNotification {
 
 /*
  ** DiscussionTitleUpdated
+ ** Receive a notification each time a discussion title changed.
+ ** This can arrive under different circumstances:
+ ** - the contact associated to this discussion changed it's details
+ ** - the associated group was renamed
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _discussion_ids_ was not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToDiscussionTitleUpdatedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about discussions that match all the filter params.
   optional datatypes.v1.DiscussionFilter filter = 2;
+  // you will only receive notifications about discussions specified in this list.
   repeated uint64 discussion_ids = 3;
 }
 message DiscussionTitleUpdatedNotification {
@@ -47,14 +78,24 @@ message DiscussionTitleUpdatedNotification {
 
 /*
  ** DiscussionSettingsUpdated
+ ** Receive a notification each time the discussion shared settings have been updated.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _discussion_ids_ was not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToDiscussionSettingsUpdatedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about discussions that match all the filter params.
   optional datatypes.v1.DiscussionFilter filter = 2;
+  // you will only receive notifications about discussions specified in this list.
   repeated uint64 discussion_ids = 3;
 }
 message DiscussionSettingsUpdatedNotification {
   datatypes.v1.Discussion discussion = 1;
+  // the new current discussion settings
   datatypes.v1.DiscussionSettings new_settings = 2;
+  // settings before this update
   datatypes.v1.DiscussionSettings previous_settings = 3;
 }

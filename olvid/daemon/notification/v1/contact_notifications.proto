@@ -11,9 +11,15 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** ContactNew
+ ** Receive a notification every time a contact is added to your contact book.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToContactNewNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about contacts that match all the filter params.
   optional datatypes.v1.ContactFilter filter = 2;
 }
 message ContactNewNotification {
@@ -22,10 +28,19 @@ message ContactNewNotification {
 
 /*
  ** ContactDeleted
+ ** Receive a notification every time a contact is removed from your contact book.
+ ** This might happen if you manually removed contact, if he did, or if he deleted it's identity and chose to notify it's contact about it.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _contact_ids_ was not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToContactDeletedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about contacts that match all the filter params.
   optional datatypes.v1.ContactFilter filter = 2;
+  // you will only receive notifications about contacts specified in this list.
   repeated uint64 contact_ids = 3;
 }
 message ContactDeletedNotification {
@@ -34,10 +49,19 @@ message ContactDeletedNotification {
 
 /*
  ** ContactDetailsUpdated
+ ** Receive a notification each time a contact update it's identity details.
+ ** This implies that this contact display name changed.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _contact_ids_ was not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToContactDetailsUpdatedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about contacts that match all the filter params.
   optional datatypes.v1.ContactFilter filter = 2;
+  // you will only receive notifications about contacts specified in this list.
   repeated uint64 contact_ids = 3;
 }
 message ContactDetailsUpdatedNotification {
@@ -47,10 +71,18 @@ message ContactDetailsUpdatedNotification {
 
 /*
  ** ContactPhotoUpdated
+ ** Receive a notification each time a contact profile picture has been updated.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _contact_ids_ was not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToContactPhotoUpdatedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about contacts that match all the filter params.
   optional datatypes.v1.ContactFilter filter = 2;
+  // you will only receive notifications about contacts specified in this list.
   repeated uint64 contact_ids = 3;
 }
 message ContactPhotoUpdatedNotification {

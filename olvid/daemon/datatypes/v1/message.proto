@@ -16,7 +16,7 @@ message Message {
   MessageId id = 1;
   // the discussion the message belongs to
   uint64 discussion_id = 2;
-  // set to a contact_id, or 0 if you sent the message
+  // set to 0 if you sent the message, or to the contact id referencing the sender
   uint64 sender_id = 3;
   // text body
   string body = 4;

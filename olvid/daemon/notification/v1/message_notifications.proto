@@ -10,9 +10,15 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** MessageReceived
+ ** Receive a notification when an you received a new message.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageReceivedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about messages that match this filter.
   optional datatypes.v1.MessageFilter filter = 2;
 }
 message MessageReceivedNotification {
@@ -21,9 +27,15 @@ message MessageReceivedNotification {
 
 /*
  ** MessageSent
+ ** Receive a notification when an you sent a new message.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageSentNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about messages that match this filter.
   optional datatypes.v1.MessageFilter filter = 2;
 }
 message MessageSentNotification {
@@ -32,10 +44,21 @@ message MessageSentNotification {
 
 /*
  ** MessageDeleted
+ ** Receive a notification when a message has been deleted.
+ ** This can arrive under different circumstances:
+ ** - you deleted a message locally
+ ** - someone else deleted it's own message for everyone in the discussion
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageDeletedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about messages specified in this list.
   repeated datatypes.v1.MessageId message_ids = 2;
+  // you will only receive notifications about messages that match this filter.
   optional datatypes.v1.MessageFilter filter = 3;
 }
 message MessageDeletedNotification {
@@ -44,10 +67,19 @@ message MessageDeletedNotification {
 
 /*
  ** MessageBodyUpdated
+ ** Receive a notification when a message text body have been updated.
+ ** Only the message sender can edit its own messages.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageBodyUpdatedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about messages specified in this list.
   repeated datatypes.v1.MessageId message_ids = 2;
+  // you will only receive notifications about messages that match this filter.
   optional datatypes.v1.MessageFilter filter = 3;
 }
 message MessageBodyUpdatedNotification {
@@ -55,39 +87,67 @@ message MessageBodyUpdatedNotification {
   string previous_body = 2;
 }
 
-// You cannot guarantee this notification will arrive when working with ephemeral message
+
 /*
  ** MessageUploaded
+ ** Receive a notification when an outbound message have been uploaded on server.
+ ** Note: You cannot guarantee this notification will arrive when working with ephemeral message
+ **
+ ** **Error codes**:
+ ** `INVALID_ARGUMENT`: at least one of _message_ids_ is not an outbound message.
+ ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageUploadedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about messages specified in this list.
   repeated datatypes.v1.MessageId message_ids = 2;
+  // you will only receive notifications about messages that match this filter.
   optional datatypes.v1.MessageFilter filter = 3;
 }
 message MessageUploadedNotification {
   datatypes.v1.Message message = 1;
 }
 
-// You cannot guarantee this notification will arrive when working with ephemeral message
 /*
  ** MessageDelivered
+ ** Receive a notification when an outbound message have been delivered on at least one recipient's device.
+ ** Note: You cannot guarantee this notification will arrive when working with ephemeral message
+ **
+ ** **Error codes**:
+ ** `INVALID_ARGUMENT`: at least one of _message_ids_ is not an outbound message.
+ ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageDeliveredNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about messages specified in this list.
   repeated datatypes.v1.MessageId message_ids = 2;
+  // you will only receive notifications about messages that match this filter.
   optional datatypes.v1.MessageFilter filter = 3;
 }
 message MessageDeliveredNotification {
   datatypes.v1.Message message = 1;
 }
 
-// You cannot guarantee this notification will arrive when working with ephemeral message
 /*
  ** MessageRead
+ ** Receive a notification when an outbound message have been read by at least one recipient.
+ ** Note: You cannot guarantee this notification will arrive when working with ephemeral message
+ **
+ ** **Error codes**:
+ ** `INVALID_ARGUMENT`: at least one of _message_ids_ is not an outbound message.
+ ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageReadNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about messages specified in this list.
   repeated datatypes.v1.MessageId message_ids = 2;
+  // you will only receive notifications about messages that match this filter.
   optional datatypes.v1.MessageFilter filter = 3;
 }
 message MessageReadNotification {
@@ -96,10 +156,17 @@ message MessageReadNotification {
 
 /*
  ** MessageLocationReceived
- ** triggered by inbound messages
+ ** Receive a notification when you received a location message.
+ ** Location messages are different from location sharing messages as they contains one static position.
+ ** A received location message also triggers the MessageReceived notification.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageLocationReceivedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about messages that match this filter.
   optional datatypes.v1.MessageFilter filter = 2;
 }
 message MessageLocationReceivedNotification {
@@ -108,10 +175,17 @@ message MessageLocationReceivedNotification {
 
 /*
  ** MessageLocationSent
- ** triggered by outbound messages
+ ** Receive a notification when you sent a location message.
+ ** Location messages are different from location sharing messages as they contains one static position.
+ ** A sent location message also triggers the MessageSent notification.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageLocationSentNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about messages that match this filter.
   optional datatypes.v1.MessageFilter filter = 2;
 }
 message MessageLocationSentNotification {
@@ -120,10 +194,17 @@ message MessageLocationSentNotification {
 
 /*
  ** MessageLocationSharingStart
- ** triggered by inbound AND outbound messages
+ ** Receive a notification when you sent or you received a new location sharing message.
+ ** Location sharing messages are supposed to be updated for a given while.
+ ** A new location sharing message also triggers the MessageReceived or MessageSent notification.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageLocationSharingStartNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about messages that match this filter.
   optional datatypes.v1.MessageFilter filter = 2;
 }
 message MessageLocationSharingStartNotification {
@@ -132,11 +213,20 @@ message MessageLocationSharingStartNotification {
 
 /*
  ** MessageLocationSharingUpdate
- ** triggered by inbound AND outbound messages
+ ** Receive a notification when a location sharing message have been updated with a new location.
+ ** This might concern inbound or outbound messages.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `INVALID_ARGUMENT`: one of _message_ids_ is not a live location sharing.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageLocationSharingUpdateNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about messages specified in this list.
   repeated datatypes.v1.MessageId message_ids = 2;
+  // you will only receive notifications about messages that match this filter.
   optional datatypes.v1.MessageFilter filter = 3;
 }
 message MessageLocationSharingUpdateNotification {
@@ -146,11 +236,20 @@ message MessageLocationSharingUpdateNotification {
 
 /*
  ** MessageLocationSharingEnd
- ** triggered by inbound AND outbound messages
+ ** Receive a notification when a location sharing message have been stopped or automatically finished.
+ ** This might concern inbound or outbound messages.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `INVALID_ARGUMENT`: one of _message_ids_ is not a live location sharing.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageLocationSharingEndNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about messages specified in this list.
   repeated datatypes.v1.MessageId message_ids = 2;
+  // you will only receive notifications about messages that match this filter.
   optional datatypes.v1.MessageFilter filter = 3;
 }
 message MessageLocationSharingEndNotification {
@@ -159,11 +258,21 @@ message MessageLocationSharingEndNotification {
 
 /*
  ** MessageReactionAdded
+ ** Receive a notification when a reaction was added to a message.
+ ** It can concern your reactions or any contact reactions.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageReactionAddedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about messages specified in this list.
   repeated datatypes.v1.MessageId message_ids = 2;
+  // you will only receive notifications about messages that match this filter.
   optional datatypes.v1.MessageFilter filter = 3;
+  // you will only receive notifications about reactions that match this filter.
   optional datatypes.v1.ReactionFilter reaction_filter = 4;
 }
 message MessageReactionAddedNotification {
@@ -173,12 +282,23 @@ message MessageReactionAddedNotification {
 
 /*
  ** MessageReactionUpdated
+ ** Receive a notification when a reaction on a message was updated.
+ ** It can concern your reactions or any contact reactions.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageReactionUpdatedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about messages specified in this list.
   repeated datatypes.v1.MessageId message_ids = 2;
+  // you will only receive notifications about messages that match this filter.
   optional datatypes.v1.MessageFilter message_filter = 3;
+  // you will only receive notifications about reactions that match this filter.
   optional datatypes.v1.ReactionFilter reaction_filter = 4;
+  // you will only receive notifications about reactions that match this filter, before update.
   optional datatypes.v1.ReactionFilter previous_reaction_filter = 5;
 }
 message MessageReactionUpdatedNotification {
@@ -189,11 +309,21 @@ message MessageReactionUpdatedNotification {
 
 /*
  ** MessageReactionRemoved
+ ** Receive a notification when a reaction on a message was removed.
+ ** It can concern your reactions or any contact reactions.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _message_ids_ does not exists.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToMessageReactionRemovedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about messages specified in this list.
   repeated datatypes.v1.MessageId message_ids = 2;
+  // you will only receive notifications about messages that match this filter.
   optional datatypes.v1.MessageFilter filter = 3;
+  // you will only receive notifications about reactions that match this filter.
   optional datatypes.v1.ReactionFilter reaction_filter = 4;
 }
 message MessageReactionRemovedNotification {

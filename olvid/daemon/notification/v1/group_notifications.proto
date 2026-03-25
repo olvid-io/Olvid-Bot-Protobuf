@@ -10,9 +10,19 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** GroupNew
+ ** Receive a notification when you join a new group.
+ ** This can arrive under different circumstances:
+ ** - you created a group
+ ** - you accepted a group invitation
+ ** - for keycloak managed group: the directory created a group or added you to an existing group
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupNewNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about groups that match all the filter params.
   optional datatypes.v1.GroupFilter group_filter = 2;
 }
 message GroupNewNotification {
@@ -21,10 +31,24 @@ message GroupNewNotification {
 
 /*
  ** GroupDeleted
+ ** Receive a notification when you left a group.
+ ** This can arrive under different circumstances:
+ ** - you chose to leave a group
+ ** - you disbanded a group (you must be admin of this group)
+ ** - a group admin disbanded the group
+ ** - a group admin removed you from the group
+ ** - for keycloak managed group: the keycloak directory removed you from the group or disbanded the group
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupDeletedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about groups specified in this list.
   repeated uint64 group_ids = 2;
+  // you will only receive notifications about groups that match all the filter params.
   optional datatypes.v1.GroupFilter group_filter = 3;
 }
 message GroupDeletedNotification {
@@ -33,24 +57,50 @@ message GroupDeletedNotification {
 
 /*
  ** GroupNameUpdated
+ ** Receive a notification when a group name have been updated.
+ ** This can arrive under different circumstances:
+ ** - you updated the group name (you must be admin of this group)
+ ** - an admin updated the group name
+ ** - for keycloak managed groups: the group name were changed by the keycloak directory
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupNameUpdatedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about groups specified in this list.
   repeated uint64 group_ids = 2;
+  // you will only receive notifications about groups that match all the filter params.
   optional datatypes.v1.GroupFilter group_filter = 3;
+  // regexp filter on *group.name* field, before update
   optional string previous_name_search = 4;
 }
 message GroupNameUpdatedNotification {
   datatypes.v1.Group group = 1;
+  // the group name before update
   string previous_name = 2;
 }
 
 /*
  ** GroupPhotoUpdated
+ ** Receive a notification when a group picture have been updated.
+ ** This can arrive under different circumstances:
+ ** - you updated the group picture (you must be admin of this group)
+ ** - an admin updated the group picture
+ ** - for keycloak managed groups: the group picture were changed by the keycloak directory
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupPhotoUpdatedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about groups specified in this list.
   repeated uint64 group_ids = 2;
+  // you will only receive notifications about groups that match all the filter params.
   optional datatypes.v1.GroupFilter group_filter = 3;
 }
 message GroupPhotoUpdatedNotification {
@@ -59,11 +109,24 @@ message GroupPhotoUpdatedNotification {
 
 /*
  ** GroupDescriptionUpdated
+ ** Receive a notification when a group description have been updated.
+ ** This can arrive under different circumstances:
+ ** - you updated the group description (you must be admin of this group)
+ ** - an admin updated the group description
+ ** - for keycloak managed groups: the group description were changed by the keycloak directory
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupDescriptionUpdatedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about groups specified in this list.
   repeated uint64 group_ids = 2;
+  // you will only receive notifications about groups that match all the filter params.
   optional datatypes.v1.GroupFilter group_filter = 3;
+  // regexp filter on previous *group.description* field, before update
   optional string previous_description_search = 4;
 }
 message GroupDescriptionUpdatedNotification {
@@ -73,11 +136,23 @@ message GroupDescriptionUpdatedNotification {
 
 /*
  ** GroupPendingMemberAdded
+ ** Receive a notification when a pending member was added from a group.
+ ** This can arrive under different circumstances:
+ ** - an admin added a new member to the group
+ ** - you joined a group and all group members are all considered as pending until each one acknowledge you joined this group
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupPendingMemberAddedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about groups specified in this list.
   repeated uint64 group_ids = 2;
+  // you will only receive notifications about groups that match all the filter params.
   optional datatypes.v1.GroupFilter group_filter = 3;
+  // you will only receive notifications about groups with a pending member that match this filter.
   optional datatypes.v1.PendingGroupMemberFilter pending_member_filter = 4;
 }
 message GroupPendingMemberAddedNotification {
@@ -87,11 +162,23 @@ message GroupPendingMemberAddedNotification {
 
 /*
  ** GroupPendingMemberRemoved
+ ** Receive a notification when a pending member was removed from a group.
+ ** This can arrive under different circumstances:
+ ** - a pending group member accepted or declined the group invitation
+ ** - you joined a group and a member acknowledged you joined this group
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupPendingMemberRemovedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about groups specified in this list.
   repeated uint64 group_ids = 2;
+  // you will only receive notifications about groups that match all the filter params.
   optional datatypes.v1.GroupFilter group_filter = 3;
+  // you will only receive notifications about groups with a pending member that match this filter.
   optional datatypes.v1.PendingGroupMemberFilter pending_member_filter = 4;
 }
 message GroupPendingMemberRemovedNotification {
@@ -101,11 +188,23 @@ message GroupPendingMemberRemovedNotification {
 
 /*
  ** GroupMemberJoined
+ ** Receive a notification when a new member joined a group.
+ ** This can arrive under different circumstances:
+ ** - a pending group member accepted the group invitation
+ ** - for keycloak managed groups: directory added a new group member / a user registered on directory and was automatically added to existing groups
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupMemberJoinedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about groups specified in this list.
   repeated uint64 group_ids = 2;
+  // you will only receive notifications about groups that match all the filter params.
   optional datatypes.v1.GroupFilter group_filter = 3;
+  // you will only receive notifications about groups with a member that match this filter.
   optional datatypes.v1.GroupMemberFilter member_filter = 4;
 }
 message GroupMemberJoinedNotification {
@@ -115,11 +214,24 @@ message GroupMemberJoinedNotification {
 
 /*
  ** GroupMemberLeft
+ ** Receive a notification when a group member was removed from a group.
+ ** This can arrive under different circumstances:
+ ** - you removed a group member (you must be a group admin)
+ ** - a group member was removed by an admin
+ ** - for keycloak managed groups: directory removed a group member / a user unregistered from directory and was automatically removed from groups
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupMemberLeftNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about groups specified in this list.
   repeated uint64 group_ids = 2;
+  // you will only receive notifications about groups that match all the filter params.
   optional datatypes.v1.GroupFilter group_filter = 3;
+  // you will only receive notifications about groups with a member that match this filter.
   optional datatypes.v1.GroupMemberFilter member_filter = 4;
 }
 message GroupMemberLeftNotification {
@@ -129,34 +241,57 @@ message GroupMemberLeftNotification {
 
 /*
  ** GroupOwnPermissionsUpdated
- ** triggered when your permissions are updated
+ ** Receive a notification when your permissions have been updated in a group.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupOwnPermissionsUpdatedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about groups specified in this list.
   repeated uint64 group_ids = 2;
+  // you will only receive notifications about groups that match all the filter params.
   optional datatypes.v1.GroupFilter group_filter = 3;
+  // you will only receive notifications about groups where your permissions match this filter.
   optional datatypes.v1.GroupPermissionFilter permissions_filter = 4;
+  // you will only receive notifications about groups where your permissions match this filter, before update.
   optional datatypes.v1.GroupPermissionFilter previous_permissions_filter = 5;
 }
 message GroupOwnPermissionsUpdatedNotification {
   datatypes.v1.Group group = 1;
+  // your new permissions
   datatypes.v1.GroupMemberPermissions permissions = 2;
+  // your permissions before update
   datatypes.v1.GroupMemberPermissions previous_permissions = 3;
 }
 
 /*
  ** GroupMemberPermissionsUpdated
- ** triggered when permissions of a group member are updated
+ ** Receive a notification when a group member permissions have been updated.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: at least one of _group_ids_ does not exists.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToGroupMemberPermissionsUpdatedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
+  // you will only receive notifications about groups specified in this list.
   repeated uint64 group_ids = 2;
+  // you will only receive notifications about groups that match all the filter params.
   optional datatypes.v1.GroupFilter group_filter = 3;
+  // you will only receive notifications about group members that match this filter.
   optional datatypes.v1.GroupMemberFilter member_filter = 4;
+  // you will only receive notifications about group members that match this filter.
+  // TODO update to GroupPermissionsFilter !
   optional datatypes.v1.GroupMemberFilter previous_permission_filter = 5;
 }
 message GroupMemberPermissionsUpdatedNotification {
   datatypes.v1.Group group = 1;
+  // the group member permissions have been updated for
   datatypes.v1.GroupMember member = 2;
+  // the member permissions before update
   datatypes.v1.GroupMemberPermissions previous_permissions = 3;
 }

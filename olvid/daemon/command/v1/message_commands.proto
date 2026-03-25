@@ -13,6 +13,8 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
  ** MessageList
  ** List messages for current identity.
  ** Pass a filter to select only messages that match specific criteria.
+ ** You can list unread only messages with _unread_ parameter. This is useful to list unread messages on start if you want to process messages that arrived when you were down.
+ ** Messages are mark as read when you list them with MessageList or if a MessageReceived notification was sent to any client when it arrived.
  **
  ** **Error codes**:
  ** `UNAUTHENTICATED`: client key is invalid.

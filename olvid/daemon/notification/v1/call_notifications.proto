@@ -8,13 +8,17 @@ option go_package = "olvid.io/daemon";
 option java_multiple_files = true;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
-/*******************************************************
-   PUBLIC API
-   *******************************************************/
 /*
- ** CallIncomingCall (Inbound call)
+ ** CallIncomingCall
+ ** Receive a notification when someone tries to call you. (InboundCal)
+ ** Daemon will automatically answer with a busy message to notify you won't be able to answer.
+ ** Call details are available in notification content.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToCallIncomingCallNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
 }
 message CallIncomingCallNotification {
@@ -27,9 +31,15 @@ message CallIncomingCallNotification {
 }
 
 /*
- ** CallRinging (Outbound call)
+ ** CallRinging
+ ** When you initiated a call, receive a notification when a participant phone starts to ring.
+ ** Under some network circumstances a participant phone might never start ringing.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToCallRingingNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
 }
 message CallRingingNotification {
@@ -38,9 +48,15 @@ message CallRingingNotification {
 }
 
 /*
- ** CallAccepted (Outbound call)
+ ** CallAccepted
+ ** When you initiated a call, receive a notification if a participant accepted the call.
+ ** Daemon will automatically hang up when a participant accept the call because we currently cannot manage the call.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToCallAcceptedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
 }
 message CallAcceptedNotification {
@@ -49,9 +65,14 @@ message CallAcceptedNotification {
 }
 
 /*
- ** CallDeclined (Outbound call)
+ ** CallDeclined
+ ** When you initiated a call, receive a notification if a participant declined the call.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToCallDeclinedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
 }
 message CallDeclinedNotification {
@@ -61,8 +82,13 @@ message CallDeclinedNotification {
 
 /*
  ** CallBusy (Outbound call)
+ ** When you initiated a call, receive a notification if a participant accepted the call.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToCallBusyNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
 }
 message CallBusyNotification {
@@ -71,9 +97,14 @@ message CallBusyNotification {
 }
 
 /*
- ** CallEnded: everyone declined or left call
+ ** CallEnded:
+ ** For inbound or outbound call, receive a notification when every call participant left a call or declined it.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SubscribeToCallEndedNotification {
+  // limit the number of notifications you will receive , set to 0 to disable
   optional uint64 count = 1;
 }
 message CallEndedNotification {
