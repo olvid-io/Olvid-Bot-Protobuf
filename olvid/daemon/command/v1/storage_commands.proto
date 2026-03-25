@@ -9,10 +9,17 @@ option java_multiple_files = true;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
- ** Global storage api: store key value elements in storage. They will be restored as is during backup restoration.
- */
-/*
  ** StorageList
+ ** List stored elements in global storage scope, for current client key.
+ ** Pass a filter to select only elements that match specific criteria.
+ **
+ ** Mind that temporary client keys (specified in daemon environment or as command line arguments) does not have an allocated storage space.
+ ** You must create a client in database to use storage commands.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid or a temporary client key.
+ ** `INVALID_ARGUMENT`: invalid filter
+ ** `INTERNAL`
  */
 message StorageListRequest {
   optional datatypes.v1.StorageElementFilter filter = 1;
@@ -23,6 +30,11 @@ message StorageListResponse {
 
 /*
  ** StorageGet
+ ** Request the value associated to a key in your global storage.
+ ** If the key does not already exists return an empty string.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid or a temporary client key.
  */
 message StorageGetRequest {
   string key = 1;
@@ -33,30 +45,45 @@ message StorageGetResponse {
 
 /*
  ** StorageSet
+ ** Set the value for a key in your global storage.
+ ** If the key was already set the value is updated and it returns the *previous_value* in response.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid or a temporary client key.
+ ** `INTERNAL`
  */
 message StorageSetRequest {
   string key = 1;
   string value = 2;
 }
 message StorageSetResponse {
-  string previous_value = 1;
+  string previous_value = 1; // if the key already exists, this contains the erased value.
 }
 
 /*
  ** StorageUnset
+ ** Unset a key in your global storage.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid or a temporary client key.
  */
 message StorageUnsetRequest {
   string key = 1;
 }
 message StorageUnsetResponse {
-  string previous_value = 1;
+  string previous_value = 1; // the value previously associated to this key
 }
 
 /*
- ** Discussion storage api: store elements in daemon database, associated with a discussion id. They will remain associated to this discussion if you restore a backup.
- */
-/*
  ** DiscussionStorageList
+ ** List stored elements in a specific discussion storage scope, for current client key.
+ ** Pass a filter to select only elements that match specific criteria.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid or a temporary client key.
+ ** `INVALID_ARGUMENT`: discussion storage is not available with an admin client key / invalid filter.
+ ** `NOT_FOUND`: discussion not found.
+ ** `INTERNAL`
  */
 message DiscussionStorageListRequest {
   uint64 discussion_id = 1;
@@ -69,6 +96,13 @@ message DiscussionStorageListResponse {
 
 /*
  ** DiscussionStorageGet
+ ** Request the value associated to a key in the specified discussion storage.
+ ** If the key does not already exists return an empty string.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid or a temporary client key.
+ ** `INVALID_ARGUMENT`: discussion storage is not available with an admin client key.
+ ** `NOT_FOUND`: discussion not found.
  */
 message DiscussionStorageGetRequest {
   uint64 discussion_id = 1;
@@ -80,6 +114,14 @@ message DiscussionStorageGetResponse {
 
 /*
  ** DiscussionStorageSet
+ ** Set the value for a key in the specified discussion storage.
+ ** If the key was already set the value is updated and it returns the *previous_value* in response.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid or a temporary client key.
+ ** `INVALID_ARGUMENT`: discussion storage is not available with an admin client key.
+ ** `NOT_FOUND`: discussion not found.
+ ** `INTERNAL`
  */
 message DiscussionStorageSetRequest {
   uint64 discussion_id = 1;
@@ -92,6 +134,12 @@ message DiscussionStorageSetResponse {
 
 /*
  ** DiscussionStorageUnset
+ ** Unset a key in the specified discussion storage.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid or a temporary client key.
+ ** `INVALID_ARGUMENT`: discussion storage is not available with an admin client key.
+ ** `NOT_FOUND`: discussion not found.
  */
 message DiscussionStorageUnsetRequest {
   uint64 discussion_id = 1;

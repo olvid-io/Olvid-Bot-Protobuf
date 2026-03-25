@@ -9,7 +9,13 @@ option java_multiple_files = true;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
- ** AttachmentList return all attachments for current identity
+ ** AttachmentList
+ ** List attachments for current identity.
+ ** Pass a filter to select only attachments that match specific criteria.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND` ("Message not found"): filter.messageId does not belong to an identity message.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message AttachmentListRequest {
   optional datatypes.v1.AttachmentFilter filter = 1;
@@ -20,6 +26,11 @@ message AttachmentListResponse {
 
 /*
  ** AttachmentGet
+ ** Get an attachment by id.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND` (*Attachment not found*): attachment_id does not belong to an identity attachment.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message AttachmentGetRequest {
   datatypes.v1.AttachmentId attachment_id = 1;
@@ -30,6 +41,11 @@ message AttachmentGetResponse {
 
 /*
  ** AttachmentDelete
+ ** Delete an attachment by id.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND` (*Attachment not found*): attachment_id does not belong to an identity attachment.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message AttachmentDeleteRequest {
   datatypes.v1.AttachmentId attachment_id = 1;
@@ -39,6 +55,13 @@ message AttachmentDeleteResponse {}
 
 /*
  ** AttachmentDownload
+ ** Download the file associated to an attachment.
+ ** This returns one or more chunks of bytes.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND` (*Attachment not found*): attachment_id does not belong to an identity attachment.
+ ** `INTERNAL`
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message AttachmentDownloadRequest {
   datatypes.v1.AttachmentId attachment_id = 1;

@@ -10,6 +10,14 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** DiscussionList
+ ** List discussions for current identity.
+ ** Pass a filter to select only discussions that match specific criteria.
+ **
+ ** **Error codes**:
+ ** `INVALID_ARGUMENT`: invalid filter.
+ ** `NOT_FOUND`: filter contact not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `INTERNAL`
  */
 message DiscussionListRequest {
   optional datatypes.v1.DiscussionFilter filter = 1;
@@ -20,6 +28,11 @@ message DiscussionListResponse {
 
 /*
  ** DiscussionGet
+ ** Get discussion by id.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: discussion not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message DiscussionGetRequest {
   uint64 discussion_id = 1;
@@ -30,6 +43,12 @@ message DiscussionGetResponse {
 
 /*
  ** DiscussionGetBytesIdentifier
+ ** Get a discussion identifier as bytes.
+ ** This is useful to have a long term identifier for a discussion, backup-proof, and common to any device.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: discussion not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message DiscussionGetBytesIdentifierRequest {
   uint64 discussion_id = 1;
@@ -40,6 +59,11 @@ message DiscussionGetBytesIdentifierResponse {
 
 /*
  ** DiscussionGetByContact
+ ** Get discussion by contact id.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: discussion not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message DiscussionGetByContactRequest {
   uint64 contact_id = 1;
@@ -50,6 +74,11 @@ message DiscussionGetByContactResponse {
 
 /*
  ** DiscussionGetByGroup
+ ** Get discussion by group id.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: discussion not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message DiscussionGetByGroupRequest {
   uint64 group_id = 1;
@@ -60,6 +89,11 @@ message DiscussionGetByGroupResponse {
 
 /*
  ** DiscussionEmpty
+ ** Delete all messages and attachments in a discussion.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: discussion not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message DiscussionEmptyRequest {
   uint64 discussion_id = 1;
@@ -68,6 +102,14 @@ message DiscussionEmptyResponse {}
 
 /*
  ** DiscussionDownloadPhoto
+ ** Download a discussion photo.
+ ** The photo can be the contact photo, the group photo, or a generated image for the discussion if a specific image was not set.
+ ** Photos are always jpeg files with a maximum of 1080x1080 resolution.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: discussion not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `INTERNAL`
  */
 message DiscussionDownloadPhotoRequest {
   uint64 discussion_id = 1;
@@ -78,6 +120,13 @@ message DiscussionDownloadPhotoResponse {
 
 /*
  ** DiscussionLockedList
+ ** List locked discussions.
+ ** Locked discussions are discussions associated to a deleted contact or a group you left.
+ ** Messages in those discussions are still accessible, but you cannot post new messages in those discussions.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `INTERNAL`
  */
 message DiscussionLockedListRequest {}
 message DiscussionLockedListResponse {
@@ -86,6 +135,12 @@ message DiscussionLockedListResponse {
 
 /*
  ** DiscussionLockedDelete
+ ** Delete a locked discussion by id.
+ ** This will delete discussion and its content, including messages and attached files.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: discussion not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message DiscussionLockedDeleteRequest {
   uint64 discussion_id = 1;

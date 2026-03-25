@@ -8,6 +8,15 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** CallStartDiscussionCall
+ ** Start a call with one discussion member(s).
+ ** This will start a one to one call or a group call depending on discussion type.
+ ** You can use *call_identifier* to filter later call notifications.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: discussion not found.
+ ** `INVALID_ARGUMENT`: cannot start a call in an empty group.
+ ** `INTERNAL`
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message CallStartDiscussionCallRequest {
   uint64 discussion_id = 1;
@@ -18,9 +27,16 @@ message CallStartDiscussionCallResponse {
 
 /*
  ** CallStartCustomCall
+ ** Start a call with any contacts, even if they do not belong to the same discussion.
+ ** You can use *call_identifier* to filter later call notifications.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: discussion or contact not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message CallStartCustomCallRequest {
   repeated uint64 contact_ids = 1;
+  // specify in which discussion other contacts will log call
   optional uint64 discussion_id = 2;
 }
 message CallStartCustomCallResponse {

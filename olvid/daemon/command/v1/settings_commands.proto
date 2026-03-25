@@ -10,6 +10,10 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** SettingsIdentityGet
+ ** Get current settings for your identity.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SettingsIdentityGetRequest {}
 message SettingsIdentityGetResponse {
@@ -18,8 +22,13 @@ message SettingsIdentityGetResponse {
 
 /*
  ** SettingsIdentitySet
- ** WARN: this entrypoint erase WHOLE settings. To update identity settings use SettingsIdentityGet to get current config
- ** and only edit fields you want to update.
+ ** Update your identity settings.
+ ** ⚠️ Update erase the WHOLE settings.
+ ** To update current settings use SettingsIdentityGet to get current config, and only edit fields you want to update.
+ **
+ ** **Error codes**:
+ ** `INVALID_ARGUMENT`: cannot set keycloak settings if your identity is not keycloak managed.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SettingsIdentitySetRequest {
   datatypes.v1.IdentitySettings identity_settings = 1;
@@ -30,6 +39,13 @@ message SettingsIdentitySetResponse {
 
 /*
  ** SettingsDiscussionGet
+ ** Get a discussion settings.
+ ** Those settings are shared with other members of this discussion.
+ ** For example, a parameter for ephemeral message parameters concerning a discussion would affect all future messages posted in this discussion, from any member.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: discussion not found
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SettingsDiscussionGetRequest {
   uint64 discussion_id = 1;
@@ -40,6 +56,13 @@ message SettingsDiscussionGetResponse {
 
 /*
  ** SettingsDiscussionSet
+ ** Update a discussion settings.
+ ** ⚠️ Update erase the WHOLE settings.
+ ** To update current settings use SettingsDiscussionGet to get current config, and only edit fields you want to update.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: discussion not found
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message SettingsDiscussionSetRequest {
   datatypes.v1.DiscussionSettings discussion_settings = 1;

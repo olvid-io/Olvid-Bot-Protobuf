@@ -10,6 +10,11 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** IdentityGet
+ ** Get your identity details.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `INTERNAL`
  */
 message IdentityGetRequest {}
 message IdentityGetResponse {
@@ -18,6 +23,13 @@ message IdentityGetResponse {
 
 /*
  ** IdentityGetBytesIdentifier
+ ** Get your Olvid identity as bytes.
+ ** This is useful to have a long term identifier for an identity, backup-proof, and common to any device.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: identity not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `INTERNAL`
  */
 message IdentityGetBytesIdentifierRequest {}
 message IdentityGetBytesIdentifierResponse {
@@ -26,6 +38,13 @@ message IdentityGetBytesIdentifierResponse {
 
 /*
  ** IdentityGetInvitationLink
+ ** Get your invitation link. This link can be sent to other Olvid users to let them send you an invitation.
+ ** Invitation links can be open with any Olvid application or open in a web browser to show a QR code to scan.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: identity not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `INTERNAL`
  */
 message IdentityGetInvitationLinkRequest {}
 message IdentityGetInvitationLinkResponse {
@@ -34,20 +53,32 @@ message IdentityGetInvitationLinkResponse {
 
 /*
  ** IdentityUpdateDetails
+ ** Update your Olvid identity details (first name, last name, company and position).
+ ** At least on field in first and last name must be non empty.
+ ** Your details will be visible by your contacts, and you display name is computed from this details.
+ ** Details for a keycloak managed identity cannot be updated.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: identity not found.
+ ** `INVALID_ARGUMENT`: at least one of first name and last name must be non empty / cannot update a keycloak managed identity.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message IdentityUpdateDetailsRequest {
+  // your new identity details
   datatypes.v1.IdentityDetails new_details = 2;
 }
 message IdentityUpdateDetailsResponse {}
 
 /*
- ** IdentityRemovePhoto
- */
-message IdentityRemovePhotoRequest {}
-message IdentityRemovePhotoResponse {}
-
-/*
  ** IdentitySetPhoto
+ ** Set a profile picture for your identity.
+ ** This picture will be visible by your contacts.
+ ** The photo can be jpeg or png but will be converted to jpeg and resolution will be limited to 1080x1080.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: identity not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `INTERNAL`
  */
 message IdentitySetPhotoRequestMetadata {
   string filename = 1;
@@ -63,6 +94,13 @@ message IdentitySetPhotoResponse {}
 
 /*
  ** IdentityDownloadPhoto
+ ** Download your current identity picture.
+ ** Pictures are always jpeg files with a maximum of 1080x1080 resolution.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: identity not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `INTERNAL`
  */
 message IdentityDownloadPhotoRequest {}
 message IdentityDownloadPhotoResponse {
@@ -70,7 +108,25 @@ message IdentityDownloadPhotoResponse {
 }
 
 /*
+ ** IdentityRemovePhoto
+ ** Remove your current identity picture.
+ ** The automatically generate identity image will be used instead.
+ **
+ ** **Error codes**:
+ ** `NOT_FOUND`: identity not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `INTERNAL`
+ */
+message IdentityRemovePhotoRequest {}
+message IdentityRemovePhotoResponse {}
+
+/*
  ** IdentityGetApiKeyStatus
+ ** Check you current Olvid api key status.
+ ** Api Keys allows an identity to initiate calls or to use multi device.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message IdentityGetApiKeyStatusRequest {}
 message IdentityGetApiKeyStatusResponse {
@@ -79,6 +135,12 @@ message IdentityGetApiKeyStatusResponse {
 
 /*
  ** IdentitySetApiKey
+ ** Manually set an Olvid api key.
+ ** Olvid api keys are standard uuids.
+ **
+ ** **Error codes**:
+ ** `INVALID_ARGUMENT`: api key format is not valid.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message IdentitySetApiKeyRequest {
   string api_key = 1;
@@ -89,6 +151,11 @@ message IdentitySetApiKeyResponse {
 
 /*
  ** IdentitySetConfigurationLink
+ ** Set an Olvid configuration link with an api key.
+ **
+ ** **Error codes**:
+ ** `INVALID_ARGUMENT`: configuration link is invalid / configuration link is for another server.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message IdentitySetConfigurationLinkRequest {
   string configuration_link = 1;

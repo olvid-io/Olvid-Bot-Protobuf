@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package olvid.daemon.command.v1;
 
-import "olvid/daemon/datatypes/v1/identity.proto";
 import "olvid/daemon/datatypes/v1/keycloak.proto";
 
 option go_package = "olvid.io/daemon";
@@ -11,6 +10,15 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** KeycloakBindIdentity
+ ** Register you identity in a keycloak directory.
+ ** Your identity should not already be registered in a keycloak directory (`identity.keycloak_managed`).
+ ** When registered your directory might add you to some managed groups, and you will be granted access to other directory users.
+ ** Other directory users can be added as contacts with no further confirmation (see *KeycloakUserList* and *KeycloakAddUserAsContact*).
+ **
+ ** **Error codes**:
+ ** `INVALID_ARGUMENT`: identity is already keycloak managed.
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `INTERNAL`
  */
 message KeycloakBindIdentityRequest {
   string configuration_link = 1;
@@ -19,24 +27,50 @@ message KeycloakBindIdentityResponse {} // binding is partially asynchronous, so
 
 /*
  ** KeycloakUnbindIdentity
+ ** Unregister from a keycloak directory.
+ ** Your identity should already be keycloak managed.
+ ** You will lose access to keycloak user directory and you will leave keycloak managed groups.
+ ** Your keycloak managed contacts will remain contacts but won't be keycloak managed anymore.
+ **
+ ** **Error codes**:
+ ** `INVALID_ARGUMENT`: identity is not keycloak managed.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message KeycloakUnbindIdentityRequest {}
 message KeycloakUnbindIdentityResponse {}
 
 /*
  ** KeycloakUserList
+ ** List other users registered on your keycloak directory.
+ ** Pass a filter to select only users that match specific criteria.
+ **
+ ** **Error codes**:
+ ** `INVALID_ARGUMENT`: identity is not keycloak managed / invalid filter.
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `INTERNAL`
  */
 message KeycloakUserListRequest {
   optional daemon.datatypes.v1.KeycloakUserFilter filter = 1;
+  // only users that registered on keycloak since this timestamp, set to 0 to list all users.
   optional uint64 last_list_timestamp = 2;
 }
 message KeycloakUserListResponse {
   repeated daemon.datatypes.v1.KeycloakUser users = 1;
+  // set this timestamp in request.last_list_timestamp if you want to list only new users.
   uint64 last_list_timestamp = 2;
 }
 
 /*
  ** KeycloakAddUserAsContact
+ ** Add a user from keycloak directory as a contact.
+ ** This will not trigger any invitation protocol.
+ ** Directory is considered as a trusted third party so no further confirmation is required.
+ ** Contact and discussion will be created as soon as one of the other user's device is online and automatically answer "invitation".
+ **
+ ** **Error codes**:
+ ** `INVALID_ARGUMENT`: identity is not keycloak managed.
+ ** `NOT_FOUND`: keycloak user not found.
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
 message KeycloakAddUserAsContactRequest {
   string keycloak_id = 1;

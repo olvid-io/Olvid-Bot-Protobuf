@@ -8,14 +8,16 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** Ping
- ** unauthenticated rpc to check daemon is up and accessible
+ ** Unauthenticated method.
+ ** Juts check if daemon is reachable.
  */
 message PingRequest {}
 message PingResponse {}
 
 /*
  ** DaemonVersion
- ** authenticated rpc to get current daemon version
+ ** Authenticated method.
+ ** Ask daemon its version.
  */
 message DaemonVersionRequest {}
 message DaemonVersionResponse {
@@ -24,14 +26,22 @@ message DaemonVersionResponse {
 
 /*
  ** AuthenticationTest
- ** check that sent credentials are valid user credentials, else it returns an error
+ ** Authenticated rpc.
+ ** Check that sent credentials are valid user credentials, else it returns an error.
+ **
+ ** **Error codes**:
+ ** `PERMISSION_DENIED`: invalid client key.
  */
 message AuthenticationTestRequest {}
 message AuthenticationTestResponse {}
 
 /*
  ** AuthenticationAdminTest
- ** check that sent credentials are valid admin credentials, else it returns an error
+ ** Authenticated rpc (admin key only).
+ ** Check that sent credentials are valid admin credentials, else it returns an error.
+ **
+ ** **Error codes**:
+ ** `PERMISSION_DENIED`: client key is not an admin client key.
  */
 message AuthenticationAdminTestRequest {}
 message AuthenticationAdminTestResponse {}

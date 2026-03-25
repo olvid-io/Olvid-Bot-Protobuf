@@ -10,7 +10,14 @@ option java_multiple_files = true;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
- ** MessageList return all messages for current identity
+ ** MessageList
+ ** List messages for current identity.
+ ** Pass a filter to select only messages that match specific criteria.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `INVALID_ARGUMENT`: filter is invalid
+ ** `INTERNAL`
  */
 message MessageListRequest {
   optional datatypes.v1.MessageFilter filter = 1;
@@ -22,6 +29,11 @@ message MessageListResponse {
 
 /*
  ** MessageGet
+ ** get a specific message by id.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `NOT_FOUND`: message not found.
  */
 message MessageGetRequest {
   datatypes.v1.MessageId message_id = 1;
@@ -31,22 +43,15 @@ message MessageGetResponse {
 }
 
 /*
- ** MessageRefresh force download of messages on the server
- */
-message MessageRefreshRequest {}
-message MessageRefreshResponse {}
-
-/*
- ** MessageDelete
- */
-message MessageDeleteRequest {
-  datatypes.v1.MessageId message_id = 1;
-  optional bool delete_everywhere = 2;
-}
-message MessageDeleteResponse {}
-
-/*
  ** MessageSend
+ ** Post a text message in a discussion.
+ ** A message must have a non-blank body.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `NOT_FOUND`: discussion / replied message not found.
+ ** `INVALID_ARGUMENT`: message body is empty or blank.
+ ** `INTERNAL`
  */
 message MessageSendRequest {
   uint64 discussion_id = 1;
@@ -61,6 +66,19 @@ message MessageSendResponse {
 
 /*
  ** MessageSendWithAttachments
+ ** Post a message with attachments in a given discussion.
+ ** A message must have a non empty body or at least one attachment.
+ ** To allow sending multiple files with no size limitations this entry point is a client stream.
+ ** First send a MessageSendWithAttachmentsRequest filling metadata field.
+ ** Then send each file separately by chunks of any size.
+ ** Always send an empty MessageSendWithAttachmentsRequest with only file_delimiter set to true at the end of each file upload.
+ ** When all attachments are uploaded server will answer with a MessageSendWithAttachmentsResponse and close stream.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `NOT_FOUND`: discussion / replied message not found.
+ ** `INVALID_ARGUMENT`: message body is empty or blank with no attached file / attached the same file twice.
+ ** `INTERNAL`
  */
 message MessageSendWithAttachmentsRequest {
   oneof request {
@@ -90,7 +108,65 @@ message MessageSendWithAttachmentsResponse {
 }
 
 /*
+ ** MessageReact
+ ** Add, update or remove a reaction from a message.
+ ** If _reaction_ is set this will add a new reaction or update your previous reaction on this message message.
+ ** If _reaction_ is an empty string your previous reaction will be removed if you had one.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `NOT_FOUND`: message not found.
+ ** `INTERNAL`
+ */
+message MessageReactRequest {
+  datatypes.v1.MessageId message_id = 1;
+  optional string reaction = 2;
+}
+message MessageReactResponse {}
+
+/*
+ ** MessageUpdateBody
+ ** Update one of your message body.
+ ** Body cannot be empty or blank.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `NOT_FOUND`: message not found.
+ ** `INVALID_ARGUMENT`: you can only edit your own messages / new body cannot be empty or blank.
+ ** `INTERNAL`
+ */
+message MessageUpdateBodyRequest {
+  datatypes.v1.MessageId message_id = 1;
+  string updated_body = 2;
+}
+message MessageUpdateBodyResponse {}
+
+/*
+ ** MessageDelete
+ ** Delete a message giving it's id.
+ ** TODO delete everywhere ?
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `NOT_FOUND`: message not found.
+ ** `INTERNAL`
+ */
+message MessageDeleteRequest {
+  datatypes.v1.MessageId message_id = 1;
+  optional bool delete_everywhere = 2;
+}
+message MessageDeleteResponse {}
+
+/*
  ** MessageSendLocation
+ ** Post a location message in a discussion.
+ ** A location message represent a specific location, and is different of a location sharing that can be updated.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `NOT_FOUND`: discussion not found.
+ ** `INVALID_ARGUMENT: latitude and longitude are both equal to zero / preview_filename and preview_payload must be set together.
+ ** `INTERNAL`
  */
 message MessageSendLocationRequest {
   uint64 discussion_id = 1;
@@ -99,9 +175,11 @@ message MessageSendLocationRequest {
   optional double altitude = 4;
   optional float precision = 5;
   optional string address = 6;
-  // preview filename and payload must be set together. Payload might not exceed protobuf max message size.
+  // attach an option preview as a picture, specify filename to use
   optional string preview_filename = 7;
+  // attach an option preview as a picture, specify payload (must be smaller than grpc max message size)
   optional bytes preview_payload = 8;
+  // make your location message ephemeral
   optional datatypes.v1.MessageEphemerality ephemerality = 9;
 }
 message MessageSendLocationResponse {
@@ -110,6 +188,13 @@ message MessageSendLocationResponse {
 
 /*
  ** MessageStartLocationSharing
+ ** Start sharing a location in a discussion.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `NOT_FOUND`: discussion not found.
+ ** `INVALID_ARGUMENT: latitude and longitude are both equal to zero.
+ ** `INTERNAL`
  */
 message MessageStartLocationSharingRequest {
   uint64 discussion_id = 1;
@@ -124,6 +209,13 @@ message MessageStartLocationSharingResponse {
 
 /*
  ** MessageUpdateLocationSharing
+ ** Update one of your sharing location message with a new location.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `NOT_FOUND`: message not found.
+ ** `INVALID_ARGUMENT: you can only update your location sharing messages / sharing is no longer active.
+ ** `INTERNAL`
  */
 message MessageUpdateLocationSharingRequest {
   datatypes.v1.MessageId message_id = 1;
@@ -138,6 +230,12 @@ message MessageUpdateLocationSharingResponse {
 
 /*
  ** MessageEndLocationSharing
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
+ ** `NOT_FOUND`: message not found.
+ ** `INVALID_ARGUMENT: you can only end your location sharing messages / sharing is no longer active.
+ ** `INTERNAL`
  */
 message MessageEndLocationSharingRequest {
   datatypes.v1.MessageId message_id = 1;
@@ -147,20 +245,11 @@ message MessageEndLocationSharingResponse {
 }
 
 /*
- ** MessageReact
- ** if reaction is not set delete current reaction if there is one
+ ** MessageRefresh
+ ** Manually refresh messages available on server.
+ **
+ ** **Error codes**:
+ ** `UNAUTHENTICATED`: client key is invalid.
  */
-message MessageReactRequest {
-  datatypes.v1.MessageId message_id = 1;
-  optional string reaction = 2;
-}
-message MessageReactResponse {}
-
-/*
- ** MessageUpdateBody
- */
-message MessageUpdateBodyRequest {
-  datatypes.v1.MessageId message_id = 1;
-  string updated_body = 2;
-}
-message MessageUpdateBodyResponse {}
+message MessageRefreshRequest {}
+message MessageRefreshResponse {}
