@@ -31,6 +31,8 @@ service IdentityAdminService {
 }
 
 // Backup
+// Olvid Backups are accessible using a simple key. They contains data necessary to restore or to transfer an identity from a device (a daemon) to another.
+// ⚠️ Backups does not contain any message or attachments, it's only designed to re-create secure channel with your contacts, restore your discussions and you daemon configuration (client keys, settings, ...)
 service BackupAdminService {
   rpc BackupKeyGet(admin.v1.BackupKeyGetRequest) returns (admin.v1.BackupKeyGetResponse) {}
   rpc BackupKeyRenew(admin.v1.BackupKeyRenewRequest) returns (admin.v1.BackupKeyRenewResponse) {}

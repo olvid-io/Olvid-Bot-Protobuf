@@ -8,7 +8,7 @@ option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
  ** An Olvid message posted in a discussion.
- ** Send message are Outbound, received messages are Inbound.
+ ** Sent message are Outbound, received messages are Inbound.
  ** Messages must have a body and/or one or more attachment.
  */
 message Message {
@@ -140,7 +140,7 @@ message MessageFilter {
     REACTION_HAS_NOT = 2;
   }
 
-  // id message inbound or outbound
+  // is message inbound or outbound
   optional datatypes.v1.MessageId.Type type = 1;
   // does message belongs to a specific discussion
   optional uint64 discussion_id = 2;

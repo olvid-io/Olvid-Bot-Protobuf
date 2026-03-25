@@ -7,7 +7,8 @@ option java_multiple_files = false;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
 /*
- ** A group
+ ** An Olvid group is a discussion with you and other Olvid identities.
+ ** Other identities in a group are automatically added to your contact book if they were not before as collected contacts (you do not have a one to one discussion with them).
  ** *keycloak_managed* groups are not editable, and you cannot leave them. Group is managed from the keycloak admin console.
  */
 message Group {

@@ -33,9 +33,9 @@ service IdentityCommandService {
   rpc IdentityGetBytesIdentifier(command.v1.IdentityGetBytesIdentifierRequest) returns (command.v1.IdentityGetBytesIdentifierResponse) {}
   rpc IdentityGetInvitationLink(command.v1.IdentityGetInvitationLinkRequest) returns (command.v1.IdentityGetInvitationLinkResponse) {}
   rpc IdentityUpdateDetails(command.v1.IdentityUpdateDetailsRequest) returns (command.v1.IdentityUpdateDetailsResponse) {}
-  rpc IdentityRemovePhoto(command.v1.IdentityRemovePhotoRequest) returns (command.v1.IdentityRemovePhotoResponse) {}
   rpc IdentitySetPhoto(stream command.v1.IdentitySetPhotoRequest) returns (command.v1.IdentitySetPhotoResponse) {}
   rpc IdentityDownloadPhoto(command.v1.IdentityDownloadPhotoRequest) returns (command.v1.IdentityDownloadPhotoResponse) {}
+  rpc IdentityRemovePhoto(command.v1.IdentityRemovePhotoRequest) returns (command.v1.IdentityRemovePhotoResponse) {}
   rpc IdentityGetApiKeyStatus(command.v1.IdentityGetApiKeyStatusRequest) returns (command.v1.IdentityGetApiKeyStatusResponse) {}
   rpc IdentitySetApiKey(command.v1.IdentitySetApiKeyRequest) returns (command.v1.IdentitySetApiKeyResponse) {}
   rpc IdentitySetConfigurationLink(command.v1.IdentitySetConfigurationLinkRequest) returns (command.v1.IdentitySetConfigurationLinkResponse) {}
@@ -87,9 +87,9 @@ service GroupCommandService {
   rpc GroupDisband(command.v1.GroupDisbandRequest) returns (command.v1.GroupDisbandResponse) {}
   rpc GroupLeave(command.v1.GroupLeaveRequest) returns (command.v1.GroupLeaveResponse) {}
   rpc GroupUpdate(command.v1.GroupUpdateRequest) returns (command.v1.GroupUpdateResponse) {}
-  rpc GroupUnsetPhoto(command.v1.GroupUnsetPhotoRequest) returns (command.v1.GroupUnsetPhotoResponse) {}
   rpc GroupSetPhoto(stream command.v1.GroupSetPhotoRequest) returns (command.v1.GroupSetPhotoResponse) {}
   rpc GroupDownloadPhoto(command.v1.GroupDownloadPhotoRequest) returns (command.v1.GroupDownloadPhotoResponse) {}
+  rpc GroupUnsetPhoto(command.v1.GroupUnsetPhotoRequest) returns (command.v1.GroupUnsetPhotoResponse) {}
 }
 
 // Discussion
@@ -110,16 +110,16 @@ service DiscussionCommandService {
 service MessageCommandService {
   rpc MessageList(command.v1.MessageListRequest) returns (stream command.v1.MessageListResponse) {}
   rpc MessageGet(command.v1.MessageGetRequest) returns (command.v1.MessageGetResponse) {}
-  rpc MessageRefresh(command.v1.MessageRefreshRequest) returns (command.v1.MessageRefreshResponse) {}
-  rpc MessageDelete(command.v1.MessageDeleteRequest) returns (command.v1.MessageDeleteResponse) {}
   rpc MessageSend(command.v1.MessageSendRequest) returns (command.v1.MessageSendResponse) {}
   rpc MessageSendWithAttachments(stream command.v1.MessageSendWithAttachmentsRequest) returns (command.v1.MessageSendWithAttachmentsResponse) {}
+  rpc MessageReact(command.v1.MessageReactRequest) returns (command.v1.MessageReactResponse) {}
+  rpc MessageUpdateBody(command.v1.MessageUpdateBodyRequest) returns (command.v1.MessageUpdateBodyResponse) {}
+  rpc MessageDelete(command.v1.MessageDeleteRequest) returns (command.v1.MessageDeleteResponse) {}
   rpc MessageSendLocation(command.v1.MessageSendLocationRequest) returns (command.v1.MessageSendLocationResponse) {}
   rpc MessageStartLocationSharing(command.v1.MessageStartLocationSharingRequest) returns (command.v1.MessageStartLocationSharingResponse) {}
   rpc MessageUpdateLocationSharing(command.v1.MessageUpdateLocationSharingRequest) returns (command.v1.MessageUpdateLocationSharingResponse) {}
   rpc MessageEndLocationSharing(command.v1.MessageEndLocationSharingRequest) returns (command.v1.MessageEndLocationSharingResponse) {}
-  rpc MessageReact(command.v1.MessageReactRequest) returns (command.v1.MessageReactResponse) {}
-  rpc MessageUpdateBody(command.v1.MessageUpdateBodyRequest) returns (command.v1.MessageUpdateBodyResponse) {}
+  rpc MessageRefresh(command.v1.MessageRefreshRequest) returns (command.v1.MessageRefreshResponse) {}
 }
 
 // Attachment
@@ -131,6 +131,13 @@ service AttachmentCommandService {
 }
 
 // Storage
+// Each client key has its own independent storage space, with a simple key-value system.
+// _Storage_ can be seen as a global storage space, compared to _Discussion Storage_ that offers a space associated with a specific discussion.
+//
+// Both mechanisms are backup resilient, and will be restore with it's associated client key in a backup restoration process.
+//
+// Mind that temporary client keys (specified in daemon environment or as command line arguments) does not have an allocated storage space.
+// You must create a client in database to use storage commands.
 service StorageCommandService {
   rpc StorageList(command.v1.StorageListRequest) returns (stream command.v1.StorageListResponse) {}
   rpc StorageGet(command.v1.StorageGetRequest) returns (command.v1.StorageGetResponse) {}
@@ -139,6 +146,13 @@ service StorageCommandService {
 }
 
 // DiscussionStorage
+// Each client key has its own independent storage space, with a simple key-value system.
+// _Storage_ can be seen as a global storage space, compared to _Discussion Storage_ that offers a space associated with a specific discussion.
+//
+// Both mechanisms are backup resilient, and will be restore with it's associated client key in a backup restoration process.
+//
+// Mind that temporary client keys (specified in daemon environment or as command line arguments) does not have an allocated storage space.
+// You must create a client in database to use storage commands.
 service DiscussionStorageCommandService {
   rpc DiscussionStorageList(command.v1.DiscussionStorageListRequest) returns (stream command.v1.DiscussionStorageListResponse) {}
   rpc DiscussionStorageGet(command.v1.DiscussionStorageGetRequest) returns (command.v1.DiscussionStorageGetResponse) {}
@@ -147,6 +161,9 @@ service DiscussionStorageCommandService {
 }
 
 // Call
+// Currently daemon cannot handle Olvid calls properly.
+// You can be notified on incoming calls, and you can initiate call within discussions or with any contact.
+// But, you we cannot manage audio or video stream, that's why a daemon will always answer any incoming call with a "busy" response.
 service CallCommandService {
   rpc CallStartDiscussionCall(command.v1.CallStartDiscussionCallRequest) returns (command.v1.CallStartDiscussionCallResponse) {}
   rpc CallStartCustomCall(command.v1.CallStartCustomCallRequest) returns (command.v1.CallStartCustomCallResponse) {}

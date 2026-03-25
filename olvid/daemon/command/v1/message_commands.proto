@@ -160,7 +160,7 @@ message MessageDeleteResponse {}
 /*
  ** MessageSendLocation
  ** Post a location message in a discussion.
- ** A location message represent a specific location, and is different of a location sharing that can be updated.
+ ** A location message represent a specific location, and is different of a location sharing that can be updated later.
  **
  ** **Error codes**:
  ** `UNAUTHENTICATED`: client key is invalid.

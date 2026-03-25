@@ -45,7 +45,7 @@ message AttachmentId {
  ** To pass a filter an element must match all specified conditions.
  */
 message AttachmentFilter {
-  // apply pre-defined regexp filters on *mime_type*.
+  // apply pre-defined regexp filters on *mime_type* field.
   enum FileType {
     FILE_TYPE_UNSPECIFIED = 0;
     FILE_TYPE_IMAGE = 3;
