@@ -56,13 +56,19 @@ message MessageGetResponse {
  ** `INTERNAL`
  */
 message MessageSendRequest {
+  // the discussion to post the message into
   uint64 discussion_id = 1;
+  // text body for the message
   string body = 2;
+  // the id of a message to quote
   optional datatypes.v1.MessageId reply_id = 3;
+  // set an ephemerality for this message
   optional datatypes.v1.MessageEphemerality ephemerality = 4;
+  // do not download link preview if a link is detected in the message body (make send process faster)
   optional bool disable_link_preview = 5;
 }
 message MessageSendResponse {
+  // sent message
   datatypes.v1.Message message = 1;
 }
 
@@ -74,7 +80,7 @@ message MessageSendResponse {
  ** First send a MessageSendWithAttachmentsRequest filling metadata field.
  ** Then send each file separately by chunks of any size.
  ** Always send an empty MessageSendWithAttachmentsRequest with only file_delimiter set to true at the end of each file upload.
- ** When all attachments are uploaded server will answer with a MessageSendWithAttachmentsResponse and close stream.
+ ** Once attachments uploaded finished daemon will answer with a {ref}`response <message-MessageSendWithAttachmentsResponse>` and close stream.
  **
  ** **Error codes**:
  ** `UNAUTHENTICATED`: client key is invalid.
@@ -90,22 +96,30 @@ message MessageSendWithAttachmentsRequest {
   }
 }
 message MessageSendWithAttachmentsRequestMetadata {
-  // message
+  // the discussion to post the message into
   uint64 discussion_id = 1;
+  // text body, mandatory if there are no attached files
   optional string body = 2;
+  // the id of a message to quote
   optional datatypes.v1.MessageId reply_id = 3;
+  // set an ephemerality for message and attachments
   optional datatypes.v1.MessageEphemerality ephemerality = 4;
+  // do not download link preview if a link is detected in the message body (make send process faster)
   optional bool disable_link_preview = 5;
 
-  // attachments
+  // describe a file you want to attach to a message
   message File {
     string filename = 1;
+    // file size in bytes
     uint64 file_size = 2;
   }
+  // a list of files to attach to the message
   repeated File files = 10;
 }
 message MessageSendWithAttachmentsResponse {
+  // sent message
   datatypes.v1.Message message = 1;
+  // sent attachments
   repeated datatypes.v1.Attachment attachments = 2;
 }
 
@@ -121,7 +135,9 @@ message MessageSendWithAttachmentsResponse {
  ** `INTERNAL`
  */
 message MessageReactRequest {
+  // the message to react
   datatypes.v1.MessageId message_id = 1;
+  // an emoji string
   optional string reaction = 2;
 }
 message MessageReactResponse {}
@@ -138,7 +154,9 @@ message MessageReactResponse {}
  ** `INTERNAL`
  */
 message MessageUpdateBodyRequest {
+  // the message to update
   datatypes.v1.MessageId message_id = 1;
+  // the new body
   string updated_body = 2;
 }
 message MessageUpdateBodyResponse {}

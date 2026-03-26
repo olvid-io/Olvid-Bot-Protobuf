@@ -19,7 +19,8 @@ option go_package = "olvid.io/daemon";
 option java_multiple_files = true;
 option java_package = "io.olvid.desktop.daemon.protobuf";
 
-// Tools
+// Tool
+// A set of utility entrypoint to test debug and your configuration.
 service ToolCommandService {
   rpc Ping(command.v1.PingRequest) returns (command.v1.PingResponse) {}
   rpc DaemonVersion(command.v1.DaemonVersionRequest) returns (command.v1.DaemonVersionResponse) {}
