@@ -58,7 +58,7 @@ message Invitation {
   optional string sas = 5;
   // introductions protocol only
   // the contact id of the person who initiated introduction protocol
-  optional uint64 mediatorId = 6;
+  optional uint64 mediator_id = 6;
 }
 
 /*

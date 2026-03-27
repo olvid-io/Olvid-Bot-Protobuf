@@ -87,7 +87,6 @@ message MessageBodyUpdatedNotification {
   string previous_body = 2;
 }
 
-
 /*
  ** MessageUploaded
  ** Receive a notification each time an outbound message have been uploaded on server.

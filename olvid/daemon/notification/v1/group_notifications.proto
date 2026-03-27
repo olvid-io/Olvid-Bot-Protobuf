@@ -256,7 +256,7 @@ message SubscribeToGroupOwnPermissionsUpdatedNotification {
   optional datatypes.v1.GroupFilter group_filter = 3;
   // you will only receive notifications about groups where your permissions match this filter.
   optional datatypes.v1.GroupPermissionFilter permissions_filter = 4;
-  // you will only receive notifications about groups where your permissions match this filter, before update.
+  // you will only receive notifications when your previous permissions match this filter.
   optional datatypes.v1.GroupPermissionFilter previous_permissions_filter = 5;
 }
 message GroupOwnPermissionsUpdatedNotification {
@@ -284,9 +284,8 @@ message SubscribeToGroupMemberPermissionsUpdatedNotification {
   optional datatypes.v1.GroupFilter group_filter = 3;
   // you will only receive notifications about group members that match this filter.
   optional datatypes.v1.GroupMemberFilter member_filter = 4;
-  // you will only receive notifications about group members that match this filter.
-  // TODO update to GroupPermissionsFilter !
-  optional datatypes.v1.GroupMemberFilter previous_permission_filter = 5;
+  // you will only receive notifications when previous permissions match this filter.
+  optional datatypes.v1.GroupPermissionFilter previous_permission_filter = 5;
 }
 message GroupMemberPermissionsUpdatedNotification {
   datatypes.v1.Group group = 1;

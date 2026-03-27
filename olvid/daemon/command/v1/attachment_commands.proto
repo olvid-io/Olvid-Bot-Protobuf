@@ -42,6 +42,8 @@ message AttachmentGetResponse {
 /*
  ** AttachmentDelete
  ** Delete an attachment by id.
+ ** Use this to delete attachment and associated file locally to save space.
+ ** Else message deletion implies associated attachments deletion.
  **
  ** **Error codes**:
  ** `NOT_FOUND` (*Attachment not found*): attachment_id does not belong to an identity attachment.
@@ -49,7 +51,6 @@ message AttachmentGetResponse {
  */
 message AttachmentDeleteRequest {
   datatypes.v1.AttachmentId attachment_id = 1;
-  optional bool delete_everywhere = 2;
 }
 message AttachmentDeleteResponse {}
 

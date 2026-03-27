@@ -161,7 +161,7 @@ message MessageFilter {
   // does message have reactions or not
   optional Reaction has_reaction = 10;
   // message must have at least one matching reaction for each *reactions_filter*
-  repeated ReactionFilter reactions_filter = 11;
+  repeated ReactionFilter reaction_filters = 11;
 
   oneof reply {
     // is message a reply to another message

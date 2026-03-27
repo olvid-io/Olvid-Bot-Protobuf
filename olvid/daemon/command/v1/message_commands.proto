@@ -164,11 +164,19 @@ message MessageUpdateBodyResponse {}
 /*
  ** MessageDelete
  ** Delete a message giving its id.
- ** TODO delete everywhere ?
+ ** If *delete_everywhere* is specified, the message (and associated attachments) will be deleted on every other participant devices.
+ ** *delete_everywhere* is only allowed in certain circumstances.
+ ** For one to one discussions:
+ **  - inbound message: you cannot remote delete your contact messages
+ **  - outbound message: you can always remote delete your own messages
+ ** For group discussions:
+ **  - inbound message: you must have *remote_delete_anything* permission
+ **  - outbound message: you must have *remote_delete_anything* or *edit_or_remote_delete_own_messages* permission.
  **
  ** **Error codes**:
  ** `UNAUTHENTICATED`: client key is invalid.
  ** `NOT_FOUND`: message not found.
+ ** `INVALID_ARGUMENT`: cannot delete everywhere this message
  ** `INTERNAL`
  */
 message MessageDeleteRequest {
